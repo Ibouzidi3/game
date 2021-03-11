@@ -24,7 +24,9 @@ public class Laser : MonoBehaviour
             if (hit.collider)
             {
                 lr.SetPosition(1, hit.point);
+                EventManager.TriggerEvent<LaserHitEvent, Vector3>(hit.point);
             }
         } 
+
     }
 }

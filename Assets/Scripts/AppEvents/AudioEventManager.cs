@@ -9,10 +9,13 @@ public class AudioEventManager : MonoBehaviour
     public EventSound3D eventSound3DPrefab;
     public AudioClip boxDesctructionAudio = null;
     public AudioClip coinCollectAudio;
+    public AudioClip laserHitAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
     private UnityAction<Vector3> coinCollectEventListener;
+
+    private UnityAction<Vector3> laserHitEventListener;
 
     void Awake()
     {
@@ -20,6 +23,8 @@ public class AudioEventManager : MonoBehaviour
         boxDestructionEventListener = new UnityAction<Vector3>(boxDestructionEventHandler);
 
         coinCollectEventListener = new UnityAction<Vector3>(coinCollectionEventHandler);
+
+        laserHitEventListener = new UnityAction<Vector3>(laserHitEventHandler);
     }
 
 
@@ -36,15 +41,17 @@ public class AudioEventManager : MonoBehaviour
 
             EventManager.StartListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
             EventManager.StartListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
+            EventManager.StartListening<LaserHitEvent, Vector3>(laserHitEventListener);
 
-        }
+    }
 
         void OnDisable()
         {
 
             EventManager.StopListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
             EventManager.StopListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
-        }
+            EventManager.StopListening<LaserHitEvent, Vector3>(laserHitEventListener);
+    }
 
 
 
@@ -90,4 +97,23 @@ public class AudioEventManager : MonoBehaviour
         }
 
 
+
+    void laserHitEventHandler(Vector3 worldPos)
+    { 
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.laserHitAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
     }
+
+
+}
