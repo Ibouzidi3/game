@@ -6,18 +6,25 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterInputController))]
 public class MinionBasicControlScript : MonoBehaviour
 {
-    private Animator anim;	
+    private Animator anim;
     private Rigidbody rbody;
     private CharacterInputController cinput;
-     
+
     public float forwardMaxSpeed = 1f;
     public float turnMaxSpeed = 1f;
-      
+    public float defaultSpeed = 1f;
+
     //Useful if you implement jump in the future...
     public float jumpableGroundNormalMaxAngle = 45f;
     public bool closeToJumpableGround;
 
     private int groundContactCount = 0;
+
+    private Coroutine speedRoutine;
+    private Coroutine shieldRoutine;
+    private bool hasShield;
+
+
 
     public bool IsGrounded
     {
@@ -59,9 +66,9 @@ public class MinionBasicControlScript : MonoBehaviour
     void Update()
     {
 
-        float inputForward=0f;
-        float inputTurn=0f;
-      
+        float inputForward = 0f;
+        float inputTurn = 0f;
+
         if (cinput.enabled)
         {
             inputForward = cinput.Forward;
@@ -81,7 +88,7 @@ public class MinionBasicControlScript : MonoBehaviour
         //It's supposed to be safe to not scale with Time.deltaTime (e.g. framerate correction) within FixedUpdate()
         //If you want to make that optimization, you can precompute your velocity-based translation using Time.fixedDeltaTime
         //We use rbody.MovePosition() as it's the most efficient and safest way to directly control position in Unity's Physics
-        rbody.MovePosition(rbody.position +  this.transform.forward * inputForward * Time.deltaTime * forwardMaxSpeed);
+        rbody.MovePosition(rbody.position + this.transform.forward * inputForward * Time.deltaTime * forwardMaxSpeed);
         //Most characters use capsule colliders constrained to not rotate around X or Z axis
         //However, it's also good to freeze rotation around the Y axis too. This is because friction against walls/corners
         //can turn the character. This errant turn is disorienting to players. 
@@ -90,7 +97,7 @@ public class MinionBasicControlScript : MonoBehaviour
         rbody.MoveRotation(rbody.rotation * Quaternion.AngleAxis(inputTurn * Time.deltaTime * turnMaxSpeed, Vector3.up));
 
 
-        anim.SetFloat("velx", inputTurn); 
+        anim.SetFloat("velx", inputTurn);
         anim.SetFloat("vely", inputForward);
         anim.SetBool("isFalling", !isGrounded);
 
@@ -105,9 +112,9 @@ public class MinionBasicControlScript : MonoBehaviour
         {
             ++groundContactCount;
 
-            EventManager.TriggerEvent<MinionLandsEvent, Vector3, float>(collision.contacts[0].point, collision.impulse.magnitude);          
+            EventManager.TriggerEvent<MinionLandsEvent, Vector3, float>(collision.contacts[0].point, collision.impulse.magnitude);
         }
-						
+
     }
 
 
@@ -119,5 +126,33 @@ public class MinionBasicControlScript : MonoBehaviour
         }
     }
 
+    public void SpeedUp(int speedUpEffect)
+    {
+        if (speedRoutine != null)
+            StopCoroutine(speedRoutine);
+        speedRoutine = StartCoroutine(_SpeedUp(speedUpEffect));
+    }
+
+
+    public void ShieldPowerup(int shieldEffect)
+    {
+        if (shieldRoutine != null)
+            StopCoroutine(shieldRoutine);
+        shieldRoutine = StartCoroutine(_ShieldPowerup(shieldEffect));
+    }
+
+    private IEnumerator _ShieldPowerup(int shieldEffect)
+    {
+        hasShield = true;
+        yield return new WaitForSeconds(shieldEffect);
+        hasShield = false;
+    }
+
+    private IEnumerator _SpeedUp(int speedUpEffect)
+    {
+        forwardMaxSpeed = defaultSpeed * 1.5f;
+        yield return new WaitForSeconds(speedUpEffect);
+        forwardMaxSpeed = defaultSpeed;
+    }
 
 }
