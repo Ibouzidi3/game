@@ -15,6 +15,10 @@ public class MinionBasicControlScript : MonoBehaviour
     public float defaultSpeed = 1f;
     public GameObject shieldAura;
     public GameObject speedAura;
+    public GameObject speedUpText;
+    private ParticleSystem speedTextPS;
+    public GameObject shieldText;
+    private ParticleSystem shielddTextPS;
 
     //Useful if you implement jump in the future...
     public float jumpableGroundNormalMaxAngle = 45f;
@@ -64,6 +68,9 @@ public class MinionBasicControlScript : MonoBehaviour
         anim.applyRootMotion = false;
         shieldAura.SetActive(false);
         speedAura.SetActive(false);
+
+        speedTextPS = speedUpText.GetComponent<ParticleSystem>();
+        shielddTextPS = shieldText.GetComponent<ParticleSystem>();
     }
 
 
@@ -149,6 +156,7 @@ public class MinionBasicControlScript : MonoBehaviour
     {
         hasShield = true;
         shieldAura.SetActive(true);
+        shielddTextPS.Play();
         yield return new WaitForSeconds(shieldEffect);
         shieldAura.SetActive(false);
         hasShield = false;
@@ -158,6 +166,7 @@ public class MinionBasicControlScript : MonoBehaviour
     {
         forwardMaxSpeed = defaultSpeed * 1.5f;
         speedAura.SetActive(true);
+        speedTextPS.Play();
         yield return new WaitForSeconds(speedUpEffect);
         speedAura.SetActive(false);
         forwardMaxSpeed = defaultSpeed;
