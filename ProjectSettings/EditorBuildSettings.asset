@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: c6f841454187349159cc961d60ecb4f9
   - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 91c7b3002afa8464fa9cd4b6bb6c4603
+  - enabled: 0
+    path: Assets/Scenes/StartSection.unity
+    guid: 9df1fe520f924f6419d76122eb8c3ca6
+  - enabled: 1
     path: Assets/Scenes/Collectible.unity
     guid: f6df7722e5653436092da37c9826bd23
   m_configObjects: {}
