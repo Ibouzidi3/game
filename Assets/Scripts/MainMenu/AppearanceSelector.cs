@@ -10,10 +10,14 @@ public class AppearanceSelector : MonoBehaviour
     public GameObject hairObject;
     public GameObject genderGameObject;
     public GameObject costumeGameObject;
+    public GameObject costumeVariantGameObject;
     public GameObject skinColorGameObject;
+    public GameObject customizationPanel;
+    public GameObject mainPanel;
 
     private TextMeshProUGUI genderTmp;
     private TextMeshProUGUI costumeTmp;
+    private TextMeshProUGUI costumeVariantTmp;
     private TextMeshProUGUI skinColorTmp;
 
     enum Gender { Female, Male }
@@ -29,9 +33,6 @@ public class AppearanceSelector : MonoBehaviour
     private GameObject[] allSkins;
     private Dictionary<string, Dictionary<string, List<GameObject>>> assetTree;
 
-    private
-
-    // Start is called before the first frame update
     void Start ()
     {
         allSkins = Resources.LoadAll<GameObject> ("Character/Costume/");
@@ -43,69 +44,109 @@ public class AppearanceSelector : MonoBehaviour
         genderTmp = genderGameObject.GetComponent<TextMeshProUGUI> ();
         costumeTmp = costumeGameObject.GetComponent<TextMeshProUGUI> ();
         skinColorTmp = skinColorGameObject.GetComponent<TextMeshProUGUI> ();
+        costumeVariantTmp = costumeVariantGameObject.GetComponent<TextMeshProUGUI> ();
         UpdateSkin ();
     }
 
-    // Update is called once per frame
-    void Update ()
+    public void OnCharacterButtonPress ()
     {
-        if (Input.GetKeyDown (KeyCode.G))
+        customizationPanel.SetActive (true);
+        mainPanel.SetActive (false);
+    }
+
+    public void OnCharacterBackButtonPress ()
+    {
+        customizationPanel.SetActive (false);
+        mainPanel.SetActive (true);
+    }
+
+    public void OnGenderToggle ()
+    {
+        gender = gender == Gender.Female ? Gender.Male : Gender.Female;
+        costumeVariantIndex = 0;
+
+        string gsKey = gender + "-" + skinColor;
+        if (!assetTree[gsKey].ContainsKey (costume))
         {
-            gender = gender == Gender.Female ? Gender.Male : Gender.Female;
+            costumeIndex = 0;
             costumeVariantIndex = 0;
-
-            string gsKey = gender + "-" + skinColor;
-            if (!assetTree[gsKey].ContainsKey (costume))
-            {
-                costumeIndex = 0;
-                costumeVariantIndex = 0;
-                costume = assetTree[gsKey].Keys.ToList ()[0];
-            }
-
-
-            UpdateSkin ();
+            costume = assetTree[gsKey].Keys.ToList ()[0];
         }
 
-        if (Input.GetKeyDown (KeyCode.S))
-        {
+
+        UpdateSkin ();
+    }
+
+    public void OnColorRight ()
+    {
+        if ((int)skinColor < Enum.GetValues (typeof (SkinColor)).Length - 1)
             skinColor++;
-            if ((int)skinColor >= Enum.GetValues (typeof (SkinColor)).Length)
-            {
-                skinColor = 0;
-            }
-            UpdateSkin ();
-        }
+        else
+            skinColor = 0;
 
-        if (Input.GetKeyDown (KeyCode.C))
-        {
-            List<string> costumeList = assetTree[gender + "-" + skinColor].Keys.ToList ();
+        UpdateSkin ();
 
+    }
+
+    public void OnColorLeft ()
+    {
+        if ((int)skinColor == 0)
+            skinColor = SkinColor.White;
+        else
+            skinColor--;
+
+        UpdateSkin ();
+
+    }
+
+    public void OnCostumeRight ()
+    {
+        List<string> costumeList = assetTree[gender + "-" + skinColor].Keys.ToList ();
+        if (costumeIndex < costumeList.Count () - 1)
+            costumeIndex++;
+        else
+            costumeIndex = 0;
+
+        costumeVariantIndex = 0;
+        costume = costumeList[costumeIndex];
+
+        UpdateSkin ();
+    }
+
+    public void OnCostumeLeft ()
+    {
+        List<string> costumeList = assetTree[gender + "-" + skinColor].Keys.ToList ();
+
+        if (costumeIndex == 0)
+            costumeIndex = costumeList.Count () - 1;
+        else
+            costumeIndex--;
+
+        costumeVariantIndex = 0;
+        costume = costumeList[costumeIndex];
+
+        UpdateSkin ();
+
+    }
+
+    public void OnCostumeVariantRight ()
+    {
+        if (costumeVariantIndex < assetTree[gender + "-" + skinColor][costume].Count () - 1)
+            costumeVariantIndex++;
+        else
             costumeVariantIndex = 0;
 
-            if (costumeIndex < costumeList.Count () - 1)
-                costumeIndex++;
-            else
-                costumeIndex = 0;
+        UpdateSkin ();
+    }
 
-            costume = costumeList[costumeIndex];
+    public void OnCostumeVariantLeft ()
+    {
+        if (costumeVariantIndex == 0)
+            costumeVariantIndex = assetTree[gender + "-" + skinColor][costume].Count () - 1;
+        else
+            costumeVariantIndex--;
 
-            UpdateSkin ();
-        }
-
-        if (Input.GetKeyDown (KeyCode.V))
-        {
-            if (costumeVariantIndex < assetTree[gender + "-" + skinColor][costume].Count () - 1)
-            {
-                costumeVariantIndex++;
-            }
-            else
-            {
-                costumeVariantIndex = 0;
-            }
-
-            UpdateSkin ();
-
-        }
+        UpdateSkin ();
     }
 
     private void BuildAssetTree ()
@@ -114,7 +155,14 @@ public class AppearanceSelector : MonoBehaviour
         {
             string[] elements = skin.name.Split (' ');
 
-            Gender assetGender = elements[0] == "Female" ? Gender.Female : Gender.Male;
+            Gender assetGender;
+
+            if (elements[0] == "Female")
+                assetGender = Gender.Female;
+            else if (elements[0] == "Male")
+                assetGender = Gender.Male;
+            else
+                continue;
 
             SkinColor assetSkinColor;
 
@@ -122,8 +170,10 @@ public class AppearanceSelector : MonoBehaviour
                 assetSkinColor = SkinColor.White;
             else if (elements[1] == "Brown")
                 assetSkinColor = SkinColor.Brown;
-            else
+            else if (elements[1] == "Black")
                 assetSkinColor = SkinColor.Black;
+            else
+                continue;
 
             string costume = "";
             for (int i = 2; i < elements.Length; i++)
@@ -160,7 +210,10 @@ public class AppearanceSelector : MonoBehaviour
         costumeObject.GetComponent<SkinnedMeshRenderer> ().materials = newAsset.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
         genderTmp.text = genderToString (gender);
         skinColorTmp.text = SkinColorToString (skinColor);
-        costumeTmp.text = newAsset.name;
+
+        string variantName = newAsset.name.Substring (newAsset.name.IndexOf ('0'));
+        costumeTmp.text = costume;
+        costumeVariantTmp.text = variantName;
 
     }
 
