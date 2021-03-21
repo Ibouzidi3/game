@@ -362,6 +362,11 @@ PrefabInstance:
       propertyPath: forwardMaxSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8556962835516875348, guid: 3e1a5c90f053f4f098e24c25d6f7e326,
+        type: 3}
+      propertyPath: closeToJumpableGround
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8556962835516875351, guid: 3e1a5c90f053f4f098e24c25d6f7e326,
         type: 3}
       propertyPath: m_Name
