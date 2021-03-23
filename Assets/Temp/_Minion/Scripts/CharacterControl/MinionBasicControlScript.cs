@@ -65,6 +65,7 @@ public class MinionBasicControlScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        defaultSpeed = forwardMaxSpeed;
         anim.applyRootMotion = false;
         shieldAura.SetActive(false);
         speedAura.SetActive(false);
@@ -164,7 +165,7 @@ public class MinionBasicControlScript : MonoBehaviour
 
     private IEnumerator _SpeedUp(int speedUpEffect)
     {
-        forwardMaxSpeed = defaultSpeed * 1.5f;
+        forwardMaxSpeed = defaultSpeed * 1.6f;
         speedAura.SetActive(true);
         speedTextPS.Play();
         yield return new WaitForSeconds(speedUpEffect);
