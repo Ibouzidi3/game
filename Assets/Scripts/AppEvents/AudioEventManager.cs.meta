@@ -8,6 +8,9 @@ MonoImporter:
   - boxDesctructionAudio: {instanceID: 0}
   - coinCollectAudio: {instanceID: 0}
   - laserHitAudio: {fileID: 8300000, guid: d389e4695172f48d2b04ba4852b1bfa5, type: 3}
+  - checkpointAudio: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
+  - speedUp: {instanceID: 0}
+  - shieldPowerup: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
