@@ -15,6 +15,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip shieldPowerup;
     public AudioClip rollingBallAudio;
     public AudioClip swingingPendulumAudio;
+    public AudioClip jumpableMashroomAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -27,6 +28,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> checkpointEventListener;
     private UnityAction<Vector3> rollingBallEventListener;
     private UnityAction<Vector3> swingingPendulumEventListener;
+    private UnityAction<Vector3> jumpableMashroomEventListener;
 
     void Awake()
     {
@@ -42,6 +44,7 @@ public class AudioEventManager : MonoBehaviour
         shieldPowerupEventListener = new UnityAction<Vector3>(shieldPowerupEventHandler);
         rollingBallEventListener = new UnityAction<Vector3>(rollingBallEventHandler);
         swingingPendulumEventListener = new UnityAction<Vector3>(swingingPendulumEventHandler);
+        jumpableMashroomEventListener = new UnityAction<Vector3>(jumpableMashroomEventHandler);
 
     }
 
@@ -57,6 +60,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<CheckpointEvent, Vector3>(checkpointEventListener);
             EventManager.StartListening<RollingBallEvent, Vector3>(rollingBallEventListener);
             EventManager.StartListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
+            EventManager.StartListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
 
 
     }
@@ -72,6 +76,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<CheckpointEvent, Vector3>(checkpointEventListener);
             EventManager.StopListening<RollingBallEvent, Vector3>(rollingBallEventListener);
             EventManager.StopListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
+            EventManager.StopListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
     }
 
 
@@ -219,6 +224,24 @@ public class AudioEventManager : MonoBehaviour
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = this.swingingPendulumAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+
+    void jumpableMashroomEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.jumpableMashroomAudio;
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 500f;
