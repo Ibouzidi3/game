@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - FxTemporaire
   - TNT
+  - Moving Bench
   layers:
   - Default
   - TransparentFX

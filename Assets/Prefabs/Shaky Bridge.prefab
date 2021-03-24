@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4162172701241308925}
   - component: {fileID: 1329479041067804098}
   - component: {fileID: 687656456791542467}
+  - component: {fileID: 8192667769344034126}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (1)
   m_TagString: Untagged
@@ -185,6 +186,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8192667769344034126
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687656456791542466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.29420996, z: 2.6299448}
+  m_Center: {x: -2.3187696e-16, y: -0.1664598, z: 0.483683}
 --- !u!1 &3048884166882051711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,6 +1694,7 @@ GameObject:
   - component: {fileID: 3048884167052237275}
   - component: {fileID: 3048884167052237274}
   - component: {fileID: 3048884167052237277}
+  - component: {fileID: 8539759584551640852}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (13)
   m_TagString: Untagged
@@ -1760,6 +1775,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &8539759584551640852
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884167052237276}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.096706, y: 0.27876186, z: 2.9474387}
+  m_Center: {x: -0.0056113005, y: -0.15816641, z: 0.5245404}
 --- !u!1 &3048884167082204430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,6 +2912,7 @@ GameObject:
   - component: {fileID: 3048884167296906397}
   - component: {fileID: 3048884167296906396}
   - component: {fileID: 3048884167296906399}
+  - component: {fileID: 2756554685929676671}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (3)
   m_TagString: Untagged
@@ -2964,6 +2993,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2756554685929676671
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884167296906398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0030552, y: 0.23235798, z: 3.061639}
+  m_Center: {x: -0.02200836, y: -0.14653397, z: 0.44733667}
 --- !u!1 &3048884167327870383
 GameObject:
   m_ObjectHideFlags: 0
@@ -4647,6 +4689,7 @@ GameObject:
   - component: {fileID: 3048884167752409546}
   - component: {fileID: 3048884167752409549}
   - component: {fileID: 3048884167752409548}
+  - component: {fileID: 7382836270492591103}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (4)
   m_TagString: Untagged
@@ -4727,6 +4770,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &7382836270492591103
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884167752409551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.25058413, z: 2.993265}
+  m_Center: {x: -7.28533e-18, y: -0.15877461, z: 0.49948722}
 --- !u!1 &3048884167767466766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,6 +4794,7 @@ GameObject:
   - component: {fileID: 3048884167767466765}
   - component: {fileID: 3048884167767466764}
   - component: {fileID: 3048884167767466767}
+  - component: {fileID: 5577499212555863478}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (10)
   m_TagString: Untagged
@@ -4818,6 +4875,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5577499212555863478
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884167767466766}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2732153, z: 2.8900707}
+  m_Center: {x: -5.4278634e-16, y: -0.15938234, z: 0.4618047}
 --- !u!1 &3048884167820359198
 GameObject:
   m_ObjectHideFlags: 0
@@ -5373,6 +5443,7 @@ GameObject:
   - component: {fileID: 3048884167891358730}
   - component: {fileID: 3048884167891358733}
   - component: {fileID: 3048884167891358732}
+  - component: {fileID: 3531025365186099481}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (9)
   m_TagString: Untagged
@@ -5453,6 +5524,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3531025365186099481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884167891358735}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0968205, y: 0.2632861, z: 2.9832976}
+  m_Center: {x: -0.006611526, y: -0.15242362, z: 0.50586635}
 --- !u!1 &3048884167912432760
 GameObject:
   m_ObjectHideFlags: 0
@@ -6211,6 +6295,7 @@ GameObject:
   - component: {fileID: 3048884168092923510}
   - component: {fileID: 3048884168092923497}
   - component: {fileID: 3048884168092923496}
+  - component: {fileID: 8905527954166619881}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (5)
   m_TagString: Untagged
@@ -6291,6 +6376,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8905527954166619881
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168092923499}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.23934126, z: 3.0042593}
+  m_Center: {x: -1.01900605e-16, y: -0.12677646, z: 0.49282926}
 --- !u!1 &3048884168108725324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6302,6 +6400,7 @@ GameObject:
   - component: {fileID: 3048884168108725323}
   - component: {fileID: 3048884168108725322}
   - component: {fileID: 3048884168108725325}
+  - component: {fileID: 5625943321844924745}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (12)
   m_TagString: Untagged
@@ -6382,6 +6481,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5625943321844924745
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168108725324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.071426, y: 0.25201893, z: 2.969508}
+  m_Center: {x: -0.005331099, y: -0.15847063, z: 0.4863618}
 --- !u!1 &3048884168119933344
 GameObject:
   m_ObjectHideFlags: 0
@@ -7689,6 +7801,7 @@ GameObject:
   - component: {fileID: 3048884168346542470}
   - component: {fileID: 3048884168346542521}
   - component: {fileID: 3048884168346542520}
+  - component: {fileID: 5950496573634695437}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (6)
   m_TagString: Untagged
@@ -7769,6 +7882,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5950496573634695437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168346542523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0414877, y: 0.36368608, z: 3.0385997}
+  m_Center: {x: -0.020743847, y: -0.19089437, z: 0.50640184}
 --- !u!1 &3048884168369548774
 GameObject:
   m_ObjectHideFlags: 0
@@ -8616,6 +8742,7 @@ GameObject:
   - component: {fileID: 3048884168501702588}
   - component: {fileID: 3048884168501702591}
   - component: {fileID: 3048884168501702590}
+  - component: {fileID: 5480647623852344205}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (11)
   m_TagString: Untagged
@@ -8696,6 +8823,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5480647623852344205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168501702577}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1332318, y: 0.24080086, z: 3.006749}
+  m_Center: {x: 0.0000015497208, y: -0.13918638, z: 0.47979587}
 --- !u!1 &3048884168503630706
 GameObject:
   m_ObjectHideFlags: 0
@@ -9261,6 +9401,7 @@ GameObject:
   - component: {fileID: 3048884168620008622}
   - component: {fileID: 3048884168620008609}
   - component: {fileID: 3048884168620008608}
+  - component: {fileID: 2722032275189525062}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (2)
   m_TagString: Untagged
@@ -9341,6 +9482,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2722032275189525062
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168620008611}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.093269, y: 0.31540775, z: 2.5583837}
+  m_Center: {x: 0.018764853, y: -0.15213156, z: 0.49917006}
 --- !u!1 &3048884168620929746
 GameObject:
   m_ObjectHideFlags: 0
@@ -10554,6 +10708,7 @@ GameObject:
   - component: {fileID: 3048884168749271062}
   - component: {fileID: 3048884168749271049}
   - component: {fileID: 3048884168749271048}
+  - component: {fileID: 2681310006916787937}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (7)
   m_TagString: Untagged
@@ -10634,6 +10789,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2681310006916787937
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168749271051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.975536, y: 0.23552418, z: 2.9101384}
+  m_Center: {x: -0.014672101, y: -0.14241934, z: 0.50637937}
 --- !u!1 &3048884168770450085
 GameObject:
   m_ObjectHideFlags: 0
@@ -11575,6 +11743,7 @@ GameObject:
   - component: {fileID: 3048884168974774043}
   - component: {fileID: 3048884168974774042}
   - component: {fileID: 3048884168974774045}
+  - component: {fileID: 5973444146403609066}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide (8)
   m_TagString: Untagged
@@ -11655,6 +11824,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5973444146403609066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048884168974774044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0465504, y: 0.27145386, z: 2.96639}
+  m_Center: {x: 0.00577116, y: -0.15976906, z: 0.48598623}
 --- !u!1 &3048884169016925468
 GameObject:
   m_ObjectHideFlags: 0
@@ -12512,6 +12694,7 @@ GameObject:
   - component: {fileID: 5769140737732371820}
   - component: {fileID: 8908219906294117971}
   - component: {fileID: 6942319773187660112}
+  - component: {fileID: 5837666876588788554}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide
   m_TagString: Untagged
@@ -12592,6 +12775,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &5837666876588788554
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942319773187660115}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.31982374, z: 3.0618765}
+  m_Center: {x: -3.4944683e-16, y: -0.17338109, z: 0.47540975}
 --- !u!1 &8017637988561724108
 GameObject:
   m_ObjectHideFlags: 0

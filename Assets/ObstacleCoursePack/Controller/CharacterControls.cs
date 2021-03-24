@@ -229,4 +229,20 @@ public class CharacterControls : MonoBehaviour {
     {
 		cointCountText.text = coinCount.ToString();
     }
+
+
+	private void OnTriggerStay(Collider other)
+	{
+
+		if (other.gameObject.tag == "Moving Bench")
+		{
+
+			//transform.position= other.transform.position;
+
+			transform.position = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
+
+		}
+	}
+ 
+
 }

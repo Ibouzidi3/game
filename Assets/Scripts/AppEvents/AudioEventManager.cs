@@ -10,6 +10,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip boxDesctructionAudio = null;
     public AudioClip coinCollectAudio;
     public AudioClip laserHitAudio;
+    public AudioClip checkpointAudio;
     public AudioClip speedUp;
     public AudioClip shieldPowerup;
 
@@ -21,6 +22,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> speedPowerupEventListener;
 
     private UnityAction<Vector3> shieldPowerupEventListener;
+    private UnityAction<Vector3> checkpointEventListener;
 
 
     void Awake()
@@ -31,7 +33,8 @@ public class AudioEventManager : MonoBehaviour
         coinCollectEventListener = new UnityAction<Vector3>(coinCollectionEventHandler);
 
         laserHitEventListener = new UnityAction<Vector3>(laserHitEventHandler);
-        
+        checkpointEventListener = new UnityAction<Vector3>(checkpointEventHandler);
+
         speedPowerupEventListener = new UnityAction<Vector3>(speedUpEventHandler);
         shieldPowerupEventListener = new UnityAction<Vector3>(shieldPowerupEventHandler);
 
@@ -47,6 +50,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<LaserHitEvent, Vector3>(laserHitEventListener);
             EventManager.StartListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
             EventManager.StartListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
+            EventManager.StartListening<CheckpointEvent, Vector3>(checkpointEventListener);
 
 
 
@@ -60,7 +64,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<LaserHitEvent, Vector3>(laserHitEventListener);
             EventManager.StopListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
             EventManager.StopListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
-
+            EventManager.StopListening<CheckpointEvent, Vector3>(checkpointEventListener);
     }
 
 
@@ -159,6 +163,24 @@ public class AudioEventManager : MonoBehaviour
 
             snd.audioSrc.minDistance = 5f;
             snd.audioSrc.maxDistance = 100f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+
+    void checkpointEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.checkpointAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
 
             snd.audioSrc.Play();
         }
