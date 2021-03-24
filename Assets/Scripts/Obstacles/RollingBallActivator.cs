@@ -13,7 +13,7 @@ public class RollingBallActivator : MonoBehaviour
         {
             if (c.gameObject.tag == "Player")
             {
-                ball.active = true;
+                ball.active = true; 
 
             }
 

@@ -11,6 +11,7 @@ MonoImporter:
   - checkpointAudio: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   - speedUp: {instanceID: 0}
   - shieldPowerup: {instanceID: 0}
+  - rollingBallAudio: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

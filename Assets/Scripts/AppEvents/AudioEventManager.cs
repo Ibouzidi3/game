@@ -13,6 +13,8 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip checkpointAudio;
     public AudioClip speedUp;
     public AudioClip shieldPowerup;
+    public AudioClip rollingBallAudio;
+    public AudioClip swingingPendulumAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -23,7 +25,8 @@ public class AudioEventManager : MonoBehaviour
 
     private UnityAction<Vector3> shieldPowerupEventListener;
     private UnityAction<Vector3> checkpointEventListener;
-
+    private UnityAction<Vector3> rollingBallEventListener;
+    private UnityAction<Vector3> swingingPendulumEventListener;
 
     void Awake()
     {
@@ -37,7 +40,8 @@ public class AudioEventManager : MonoBehaviour
 
         speedPowerupEventListener = new UnityAction<Vector3>(speedUpEventHandler);
         shieldPowerupEventListener = new UnityAction<Vector3>(shieldPowerupEventHandler);
-
+        rollingBallEventListener = new UnityAction<Vector3>(rollingBallEventHandler);
+        swingingPendulumEventListener = new UnityAction<Vector3>(swingingPendulumEventHandler);
 
     }
 
@@ -51,7 +55,8 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
             EventManager.StartListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
             EventManager.StartListening<CheckpointEvent, Vector3>(checkpointEventListener);
-
+            EventManager.StartListening<RollingBallEvent, Vector3>(rollingBallEventListener);
+            EventManager.StartListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
 
 
     }
@@ -65,6 +70,8 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
             EventManager.StopListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
             EventManager.StopListening<CheckpointEvent, Vector3>(checkpointEventListener);
+            EventManager.StopListening<RollingBallEvent, Vector3>(rollingBallEventListener);
+            EventManager.StopListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
     }
 
 
@@ -178,6 +185,40 @@ public class AudioEventManager : MonoBehaviour
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = this.checkpointAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void rollingBallEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.rollingBallAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void swingingPendulumEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.swingingPendulumAudio;
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 500f;
