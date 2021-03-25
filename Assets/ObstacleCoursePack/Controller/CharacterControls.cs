@@ -29,10 +29,12 @@ public class CharacterControls : MonoBehaviour {
 
 	public Vector3 checkPoint;
 	private bool slide = false;
+	private PowerUpsCollector powerUpsCollector;
 
 	void  Start (){
 		// get the distance to ground
 		distToGround = GetComponent<Collider>().bounds.extents.y;
+		powerUpsCollector = GetComponent<PowerUpsCollector>();
 	}
 	
 	bool IsGrounded (){
@@ -67,7 +69,7 @@ public class CharacterControls : MonoBehaviour {
 			{
 			 // Calculate how fast we should be moving
 				Vector3 targetVelocity = moveDir;
-				targetVelocity *= speed;
+				targetVelocity *= GetSpeed();
 
 				// Apply a force that attempts to reach our target velocity
 				Vector3 velocity = rb.velocity;
@@ -82,10 +84,10 @@ public class CharacterControls : MonoBehaviour {
 				velocityChange.y = 0;
 				if (!slide)
 				{
-					if (Mathf.Abs(rb.velocity.magnitude) < speed * 1.0f)
+					if (Mathf.Abs(rb.velocity.magnitude) < GetSpeed() * 1.0f)
 						rb.AddForce(velocityChange, ForceMode.VelocityChange);
 				}
-				else if (Mathf.Abs(rb.velocity.magnitude) < speed * 1.0f)
+				else if (Mathf.Abs(rb.velocity.magnitude) < GetSpeed() * 1.0f)
 				{
 					rb.AddForce(moveDir * 0.15f, ForceMode.VelocityChange);
 					//Debug.Log(rb.velocity.magnitude);
@@ -110,7 +112,7 @@ public class CharacterControls : MonoBehaviour {
 					if (velocity.y < -maxFallSpeed)
 						rb.velocity = new Vector3(velocity.x, -maxFallSpeed, velocity.z);
 				}
-				else if (Mathf.Abs(rb.velocity.magnitude) < speed * 1.0f)
+				else if (Mathf.Abs(rb.velocity.magnitude) < GetSpeed() * 1.0f)
 				{
 					rb.AddForce(moveDir * 0.15f, ForceMode.VelocityChange);
 				}
@@ -226,6 +228,14 @@ public class CharacterControls : MonoBehaviour {
 
 		}
 	}
+
+	private float GetSpeed()
+    {
+		if(powerUpsCollector == null)
+			return speed;
+
+		return powerUpsCollector.GetSpeed();
+    }
  
 
 }

@@ -3,16 +3,16 @@ using System.Collections;
 
 public class PowerUpsCollectorComponent : MonoBehaviour, PowerUpsCollector
 {
-    public float defaultSpeed = 10.0f;
+    public float defaultSpeed = 7.0f;
     public float speedIncreaseFactor = 1.5f;
     private float speed;
     private bool shield;
-    public int shieldEffectInSec;
+    public int shieldEffectInSec = 5;
     public GameObject shieldText;
     public GameObject shieldAura;
     private GameObject shieldAuraClone;
     private Coroutine shieldRoutine;
-    public int speedEffectInSec;
+    public int speedEffectInSec = 5;
     public GameObject speedText;
     public GameObject speedAura;
     private GameObject speedAuraClone;
