@@ -29,8 +29,6 @@ public class CharacterControls : MonoBehaviour {
 
 	public Vector3 checkPoint;
 	private bool slide = false;
-	private int coinCount = 0;
-	public TextMeshProUGUI cointCountText;
 
 	void  Start (){
 		// get the distance to ground
@@ -214,21 +212,6 @@ public class CharacterControls : MonoBehaviour {
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("Coin"))
-		{
-			other.gameObject.SetActive(false);
-			coinCount++;
-			SetCoinCountText();
-		}
-
-	}
-
-	private void SetCoinCountText()
-    {
-		cointCountText.text = coinCount.ToString();
-    }
 
 
 	private void OnTriggerStay(Collider other)

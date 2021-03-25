@@ -173,4 +173,9 @@ public class MinionBasicControlScript : MonoBehaviour
         forwardMaxSpeed = defaultSpeed;
     }
 
+    public void SetShield(bool shield)
+    {
+        hasShield = shield;
+    }
+
 }

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ShieldPowerup : MonoBehaviour
 {
-    public int shieldEffect;
+    public void Start()
+    {
+    }
     private void OnTriggerEnter(Collider collider)
     {
         if (isAbleToCollectPowerup(collider))
@@ -27,13 +29,14 @@ public class ShieldPowerup : MonoBehaviour
 
     private void SetShield(Collider collider)
     {
-        MinionBasicControlScript basicControlScript = collider.GetComponent<MinionBasicControlScript>();
-        basicControlScript.ShieldPowerup(shieldEffect);
+        ShieldCollector shieldCollector = collider.GetComponent<ShieldCollector>();
+        shieldCollector.ActivateShield();
     }
 
     private bool isAbleToCollectPowerup(Collider collider)
     {
-        return collider.GetComponent<MinionBasicControlScript>() != null;
+        return collider.GetComponent<ShieldCollector>() != null;
 
     }
+
 }

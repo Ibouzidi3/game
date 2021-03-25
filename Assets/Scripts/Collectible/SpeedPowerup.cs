@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SpeedPowerup : MonoBehaviour
 {
-    public int speedUpEffect;
+    public void Start()
+    {
+    }
     private void OnTriggerEnter(Collider collider)
     {
         if (isAbleToCollectPowerup(collider))
@@ -27,13 +29,14 @@ public class SpeedPowerup : MonoBehaviour
 
     private void SetSpeedUp(Collider collider)
     {
-        MinionBasicControlScript basicControlScript = collider.GetComponent<MinionBasicControlScript>();
-        basicControlScript.SpeedUp(speedUpEffect);
+        SpeedCollector speedCollector = collider.GetComponent<SpeedCollector>();
+        speedCollector.SpeedUp();
+
     }
 
     private bool isAbleToCollectPowerup(Collider collider)
     {
-        return collider.GetComponent<MinionBasicControlScript>() != null; 
+        return collider.GetComponent<SpeedCollector>() != null; 
 
     }
 }
