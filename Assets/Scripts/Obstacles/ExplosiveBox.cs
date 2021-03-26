@@ -31,8 +31,7 @@ public class ExplosiveBox : MonoBehaviour
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             particle = explosion.GetComponent<ParticleSystem>();
-            particle.Play();
-            //Get explosion audio from milestone project
+            particle.Play(); 
             EventManager.TriggerEvent<ExplosiveBoxEvent, Vector3>(collider.transform.position);
             EventManager.TriggerEvent<BoxDestructionEvent, Vector3>(collider.transform.position);
             //push player   
