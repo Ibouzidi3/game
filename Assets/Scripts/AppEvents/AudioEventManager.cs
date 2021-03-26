@@ -16,6 +16,8 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip rollingBallAudio;
     public AudioClip swingingPendulumAudio;
     public AudioClip jumpableMashroomAudio;
+    public AudioClip crashingStoneAudio;
+    public AudioClip explosionAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -29,6 +31,8 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> rollingBallEventListener;
     private UnityAction<Vector3> swingingPendulumEventListener;
     private UnityAction<Vector3> jumpableMashroomEventListener;
+    private UnityAction<Vector3> crashingStoneEventListener;
+    private UnityAction<Vector3> explosionEventListener;
 
     void Awake()
     {
@@ -45,7 +49,8 @@ public class AudioEventManager : MonoBehaviour
         rollingBallEventListener = new UnityAction<Vector3>(rollingBallEventHandler);
         swingingPendulumEventListener = new UnityAction<Vector3>(swingingPendulumEventHandler);
         jumpableMashroomEventListener = new UnityAction<Vector3>(jumpableMashroomEventHandler);
-
+        crashingStoneEventListener = new UnityAction<Vector3>(crashingStoneEventHandler);
+        explosionEventListener = new UnityAction<Vector3>(explosionEventHandler);
     }
 
 
@@ -61,7 +66,8 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<RollingBallEvent, Vector3>(rollingBallEventListener);
             EventManager.StartListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
             EventManager.StartListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
-
+            EventManager.StartListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
+            EventManager.StartListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
 
     }
 
@@ -77,6 +83,8 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<RollingBallEvent, Vector3>(rollingBallEventListener);
             EventManager.StopListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
             EventManager.StopListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
+            EventManager.StopListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
+            EventManager.StopListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
     }
 
 
@@ -242,6 +250,44 @@ public class AudioEventManager : MonoBehaviour
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = this.jumpableMashroomAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+
+
+    void crashingStoneEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.crashingStoneAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+
+
+    void explosionEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.explosionAudio;
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 500f;
