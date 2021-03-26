@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - TNT
   - Moving Bench
+  - NPC
   layers:
   - Default
   - TransparentFX
