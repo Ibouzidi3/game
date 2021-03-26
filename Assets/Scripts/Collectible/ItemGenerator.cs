@@ -27,10 +27,11 @@ public class ItemGenerator : MonoBehaviour
     private Vector3 GeneratePostion(GameObject item)
     {
         Vector3 position;
+
         if (isHorizontal)
-            position = new Vector3(item.transform.position.x + spacing, item.transform.position.y , item.transform.position.z);
+            position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + spacing);
         else
-            position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.position.z + spacing); // for vertical alignment items
+            position = new Vector3(item.transform.position.x - spacing, item.transform.position.y, item.transform.position.z); // for vertical alignment items
         return position;
     }
 

@@ -187,7 +187,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086647881361348134}
-  m_Material: {fileID: 13400000, guid: 42f5937c5cd107c44bcdb155f14c54c0, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -229,6 +229,7 @@ MonoBehaviour:
   jumpHeight: 2
   maxFallSpeed: 20
   rotateSpeed: 25
+  threshold: -5
   cam: {fileID: 0}
   checkPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &4479208669111551440
