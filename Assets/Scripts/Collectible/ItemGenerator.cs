@@ -12,10 +12,12 @@ public class ItemGenerator : MonoBehaviour
     void Awake()
     {
         item = Instantiate(item, gameObject.transform.position, Quaternion.identity);
+        item.transform.parent = gameObject.transform;
         GameObject clone = item;
         for (int i = 0; i < numberOfItems -1; i++)
         {
             clone = Instantiate(clone, GeneratePostion(clone), Quaternion.identity);
+            clone.transform.parent = gameObject.transform;
 
         }
         
