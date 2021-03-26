@@ -16,7 +16,7 @@ public class Checkpoint : MonoBehaviour
 		{
 			other.gameObject.GetComponent<CharacterControls>().checkPoint = checkpoint.parent.position;
 			EventManager.TriggerEvent<CheckpointEvent, Vector3>(checkpoint.parent.position);
-			Vector3 position = new Vector3(other.transform.position.x, other.transform.position.y+5, other.transform.position.z+5);
+			Vector3 position = new Vector3(other.transform.position.x, other.transform.position.y+3, other.transform.position.z);
 			GameObject text = Instantiate(checkpointText, position, Quaternion.identity);
 			particle = text.GetComponent<ParticleSystem>(); 
 			particle.Play();

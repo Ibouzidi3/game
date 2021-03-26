@@ -18,6 +18,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip jumpableMashroomAudio;
     public AudioClip crashingStoneAudio;
     public AudioClip explosionAudio;
+    public AudioClip bgmAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -33,6 +34,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> jumpableMashroomEventListener;
     private UnityAction<Vector3> crashingStoneEventListener;
     private UnityAction<Vector3> explosionEventListener;
+    private UnityAction<Vector3> bgmEventListener;
 
     void Awake()
     {
@@ -51,6 +53,7 @@ public class AudioEventManager : MonoBehaviour
         jumpableMashroomEventListener = new UnityAction<Vector3>(jumpableMashroomEventHandler);
         crashingStoneEventListener = new UnityAction<Vector3>(crashingStoneEventHandler);
         explosionEventListener = new UnityAction<Vector3>(explosionEventHandler);
+        bgmEventListener = new UnityAction<Vector3>(bgmEventHandler);
     }
 
 
@@ -68,6 +71,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
             EventManager.StartListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
             EventManager.StartListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
+            EventManager.StartListening<BGMEvent, Vector3>(bgmEventListener);
 
     }
 
@@ -85,6 +89,8 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
             EventManager.StopListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
             EventManager.StopListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
+            EventManager.StopListening<BGMEvent, Vector3>(bgmEventListener);
+
     }
 
 
@@ -295,6 +301,25 @@ public class AudioEventManager : MonoBehaviour
             snd.audioSrc.Play();
         }
     }
+
+
+    void bgmEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.bgmAudio;
+            snd.audioSrc.minDistance = 30f;
+            snd.audioSrc.maxDistance = 1000f;
+            snd.audioSrc.spatialBlend = 1f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
 
 
 }

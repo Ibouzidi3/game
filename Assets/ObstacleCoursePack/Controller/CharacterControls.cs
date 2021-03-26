@@ -31,7 +31,7 @@ public class CharacterControls : MonoBehaviour {
 	private bool slide = false;
 	private PowerUpsCollector powerUpsCollector;
 
-	void  Start (){
+	void  Start (){ 
 		// get the distance to ground
 		distToGround = GetComponent<Collider>().bounds.extents.y;
 		powerUpsCollector = GetComponent<PowerUpsCollector>();
@@ -228,6 +228,23 @@ public class CharacterControls : MonoBehaviour {
 
 		}
 	}
+
+
+	private void OnTriggerEnter(Collider other)
+	{
+
+		if (other.gameObject.tag == "Moving Bench")
+		{
+
+			//transform.position= other.transform.position;
+
+			transform.position = new Vector3(transform.position.x, transform.position.y, other.transform.position.z);
+
+		}
+	}
+
+
+
 
 	private float GetSpeed()
     {
