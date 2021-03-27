@@ -10,6 +10,9 @@ TagManager:
   - TNT
   - Moving Bench
   - NPC
+  - JumpPoint
+  - LandingPoint
+  - MovingWP
   layers:
   - Default
   - TransparentFX
