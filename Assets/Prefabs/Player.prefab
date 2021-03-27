@@ -1013,7 +1013,7 @@ MonoBehaviour:
   maxVelocityChange: 10
   jumpHeight: 2
   maxFallSpeed: 20
-  rotateSpeed: 25
+  rotateSpeed: 50
   threshold: -5
   cam: {fileID: 6045376715866733089}
   checkPoint: {x: 0, y: 0, z: 0}
