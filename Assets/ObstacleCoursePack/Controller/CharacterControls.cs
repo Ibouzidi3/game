@@ -262,7 +262,7 @@ public class CharacterControls : MonoBehaviour
 
             //transform.position= other.transform.position;
 
-            transform.position = new Vector3 (transform.position.x, transform.position.y, other.transform.position.z);
+            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
 
         }
     }
@@ -276,8 +276,7 @@ public class CharacterControls : MonoBehaviour
 
             //transform.position= other.transform.position;
 
-            transform.position = new Vector3 (transform.position.x, transform.position.y, other.transform.position.z);
-
+            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
