@@ -19,7 +19,7 @@ public class FinishLine : MonoBehaviour
 		{
 			playerVSnpc = 1;
 			EventManager.TriggerEvent<VictoryEvent, Vector3>(finishLine.parent.position);
-			Vector3 position = new Vector3(other.transform.position.x, other.transform.position.y + 3, other.transform.position.z);
+			Vector3 position = new Vector3(other.transform.position.x-10, other.transform.position.y + 3, other.transform.position.z);
 			GameObject text = Instantiate(congratsText, position, Quaternion.identity);
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
@@ -29,7 +29,7 @@ public class FinishLine : MonoBehaviour
 		if (other.gameObject.tag == "Player" && playerVSnpc == -1)
 		{
 			EventManager.TriggerEvent<LosingEvent, Vector3>(finishLine.parent.position);
-			Vector3 position = new Vector3(other.transform.position.x, other.transform.position.y + 3, other.transform.position.z);
+			Vector3 position = new Vector3(other.transform.position.x-10, other.transform.position.y + 3, other.transform.position.z);
 			GameObject text = Instantiate(losingText, position, Quaternion.identity);
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
