@@ -44,7 +44,7 @@ public class CharacterControls : MonoBehaviour
 
     bool IsGrounded ()
     {
-        return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f);
+        return Physics.Raycast (transform.position, -Vector3.up, distToGround);
     }
 
     void Awake ()
@@ -53,7 +53,6 @@ public class CharacterControls : MonoBehaviour
         rb = GetComponent<Rigidbody> ();
         baseObject = this.transform.Find ("Base");
         rb.freezeRotation = true;
-        rb.useGravity = false;
 
         checkPoint = transform.position;
         Cursor.visible = false;
@@ -64,88 +63,18 @@ public class CharacterControls : MonoBehaviour
         // Jump
         if (IsGrounded () && Input.GetButtonDown ("Jump"))
         {
-            anim.SetBool ("jump", true);
-            rb.AddForce (new Vector3 (0, jumpHeight, 0));
+            //anim.SetBool ("jump", true);
+            rb.AddForce (new Vector3 (0, jumpHeight, 0), ForceMode.Impulse);
         }
         else
         {
             anim.SetBool ("jump", false);
         }
 
-
-        if (canMove)
-        {
-            //if (moveDir.x != 0 || moveDir.z != 0)
-            //{
-            //    Vector3 targetDir = moveDir; //Direction of the character
-
-            //    targetDir.y = 0;
-            //    if (targetDir == Vector3.zero)
-            //        targetDir = transform.forward;
-            //    Quaternion tr = Quaternion.LookRotation (targetDir); //Rotation of the character to where it moves
-            //    Quaternion targetRotation = Quaternion.Slerp (transform.rotation, tr, Time.deltaTime * rotateSpeed); //Rotate the character little by little
-            //    transform.rotation = targetRotation;
-            //}
-
-            //if (IsGrounded ())
-            //{
-            //    // Calculate how fast we should be moving
-            //    Vector3 targetVelocity = moveDir;
-            //    targetVelocity *= GetSpeed ();
-
-            //    // Apply a force that attempts to reach our target velocity
-            //    Vector3 velocity = rb.velocity;
-            //    if (targetVelocity.magnitude < velocity.magnitude) //If I'm slowing down the character
-            //    {
-            //        targetVelocity = velocity;
-            //        rb.velocity /= 1.1f;
-            //    }
-            //    Vector3 velocityChange = (targetVelocity - velocity);
-            //    velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
-            //    velocityChange.y = 0;
-            //    if (!slide)
-            //    {
-            //        if (Mathf.Abs (rb.velocity.magnitude) < GetSpeed () * 1.0f)
-            //            rb.AddForce (velocityChange, ForceMode.VelocityChange);
-            //    }
-            //    else if (Mathf.Abs (rb.velocity.magnitude) < GetSpeed () * 1.0f)
-            //    {
-            //        rb.AddForce (moveDir * 0.15f, ForceMode.VelocityChange);
-            //        //Debug.Log(rb.velocity.magnitude);
-            //    }
-
-            //    // Jump
-            //    if (IsGrounded () && Input.GetButton ("Jump"))
-            //    {
-            //        rb.velocity = new Vector3 (velocity.x, CalculateJumpVerticalSpeed (), velocity.z);
-            //    }
-            //}
-            //else
-            //{
-            //    if (!slide)
-            //    {
-            //        Vector3 targetVelocity = new Vector3 (moveDir.x * airVelocity, rb.velocity.y, moveDir.z * airVelocity);
-            //        Vector3 velocity = rb.velocity;
-            //        Vector3 velocityChange = (targetVelocity - velocity);
-            //        velocityChange.x = Mathf.Clamp (velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            //        velocityChange.z = Mathf.Clamp (velocityChange.z, -maxVelocityChange, maxVelocityChange);
-            //        rb.AddForce (velocityChange, ForceMode.VelocityChange);
-            //        if (velocity.y < -maxFallSpeed)
-            //            rb.velocity = new Vector3 (velocity.x, -maxFallSpeed, velocity.z);
-            //    }
-            //    else if (Mathf.Abs (rb.velocity.magnitude) < GetSpeed () * 1.0f)
-            //    {
-            //        rb.AddForce (moveDir * 0.15f, ForceMode.VelocityChange);
-            //    }
-            //}
-        }
-        else
+        if (!canMove)
         {
             rb.velocity = pushDir * pushForce;
         }
-        // We apply gravity manually for more tuning control
-        rb.AddForce (new Vector3 (0, -gravity * GetComponent<Rigidbody> ().mass, 0));
     }
 
     private void OnAnimatorMove ()
@@ -182,7 +111,6 @@ public class CharacterControls : MonoBehaviour
         rb.MoveRotation (rb.rotation * Quaternion.AngleAxis (h * Time.deltaTime * rotateSpeed, Vector3.up));
 
         anim.SetFloat ("speedY", v);
-        //anim.SetFloat ("speedX", h);
 
 
         RaycastHit hit;
