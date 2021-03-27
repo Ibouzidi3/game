@@ -20,6 +20,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip explosionAudio;
     public AudioClip bgmAudio;
     public AudioClip victoryAudio;
+    public AudioClip losingAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -37,6 +38,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> explosionEventListener;
     private UnityAction<Vector3> bgmEventListener;
     private UnityAction<Vector3> victoryEventListener;
+    private UnityAction<Vector3> losingEventListener;
 
     void Awake()
     {
@@ -57,44 +59,46 @@ public class AudioEventManager : MonoBehaviour
         explosionEventListener = new UnityAction<Vector3>(explosionEventHandler);
         bgmEventListener = new UnityAction<Vector3>(bgmEventHandler);
         victoryEventListener = new UnityAction<Vector3>(victoryEventHandler);
+        losingEventListener = new UnityAction<Vector3>(losingEventHandler);
     }
 
 
-        void OnEnable()
-        {
+    void OnEnable()
+    {
 
-            EventManager.StartListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
-            EventManager.StartListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
-            EventManager.StartListening<LaserHitEvent, Vector3>(laserHitEventListener);
-            EventManager.StartListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
-            EventManager.StartListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
-            EventManager.StartListening<CheckpointEvent, Vector3>(checkpointEventListener);
-            EventManager.StartListening<RollingBallEvent, Vector3>(rollingBallEventListener);
-            EventManager.StartListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
-            EventManager.StartListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
-            EventManager.StartListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
-            EventManager.StartListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
-            EventManager.StartListening<BGMEvent, Vector3>(bgmEventListener);
-            EventManager.StartListening<VictoryEvent, Vector3>(victoryEventListener);
-
+        EventManager.StartListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
+        EventManager.StartListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
+        EventManager.StartListening<LaserHitEvent, Vector3>(laserHitEventListener);
+        EventManager.StartListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
+        EventManager.StartListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
+        EventManager.StartListening<CheckpointEvent, Vector3>(checkpointEventListener);
+        EventManager.StartListening<RollingBallEvent, Vector3>(rollingBallEventListener);
+        EventManager.StartListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
+        EventManager.StartListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
+        EventManager.StartListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
+        EventManager.StartListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
+        EventManager.StartListening<BGMEvent, Vector3>(bgmEventListener);
+        EventManager.StartListening<VictoryEvent, Vector3>(victoryEventListener);
+        EventManager.StartListening<LosingEvent, Vector3>(losingEventListener);
     }
 
     void OnDisable()
-        {
+    {
 
-            EventManager.StopListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
-            EventManager.StopListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
-            EventManager.StopListening<LaserHitEvent, Vector3>(laserHitEventListener);
-            EventManager.StopListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
-            EventManager.StopListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
-            EventManager.StopListening<CheckpointEvent, Vector3>(checkpointEventListener);
-            EventManager.StopListening<RollingBallEvent, Vector3>(rollingBallEventListener);
-            EventManager.StopListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
-            EventManager.StopListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
-            EventManager.StopListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
-            EventManager.StopListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
-            EventManager.StopListening<BGMEvent, Vector3>(bgmEventListener);
-            EventManager.StopListening<VictoryEvent, Vector3>(victoryEventListener);
+        EventManager.StopListening<BoxDestructionEvent, Vector3>(boxDestructionEventListener);
+        EventManager.StopListening<CoinCollectionEvent, Vector3>(coinCollectEventListener);
+        EventManager.StopListening<LaserHitEvent, Vector3>(laserHitEventListener);
+        EventManager.StopListening<SpeedPowerupEvent, Vector3>(speedPowerupEventListener);
+        EventManager.StopListening<ShieldPowerupEvent, Vector3>(shieldPowerupEventListener);
+        EventManager.StopListening<CheckpointEvent, Vector3>(checkpointEventListener);
+        EventManager.StopListening<RollingBallEvent, Vector3>(rollingBallEventListener);
+        EventManager.StopListening<SwingingPendulumEvent, Vector3>(swingingPendulumEventListener);
+        EventManager.StopListening<JumpableMashroomEvent, Vector3>(jumpableMashroomEventListener);
+        EventManager.StopListening<CrashingStoneEvent, Vector3>(crashingStoneEventListener);
+        EventManager.StopListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
+        EventManager.StopListening<BGMEvent, Vector3>(bgmEventListener);
+        EventManager.StopListening<VictoryEvent, Vector3>(victoryEventListener);
+        EventManager.StopListening<LosingEvent, Vector3>(losingEventListener);
     }
 
 
@@ -102,7 +106,7 @@ public class AudioEventManager : MonoBehaviour
 
 
     void boxDestructionEventHandler(Vector3 worldPos)
-        {
+    {
         //AudioSource.PlayClipAtPoint(this.boxAudio, worldPos);
 
         if (eventSound3DPrefab)
@@ -121,28 +125,28 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
-        void coinCollectionEventHandler(Vector3 worldPos)
+    void coinCollectionEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
         {
 
-            if (eventSound3DPrefab)
-            {
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
-                EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
 
-                snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
+            snd.audioSrc.clip = coinCollectAudio;
 
-                snd.audioSrc.clip = coinCollectAudio;
+            snd.audioSrc.minDistance = 5f;
+            snd.audioSrc.maxDistance = 100f;
 
-                snd.audioSrc.minDistance = 5f;
-                snd.audioSrc.maxDistance = 100f;
-
-                snd.audioSrc.Play();
-            }
+            snd.audioSrc.Play();
         }
+    }
 
-    
-     void laserHitEventHandler(Vector3 worldPos)
-    { 
+
+    void laserHitEventHandler(Vector3 worldPos)
+    {
 
         if (eventSound3DPrefab)
         {
@@ -342,6 +346,24 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
+
+
+    void losingEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.losingAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
 
 
 
