@@ -112,7 +112,10 @@ public class NPCController : MonoBehaviour
 
         if(agent.enabled) {
             this.currentWaypoint = FindClosestToGoal();
-            agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
+            if( this.currentWaypoint >= 0 &&  this.currentWaypoint <waypoints.Length) {
+                agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
+            }
+            
         }
          
 
