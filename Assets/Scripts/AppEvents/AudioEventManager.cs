@@ -20,7 +20,6 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip explosionAudio;
     public AudioClip bgmAudio;
     public AudioClip victoryAudio;
-    public AudioClip losingAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -38,7 +37,6 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> explosionEventListener;
     private UnityAction<Vector3> bgmEventListener;
     private UnityAction<Vector3> victoryEventListener;
-    private UnityAction<Vector3> losingEventListener;
 
     void Awake()
     {
@@ -59,7 +57,6 @@ public class AudioEventManager : MonoBehaviour
         explosionEventListener = new UnityAction<Vector3>(explosionEventHandler);
         bgmEventListener = new UnityAction<Vector3>(bgmEventHandler);
         victoryEventListener = new UnityAction<Vector3>(victoryEventHandler);
-        losingEventListener = new UnityAction<Vector3>(losingEventHandler);
     }
 
 
@@ -79,7 +76,7 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StartListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
             EventManager.StartListening<BGMEvent, Vector3>(bgmEventListener);
             EventManager.StartListening<VictoryEvent, Vector3>(victoryEventListener);
-            EventManager.StartListening<LosingEvent, Vector3>(losingEventListener);
+
     }
 
     void OnDisable()
@@ -98,7 +95,6 @@ public class AudioEventManager : MonoBehaviour
             EventManager.StopListening<ExplosiveBoxEvent, Vector3>(explosionEventListener);
             EventManager.StopListening<BGMEvent, Vector3>(bgmEventListener);
             EventManager.StopListening<VictoryEvent, Vector3>(victoryEventListener);
-            EventManager.StopListening<LosingEvent, Vector3>(losingEventListener);
     }
 
 
@@ -346,24 +342,6 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
-
-
-    void losingEventHandler(Vector3 worldPos)
-    {
-
-        if (eventSound3DPrefab)
-        {
-
-            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
-
-            snd.audioSrc.clip = this.losingAudio;
-
-            snd.audioSrc.minDistance = 10f;
-            snd.audioSrc.maxDistance = 500f;
-
-            snd.audioSrc.Play();
-        }
-    }
 
 
 
