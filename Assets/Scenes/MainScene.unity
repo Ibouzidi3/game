@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3338,7 +3338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 143.3, y: 136.7, z: 16.5}
 --- !u!1 &448243041
 GameObject:
@@ -4092,7 +4092,7 @@ PrefabInstance:
     - target: {fileID: 6873521076102118815, guid: 8f912415731bd4365af0e35287cc97fe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6873521076102118815, guid: 8f912415731bd4365af0e35287cc97fe,
         type: 3}
@@ -4521,7 +4521,7 @@ Transform:
   m_Children:
   - {fileID: 25942399}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.5860002}
 --- !u!1 &806282771
 GameObject:
@@ -5366,6 +5366,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioEventManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: losingAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: c6b596fd07a14a64b89285b6f079b167, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: victoryAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 3830029b89ea7a04992156c6adbc327c, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: laserHitAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: d389e4695172f48d2b04ba4852b1bfa5, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: explosionAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 9073e410d62374ce7bc54c3dc8b2ecc3, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: checkpointAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: rollingBallAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: crashingStoneAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: jumpableMashroomAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: swingingPendulumAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e1ffd90c2174a618c9d4050dc9ac13, type: 3}
 --- !u!1 &1162089026
@@ -8463,7 +8508,7 @@ PrefabInstance:
     - target: {fileID: 655058063182536061, guid: 410fe758f70474f2a935d8ec6903610f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 655058063182536061, guid: 410fe758f70474f2a935d8ec6903610f,
         type: 3}
