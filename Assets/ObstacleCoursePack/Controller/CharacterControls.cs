@@ -66,7 +66,7 @@ public class CharacterControls : MonoBehaviour
             Debug.Log ("jump");
             jump = false;
             anim.SetTrigger ("jump");
-            rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * speed, ForceMode.VelocityChange);
+            rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed(), ForceMode.VelocityChange);
         }
 
         if (!canMove)
@@ -91,8 +91,8 @@ public class CharacterControls : MonoBehaviour
         }
 
 
-        float newX = Mathf.LerpUnclamped (transform.position.x, newRootPosition.x, speed);
-        float newZ = Mathf.LerpUnclamped (transform.position.z, newRootPosition.z, speed);
+        float newX = Mathf.LerpUnclamped (transform.position.x, newRootPosition.x, GetSpeed());
+        float newZ = Mathf.LerpUnclamped (transform.position.z, newRootPosition.z, GetSpeed());
         this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
         //this.transform.rotation = Quaternion.LerpUnclamped (this.transform.rotation, newRootRotation, rootTurnSpeed);
 
