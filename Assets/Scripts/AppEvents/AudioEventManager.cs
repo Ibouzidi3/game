@@ -21,6 +21,8 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip bgmAudio;
     public AudioClip victoryAudio;
     public AudioClip losingAudio;
+    public AudioClip footStepAudio;
+
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -39,6 +41,8 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> bgmEventListener;
     private UnityAction<Vector3> victoryEventListener;
     private UnityAction<Vector3> losingEventListener;
+    private UnityAction<Vector3> footStepEventListener;
+
 
     void Awake()
     {
@@ -60,6 +64,7 @@ public class AudioEventManager : MonoBehaviour
         bgmEventListener = new UnityAction<Vector3>(bgmEventHandler);
         victoryEventListener = new UnityAction<Vector3>(victoryEventHandler);
         losingEventListener = new UnityAction<Vector3>(losingEventHandler);
+        footStepEventListener = new UnityAction<Vector3>(footStepEventHandler);
     }
 
 
@@ -80,6 +85,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<BGMEvent, Vector3>(bgmEventListener);
         EventManager.StartListening<VictoryEvent, Vector3>(victoryEventListener);
         EventManager.StartListening<LosingEvent, Vector3>(losingEventListener);
+        EventManager.StartListening<FootStepEvent, Vector3>(footStepEventListener);
     }
 
     void OnDisable()
@@ -99,6 +105,8 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<BGMEvent, Vector3>(bgmEventListener);
         EventManager.StopListening<VictoryEvent, Vector3>(victoryEventListener);
         EventManager.StopListening<LosingEvent, Vector3>(losingEventListener);
+        EventManager.StopListening<FootStepEvent, Vector3>(footStepEventListener);
+
     }
 
 
@@ -360,6 +368,25 @@ public class AudioEventManager : MonoBehaviour
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void footStepEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
+
+            snd.audioSrc.clip = footStepAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 20f;
 
             snd.audioSrc.Play();
         }

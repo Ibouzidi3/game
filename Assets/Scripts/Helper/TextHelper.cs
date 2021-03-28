@@ -9,7 +9,7 @@ public class TextHelper : MonoBehaviour
     private static GameObject CreateText(GameObject player, GameObject text)
     {
         GameObject textGameObject = null;
-        Vector3 position = new Vector3(player.transform.position.x, player.transform.position.y + 1.8f, player.transform.position.z);
+        Vector3 position = new Vector3(player.transform.position.x - 3f, player.transform.position.y + 1.8f, player.transform.position.z);
         textGameObject = Instantiate(text, position, Quaternion.identity);
         return textGameObject;
     }

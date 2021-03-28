@@ -6,7 +6,7 @@ using UnityEngine;
 public class CoinCollectorComponent : MonoBehaviour
 {
     private int numberOfCoins = 0;
-    public TMP_Text textMeshPro;
+    private TMP_Text textMeshPro;
     public void Start()
     {
         if(GameObject.Find("coin_text") != null)
