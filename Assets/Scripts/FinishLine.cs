@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class FinishLine : MonoBehaviour
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
 			transform.gameObject.SetActive(false);
+			StartCoroutine(RestartGame());
 		}
 
 		if (other.gameObject.tag == "Player" && playerVSnpc == -1)
@@ -34,6 +36,7 @@ public class FinishLine : MonoBehaviour
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
 			transform.gameObject.SetActive(false);
+			StartCoroutine(RestartGame());
 		}
 
 		if (other.gameObject.tag == "NPC" && playerVSnpc == 0)
@@ -41,4 +44,15 @@ public class FinishLine : MonoBehaviour
 			playerVSnpc = -1;
 		}
 	}
+ 
+
+	IEnumerator RestartGame()
+	{
+ 
+		Debug.Log("Started Coroutine at timestamp : " + Time.time); 
+		yield return new WaitForSeconds(10);
+		SceneManager.LoadScene("Menu"); 
+		Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+	}
+
 }
