@@ -10,7 +10,6 @@ public enum OffMeshLinkMoveMethod {
 
 [RequireComponent (typeof (NavMeshAgent))]
 public class AgentLinkMover : MonoBehaviour {
-    public GameObject goal;
 	public OffMeshLinkMoveMethod method = OffMeshLinkMoveMethod.Parabola;
 	IEnumerator Start () {
 		NavMeshAgent agent = GetComponent<NavMeshAgent> ();

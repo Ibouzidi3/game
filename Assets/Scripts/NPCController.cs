@@ -93,15 +93,17 @@ public class NPCController : MonoBehaviour
             this.transform.position = this.spawnPoint;
         }
 
+        waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+
         agent = GetComponent<NavMeshAgent> ();
         rb = GetComponent<Rigidbody> ();
 
         CalculateDistancesToGoal ();
 
-        this.currentWaypoint = FindClosestToGoal ();
+        this.currentWaypoint = FindClosestToGoal();
         if (this.currentWaypoint > 0)
         {
-            agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
+            agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
         }
         else
         {
@@ -121,11 +123,14 @@ public class NPCController : MonoBehaviour
 
         if (agent.enabled)
         {
-            this.currentWaypoint = FindClosestToGoal ();
-            if (this.currentWaypoint >= 0 && this.currentWaypoint < waypoints.Length)
-            {
-                agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
+            var nextWaypoint = FindClosestToGoal ();
+            if(nextWaypoint != this.currentWaypoint) {
+                if (this.currentWaypoint >= 0 && this.currentWaypoint < waypoints.Length)
+                {
+                    agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
+                }
             }
+            
 
         }
 
@@ -135,6 +140,7 @@ public class NPCController : MonoBehaviour
     void UpdateManualNav ()
     {
         Vector3 manualDestPosition = this.manualDestination.transform.position;
+        manualDestPosition.y = transform.position.y;
         // Calculate direction vector.
         Vector3 dirction = this.transform.position - manualDestPosition;
 
@@ -145,16 +151,24 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("NOWGO!!!");
+            //rb.isKinematic = true;
+            Debug.Log("NOWGO!!! "+this.transform.position);
 
             // Normalize resultant vector to unit Vector.
             dirction = -dirction.normalized;
 
             // Move in the direction of the direction vector every frame.
-            this.transform.position += dirction * Time.deltaTime * speed;
+            //this.transform.position += dirction * Time.deltaTime * speed;
+
+            float step =  speed * Time.deltaTime; // calculate distance to move
+            transform.position = Vector3.MoveTowards(transform.position,manualDestPosition, step);
+
+            //this.transform.position += new Vector3(0,4.5f,0);
+
+            //Debug.Log("Adding "+ dirction * Time.deltaTime * speed);
 
             //Vector3 jump;
-            //float jumpForce = 2.0f;
+            //float jumpForce = 1.0f;
             //rb.AddForce(dirction * jumpForce, ForceMode.Impulse);
         }
 
@@ -221,9 +235,8 @@ public class NPCController : MonoBehaviour
         this.moveState = NPCMoveState.NavMesh;
         this.agent.enabled = true;
 
-
-        this.currentWaypoint = System.Array.IndexOf (waypoints, this.manualDestination) + 1;
-        Debug.Log ("Move to " + currentWaypoint);
+        this.currentWaypoint = FindClosestToGoal ();
+        Debug.Log ("Move to " + waypoints[this.currentWaypoint].name);
 
         agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
         Debug.Log ("Move to navmesh");
