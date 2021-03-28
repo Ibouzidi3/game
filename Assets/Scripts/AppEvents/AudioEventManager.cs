@@ -122,8 +122,6 @@ public class AudioEventManager : MonoBehaviour
 
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
-            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
-
             snd.audioSrc.clip = boxDesctructionAudio;
 
             snd.audioSrc.minDistance = 5f;
@@ -140,8 +138,6 @@ public class AudioEventManager : MonoBehaviour
         {
 
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
-
-            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
 
             snd.audioSrc.clip = coinCollectAudio;
 
@@ -179,8 +175,6 @@ public class AudioEventManager : MonoBehaviour
 
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
-            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
-
             snd.audioSrc.clip = speedUp;
 
             snd.audioSrc.minDistance = 5f;
@@ -198,8 +192,6 @@ public class AudioEventManager : MonoBehaviour
         {
 
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
-
-            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
 
             snd.audioSrc.clip = shieldPowerup;
 
@@ -380,8 +372,6 @@ public class AudioEventManager : MonoBehaviour
         {
 
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
-
-            snd.gameObject.AddComponent<MinionAudioCancelOnDeath>();
 
             snd.audioSrc.clip = footStepAudio;
 
