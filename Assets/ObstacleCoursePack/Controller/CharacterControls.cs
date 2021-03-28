@@ -15,7 +15,6 @@ public class CharacterControls : MonoBehaviour
     public float gravity = 10.0f;
     public float jumpHeight = 2.0f;
     private bool jump = false;
-    private bool isJumping = false;
     public float rotateSpeed = 25f; //Speed the player rotate
     public float threshold = -5f; // How low the character falls before respawning
     private Rigidbody rb;
@@ -27,6 +26,7 @@ public class CharacterControls : MonoBehaviour
     private bool wasStuned = false; //If player was stunned before get stunned another time
     private float pushForce;
     private Vector3 pushDir;
+    private float speedY;
 
     public Vector3 checkPoint;
     private bool slide = false;
@@ -63,10 +63,14 @@ public class CharacterControls : MonoBehaviour
     {
         if (IsGrounded () && jump)
         {
-            Debug.Log ("jump");
             jump = false;
             anim.SetTrigger ("jump");
-            rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed(), ForceMode.VelocityChange);
+            //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
+        }
+
+        if (!IsGrounded ())
+        {
+            rb.velocity = new Vector3 (transform.forward.x * GetSpeed () * 0.5f * speedY, rb.velocity.y, transform.forward.z * GetSpeed () * 0.5f * speedY);
         }
 
         if (!canMove)
@@ -79,29 +83,36 @@ public class CharacterControls : MonoBehaviour
     {
         Vector3 newRootPosition;
 
-        //if (IsGrounded ())
-        //{
-        //use root motion as is if on the ground		
         newRootPosition = anim.rootPosition;
 
         if ((anim.GetNextAnimatorStateInfo (0).IsName ("Jump State") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Jump State")))
         {
             newRootPosition.y = transform.position.y + anim.deltaPosition.y * jumpHeight;
+            float newX = Mathf.LerpUnclamped (transform.position.x, transform.position.x + transform.forward.x * speedY, GetSpeed () * 0.05f);
+            float newZ = Mathf.LerpUnclamped (transform.position.z, transform.position.z + transform.forward.z * speedY, GetSpeed () * 0.05f);
+            this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
+
             Debug.Log ("We are in jump state");
         }
+        else
+        {
+            float newX = Mathf.LerpUnclamped (transform.position.x, newRootPosition.x, GetSpeed ());
+            float newZ = Mathf.LerpUnclamped (transform.position.z, newRootPosition.z, GetSpeed ());
+            this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
 
+        }
 
-        float newX = Mathf.LerpUnclamped (transform.position.x, newRootPosition.x, GetSpeed());
-        float newZ = Mathf.LerpUnclamped (transform.position.z, newRootPosition.z, GetSpeed());
-        this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
-        //this.transform.rotation = Quaternion.LerpUnclamped (this.transform.rotation, newRootRotation, rootTurnSpeed);
-
-        //}
     }
 
 
     private void Update ()
     {
+        float h = Input.GetAxis ("Horizontal");
+        speedY = Input.GetAxis ("Vertical");
+
+        anim.SetFloat ("speedY", speedY);
+        anim.SetBool ("grounded", IsGrounded ());
+
         if (transform.position.y < threshold)
         {
             ResetPosition ();
@@ -113,12 +124,11 @@ public class CharacterControls : MonoBehaviour
             jump = true;
         }
 
-        float h = Input.GetAxis ("Horizontal");
-        float v = Input.GetAxis ("Vertical");
+
+
 
         rb.MoveRotation (rb.rotation * Quaternion.AngleAxis (h * Time.deltaTime * rotateSpeed, Vector3.up));
 
-        anim.SetFloat ("speedY", v);
 
 
         RaycastHit hit;
@@ -190,32 +200,23 @@ public class CharacterControls : MonoBehaviour
         transform.rotation = Quaternion.LookRotation (new Vector3 ());
     }
 
-    private void OnTriggerStay (Collider other)
+
+    private void OnCollisionExit (Collision collision)
     {
-
-        if (other.gameObject.tag == "Moving Bench")
+        if (collision.gameObject.tag == "Moving Bench" && transform.parent != null && this.transform.parent.Equals (collision.gameObject.transform))
         {
-
-            //transform.position= other.transform.position;
-
-            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
-
+            this.transform.SetParent (null);
         }
     }
 
-
-    private void OnTriggerEnter (Collider other)
+    private void OnCollisionEnter (Collision collision)
     {
 
-        if (other.gameObject.tag == "Moving Bench")
+        if (collision.gameObject.tag == "Moving Bench")
         {
-
-            //transform.position= other.transform.position;
-
-            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
+            this.transform.SetParent (collision.gameObject.transform);
         }
     }
-
 
 
 
