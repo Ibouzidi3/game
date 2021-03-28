@@ -68,15 +68,16 @@ public class CharacterControls : MonoBehaviour
             //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
         }
 
-        if (!IsGrounded ())
-        {
-            rb.velocity = new Vector3 (transform.forward.x * GetSpeed () * 0.5f * speedY, rb.velocity.y, transform.forward.z * GetSpeed () * 0.5f * speedY);
-        }
-
         if (!canMove)
         {
             rb.velocity = pushDir * pushForce;
         }
+    }
+
+    private bool IsInAnimationState (string state)
+    {
+        return anim.GetNextAnimatorStateInfo (0).IsName (state)
+            || anim.GetCurrentAnimatorStateInfo (0).IsName (state);
     }
 
     private void OnAnimatorMove ()
@@ -85,14 +86,13 @@ public class CharacterControls : MonoBehaviour
 
         newRootPosition = anim.rootPosition;
 
-        if ((anim.GetNextAnimatorStateInfo (0).IsName ("Jump State") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Jump State")))
+        if (IsInAnimationState ("Jump State") || IsInAnimationState ("Falling"))
         {
+            float multiplier = IsInAnimationState ("Jump State") ? 0.1f : 0.1f;
             newRootPosition.y = transform.position.y + anim.deltaPosition.y * jumpHeight;
-            float newX = Mathf.LerpUnclamped (transform.position.x, transform.position.x + transform.forward.x * speedY, GetSpeed () * 0.05f);
-            float newZ = Mathf.LerpUnclamped (transform.position.z, transform.position.z + transform.forward.z * speedY, GetSpeed () * 0.05f);
+            float newX = Mathf.LerpUnclamped (transform.position.x, transform.position.x + transform.forward.x * speedY, GetSpeed () * multiplier);
+            float newZ = Mathf.LerpUnclamped (transform.position.z, transform.position.z + transform.forward.z * speedY, GetSpeed () * multiplier);
             this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
-
-            Debug.Log ("We are in jump state");
         }
         else
         {
