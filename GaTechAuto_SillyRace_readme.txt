@@ -2,8 +2,8 @@ README FILE FOR GATECH AUTO'S SILLY RACE
 ----------------------------------------
 
 Full Names: Ines Bouzidi, Ishan Maheshwari, Miko Linsangan, Oscar Marginean, Pedro Marquez
-Emails: ibouzidi3@gatech.edu, imaheshwari3@gatech.edu
-Canvas Account Names: ibouzidi3, imaheshwari3
+Emails: ibouzidi3@gatech.edu, imaheshwari3@gatech.edu, pmarquez3@gatech.edu
+Canvas Account Names: ibouzidi3, imaheshwari3, pmarquez3
 
 Main Scene: MainScene
 
@@ -52,4 +52,4 @@ Miko Linsangan - Collectibles and animations. Assets implemented: Powerups. File
 
 Oscar Marginean - Menu and character design. Assets implemented: Player. Files contributed to: MenuController.cs.
 
-Pedro Marquez - AI for NPC.  Assets implemented: Waypoints. Files contributed to: AgentLinkMover.cs, NPCController.cs.
+Pedro Marquez - AI for NPC.  Assets implemented: Waypoints, NPC(1). Files contributed to: AgentLinkMover.cs, NPCController.cs, FreeJumpLink.cs.
