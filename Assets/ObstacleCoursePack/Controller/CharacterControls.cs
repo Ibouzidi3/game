@@ -56,6 +56,7 @@ public class CharacterControls : MonoBehaviour
 
     void ApexReached ()
     {
+        jump = false;
     }
 
     void FixedUpdate ()
@@ -189,35 +190,41 @@ public class CharacterControls : MonoBehaviour
         transform.rotation = Quaternion.LookRotation (new Vector3 ());
     }
 
-    private void OnCollisionExit (Collision collision)
+    private void OnTriggerStay (Collider other)
     {
-        if (collision.gameObject.tag == "Moving Bench" && transform.parent != null && this.transform.parent.Equals (collision.gameObject.transform))
+
+        if (other.gameObject.tag == "Moving Bench")
         {
-            this.transform.SetParent (null);
-
-        }
-    }
-
-    private void OnCollisionEnter (Collision collision)
-    {
-        Debug.Log ("Collision with " + collision.gameObject.tag);
-
-        if (collision.gameObject.tag == "Moving Bench")
-        {
-            Debug.Log ("entered collision");
 
             //transform.position= other.transform.position;
-            //transform.position = new Vector3 (other.transform.position.x, transform.position.y, other.transform.position.z);
-            this.transform.SetParent (collision.gameObject.transform);
-        }
 
+            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
+
+        }
     }
+
+
+    private void OnTriggerEnter (Collider other)
+    {
+
+        if (other.gameObject.tag == "Moving Bench")
+        {
+
+            //transform.position= other.transform.position;
+
+            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
+        }
+    }
+
+
+
 
     private float GetSpeed ()
     {
-        //if (powerUpsCollector == null)
+        if (powerUpsCollector == null)
             return speed;
-        //return powerUpsCollector.GetSpeed ();
+
+        return powerUpsCollector.GetSpeed ();
     }
 
 

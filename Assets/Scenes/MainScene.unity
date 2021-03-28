@@ -41519,7 +41519,12 @@ PrefabInstance:
     - target: {fileID: 2462292277345970908, guid: 0b452ed430b6d4261976570f48725f02,
         type: 3}
       propertyPath: defaultSpeed
-      value: 7
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462292277345970908, guid: 0b452ed430b6d4261976570f48725f02,
+        type: 3}
+      propertyPath: speedIncreaseFactor
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 4229383107212519416, guid: 0b452ed430b6d4261976570f48725f02,
         type: 3}
