@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 3032671315078995111}
   - component: {fileID: 3597953606041531297}
   - component: {fileID: 3597953606041531296}
-  - component: {fileID: 8764610868565160331}
+  - component: {fileID: 3617077775140605939}
   m_Layer: 0
   m_Name: Prop_Bridge_Wide
   m_TagString: Moving Bench
@@ -330,19 +330,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &8764610868565160331
+--- !u!65 &3617077775140605939
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3597953606041531303}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 13400000, guid: 7efa732c6f1c64cefbb9abe313ce032e, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.86809963, y: 0.6989188, z: 2.908651}
-  m_Center: {x: -0.00089090044, y: -0.15054059, z: 0.51507837}
+  m_Size: {x: 0.99544173, y: 0.21020389, z: 3.04353}
+  m_Center: {x: 0.0014355691, y: -0.17071807, z: 0.48936373}
 --- !u!1 &6278346771584687017
 GameObject:
   m_ObjectHideFlags: 0

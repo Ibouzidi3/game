@@ -56,7 +56,6 @@ public class CharacterControls : MonoBehaviour
 
     void ApexReached ()
     {
-        jump = false;
     }
 
     void FixedUpdate ()
@@ -190,34 +189,29 @@ public class CharacterControls : MonoBehaviour
         transform.rotation = Quaternion.LookRotation (new Vector3 ());
     }
 
-    private void OnTriggerStay (Collider other)
+    private void OnCollisionExit (Collision collision)
     {
-
-        if (other.gameObject.tag == "Moving Bench")
+        if (collision.gameObject.tag == "Moving Bench" && transform.parent != null && this.transform.parent.Equals (collision.gameObject.transform))
         {
-
-            //transform.position= other.transform.position;
-
-            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
+            this.transform.SetParent (null);
 
         }
     }
 
-
-    private void OnTriggerEnter (Collider other)
+    private void OnCollisionEnter (Collision collision)
     {
+        Debug.Log ("Collision with " + collision.gameObject.tag);
 
-        if (other.gameObject.tag == "Moving Bench")
+        if (collision.gameObject.tag == "Moving Bench")
         {
+            Debug.Log ("entered collision");
 
             //transform.position= other.transform.position;
-
-            transform.position = new Vector3 (other.transform.position.x, transform.position.y, transform.position.z);
+            //transform.position = new Vector3 (other.transform.position.x, transform.position.y, other.transform.position.z);
+            this.transform.SetParent (collision.gameObject.transform);
         }
+
     }
-
-
-
 
     private float GetSpeed ()
     {
