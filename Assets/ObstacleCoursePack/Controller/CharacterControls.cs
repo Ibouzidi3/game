@@ -215,10 +215,9 @@ public class CharacterControls : MonoBehaviour
 
     private float GetSpeed ()
     {
-        if (powerUpsCollector == null)
+        //if (powerUpsCollector == null)
             return speed;
-
-        return powerUpsCollector.GetSpeed ();
+        //return powerUpsCollector.GetSpeed ();
     }
 
 
