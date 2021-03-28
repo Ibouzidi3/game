@@ -41544,13 +41544,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4751899343392391015, guid: 0b452ed430b6d4261976570f48725f02,
         type: 3}
-<<<<<<< HEAD
       propertyPath: jumpHeight
       value: 3
-=======
       propertyPath: maxFallSpeed
       value: 2033
->>>>>>> eab3f630 (Removing spam from console)
       objectReference: {fileID: 0}
     - target: {fileID: 7685102082071295354, guid: 0b452ed430b6d4261976570f48725f02,
         type: 3}
