@@ -24,7 +24,7 @@ public class FinishLine : MonoBehaviour
 			GameObject text = Instantiate(congratsText, position, Quaternion.identity);
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
-			transform.gameObject.SetActive(false);
+			//transform.gameObject.SetActive(false);
 			StartCoroutine(RestartGame());
 		}
 
@@ -35,7 +35,7 @@ public class FinishLine : MonoBehaviour
 			GameObject text = Instantiate(losingText, position, Quaternion.identity);
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
-			transform.gameObject.SetActive(false);
+			//transform.gameObject.SetActive(false);
 			StartCoroutine(RestartGame());
 		}
 
