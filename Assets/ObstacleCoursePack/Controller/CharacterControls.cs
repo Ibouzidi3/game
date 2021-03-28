@@ -10,17 +10,14 @@ public class CharacterControls : MonoBehaviour
 {
     private Animator anim;
 
-    public float speed = 10.0f;
+    public float speed = 3f;
     public float airVelocity = 8f;
     public float gravity = 10.0f;
-    public float maxVelocityChange = 10.0f;
     public float jumpHeight = 2.0f;
-    public float maxFallSpeed = 20.0f;
+    private bool jump = false;
+    private bool isJumping = false;
     public float rotateSpeed = 25f; //Speed the player rotate
     public float threshold = -5f; // How low the character falls before respawning
-    private Transform baseObject;
-    private Vector3 moveDir;
-    public GameObject cam;
     private Rigidbody rb;
 
     private float distToGround;
@@ -44,31 +41,32 @@ public class CharacterControls : MonoBehaviour
 
     bool IsGrounded ()
     {
-        return Physics.Raycast (transform.position, -Vector3.up, distToGround);
+        return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f);
     }
 
     void Awake ()
     {
         anim = GetComponent<Animator> ();
         rb = GetComponent<Rigidbody> ();
-        baseObject = this.transform.Find ("Base");
         rb.freezeRotation = true;
-
+        anim.applyRootMotion = true;
         checkPoint = transform.position;
         Cursor.visible = false;
     }
 
+    void ApexReached ()
+    {
+        jump = false;
+    }
+
     void FixedUpdate ()
     {
-        // Jump
-        if (IsGrounded () && Input.GetButtonDown ("Jump"))
+        if (IsGrounded () && jump)
         {
-            //anim.SetBool ("jump", true);
-            rb.AddForce (new Vector3 (0, jumpHeight, 0), ForceMode.Impulse);
-        }
-        else
-        {
-            anim.SetBool ("jump", false);
+            Debug.Log ("jump");
+            jump = false;
+            anim.SetTrigger ("jump");
+            rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * speed, ForceMode.VelocityChange);
         }
 
         if (!canMove)
@@ -86,7 +84,16 @@ public class CharacterControls : MonoBehaviour
         //use root motion as is if on the ground		
         newRootPosition = anim.rootPosition;
 
-        this.transform.position = Vector3.LerpUnclamped (this.transform.position, newRootPosition, speed);
+        if ((anim.GetNextAnimatorStateInfo (0).IsName ("Jump State") || anim.GetCurrentAnimatorStateInfo (0).IsName ("Jump State")))
+        {
+            newRootPosition.y = transform.position.y + anim.deltaPosition.y * jumpHeight;
+            Debug.Log ("We are in jump state");
+        }
+
+
+        float newX = Mathf.LerpUnclamped (transform.position.x, newRootPosition.x, speed);
+        float newZ = Mathf.LerpUnclamped (transform.position.z, newRootPosition.z, speed);
+        this.transform.position = new Vector3 (newX, newRootPosition.y, newZ);
         //this.transform.rotation = Quaternion.LerpUnclamped (this.transform.rotation, newRootRotation, rootTurnSpeed);
 
         //}
@@ -101,12 +108,13 @@ public class CharacterControls : MonoBehaviour
             return;
         }
 
+        if (Input.GetButtonDown ("Jump"))
+        {
+            jump = true;
+        }
+
         float h = Input.GetAxis ("Horizontal");
         float v = Input.GetAxis ("Vertical");
-
-        Vector3 v2 = v * cam.transform.forward; //Vertical axis to which I want to move with respect to the camera
-        Vector3 h2 = h * cam.transform.right; //Horizontal axis to which I want to move with respect to the camera
-        moveDir = (v2 + h2).normalized; //Global position to which I want to move in magnitude 1
 
         rb.MoveRotation (rb.rotation * Quaternion.AngleAxis (h * Time.deltaTime * rotateSpeed, Vector3.up));
 
