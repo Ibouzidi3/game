@@ -130,7 +130,7 @@ public class NPCController : MonoBehaviour
                     agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
                 }
             }
-            
+            transform.LookAt(waypoints[this.currentWaypoint].transform);
 
         }
 
@@ -139,6 +139,7 @@ public class NPCController : MonoBehaviour
 
     void UpdateManualNav ()
     {
+        transform.LookAt(this.goal.transform);
         Vector3 manualDestPosition = this.manualDestination.transform.position;
         manualDestPosition.y = transform.position.y;
         // Calculate direction vector.
@@ -146,13 +147,13 @@ public class NPCController : MonoBehaviour
 
         if (dirction.magnitude > minDistance)
         {
-            Debug.Log ("WAIT! it's still " + dirction.magnitude + " and min distance is " + minDistance);
+            //Debug.Log ("WAIT! it's still " + dirction.magnitude + " and min distance is " + minDistance);
             this.transform.position = this.manualOrigin.transform.position + (Vector3.up * 1.2f);
         }
         else
         {
             //rb.isKinematic = true;
-            Debug.Log("NOWGO!!! "+this.transform.position);
+            //Debug.Log("NOWGO!!! "+this.transform.position);
 
             // Normalize resultant vector to unit Vector.
             dirction = -dirction.normalized;
@@ -162,6 +163,8 @@ public class NPCController : MonoBehaviour
 
             float step =  speed * Time.deltaTime; // calculate distance to move
             transform.position = Vector3.MoveTowards(transform.position,manualDestPosition, step);
+
+            //transform.LookAt(this.manualDestination.transform);
 
             //this.transform.position += new Vector3(0,4.5f,0);
 
@@ -174,17 +177,12 @@ public class NPCController : MonoBehaviour
 
         //Debug.Log("TO REACH :" + Vector3.Distance(this.transform.position, manualDestPosition));
 
-        if (Vector3.Distance (this.transform.position, manualDestPosition) < 4)
+        if (Vector3.Distance (this.transform.position, manualDestPosition) < 1)
         {
-            if (this.manualDestination.tag == "MovingWP")
+           if (this.manualDestination.tag == "MovingWP")
             {
                 this.transform.position = this.manualDestination.transform.position + (Vector3.up * 1.2f);
             }
-            else
-            {
-                moveState = NPCMoveState.Idle;
-            }
-
             /*
 
             this.moveState = NPCMoveState.NavMesh;
@@ -204,6 +202,7 @@ public class NPCController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate ()
     {
+
         if (moveState == NPCMoveState.NavMesh)
         {
             this.UpdateNavMeshNav ();

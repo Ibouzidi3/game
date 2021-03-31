@@ -45,7 +45,7 @@ public class AgentLinkMover : MonoBehaviour {
 		Vector3 endPos = data.endPos + Vector3.up*agent.baseOffset;
 		float normalizedTime = 0.0f;
 		while (normalizedTime < 1.0f) {
-			float yOffset = height * 4.0f*(normalizedTime - normalizedTime*normalizedTime);
+			float yOffset = height * 3.0f*(normalizedTime - normalizedTime*normalizedTime);
 			agent.transform.position = Vector3.Lerp (startPos, endPos, normalizedTime) + yOffset * Vector3.up;
 			normalizedTime += Time.deltaTime / duration;
 			yield return null;
