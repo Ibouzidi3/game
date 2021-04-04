@@ -50,8 +50,7 @@ public class CharacterControls : MonoBehaviour
         rb = GetComponent<Rigidbody> ();
         rb.freezeRotation = true;
         anim.applyRootMotion = true;
-        checkPoint = transform.position;
-        Cursor.visible = false;
+        checkPoint = transform.position; 
     }
 
     void ApexReached ()

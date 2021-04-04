@@ -5,14 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
+	public static FinishLine instance = null;
+	private ParticleSystem particle;
 
 	public Transform finishLine;
 	public GameObject congratsText;
 	public GameObject losingText;
+	public int playerVSnpc 
+		{ get; private set; }
 
-	private int playerVSnpc = 0;
 
-	private ParticleSystem particle;
+
+	void Start()
+    {
+		playerVSnpc = 0; 
+    }
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -25,6 +32,7 @@ public class FinishLine : MonoBehaviour
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
 			//transform.gameObject.SetActive(false);
+			instance = this;
 			StartCoroutine(RestartGame());
 		}
 
@@ -36,6 +44,7 @@ public class FinishLine : MonoBehaviour
 			particle = text.GetComponent<ParticleSystem>();
 			particle.Play();
 			//transform.gameObject.SetActive(false);
+			instance = this;
 			StartCoroutine(RestartGame());
 		}
 
@@ -50,8 +59,8 @@ public class FinishLine : MonoBehaviour
 	{
  
 		Debug.Log("Started Coroutine at timestamp : " + Time.time); 
-		yield return new WaitForSeconds(10);
-		SceneManager.LoadScene("Menu"); 
+		yield return new WaitForSeconds(5);
+		SceneManager.LoadScene("EndOfRace"); 
 		Debug.Log("Finished Coroutine at timestamp : " + Time.time);
 	}
 
