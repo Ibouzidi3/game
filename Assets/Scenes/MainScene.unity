@@ -1417,6 +1417,26 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2518157354154474502, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518157354548858877, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518157355340134525, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518157355341136066, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 2652243464660622405, guid: 87c971756c99a43d3b79b4fe292774fa,
         type: 3}
       propertyPath: m_Layer
@@ -1701,6 +1721,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405963072529282365, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4491816320226519944, guid: 87c971756c99a43d3b79b4fe292774fa,
         type: 3}
@@ -2342,6 +2367,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5363604363885048927, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5635508262218082085, guid: 87c971756c99a43d3b79b4fe292774fa,
         type: 3}
       propertyPath: m_Layer
@@ -2406,6 +2436,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673136401716666045, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673136401716666045, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6062825228781824140, guid: 87c971756c99a43d3b79b4fe292774fa,
         type: 3}
@@ -2771,6 +2811,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412038309666587253, guid: 87c971756c99a43d3b79b4fe292774fa,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8412038309728570788, guid: 87c971756c99a43d3b79b4fe292774fa,
         type: 3}
@@ -9189,6 +9234,11 @@ PrefabInstance:
       propertyPath: crashingStoneAudio
       value: 
       objectReference: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
+    - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
+        type: 3}
+      propertyPath: footStepWaterAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f43c14949b249045a202961f8d5a00b, type: 3}
     - target: {fileID: 4782373343824343923, guid: e4e1ffd90c2174a618c9d4050dc9ac13,
         type: 3}
       propertyPath: jumpableMashroomAudio

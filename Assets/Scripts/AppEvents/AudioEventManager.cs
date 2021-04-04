@@ -22,6 +22,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip victoryAudio;
     public AudioClip losingAudio;
     public AudioClip footStepAudio;
+    public AudioClip footStepWaterAudio;
 
 
     private UnityAction<Vector3> boxDestructionEventListener;
@@ -42,7 +43,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> victoryEventListener;
     private UnityAction<Vector3> losingEventListener;
     private UnityAction<Vector3> footStepEventListener;
-
+    private UnityAction<Vector3> footStepWaterEventListener;
 
     void Awake()
     {
@@ -65,6 +66,7 @@ public class AudioEventManager : MonoBehaviour
         victoryEventListener = new UnityAction<Vector3>(victoryEventHandler);
         losingEventListener = new UnityAction<Vector3>(losingEventHandler);
         footStepEventListener = new UnityAction<Vector3>(footStepEventHandler);
+        footStepWaterEventListener = new UnityAction<Vector3>(footStepWaterEventHandler);
     }
 
 
@@ -86,6 +88,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<VictoryEvent, Vector3>(victoryEventListener);
         EventManager.StartListening<LosingEvent, Vector3>(losingEventListener);
         EventManager.StartListening<FootStepEvent, Vector3>(footStepEventListener);
+        EventManager.StartListening<FootStepWaterEvent, Vector3>(footStepWaterEventListener);
     }
 
     void OnDisable()
@@ -106,7 +109,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<VictoryEvent, Vector3>(victoryEventListener);
         EventManager.StopListening<LosingEvent, Vector3>(losingEventListener);
         EventManager.StopListening<FootStepEvent, Vector3>(footStepEventListener);
-
+        EventManager.StopListening<FootStepWaterEvent, Vector3>(footStepWaterEventListener);
     }
 
 
@@ -374,6 +377,23 @@ public class AudioEventManager : MonoBehaviour
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = footStepAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 20f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void footStepWaterEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = footStepWaterAudio;
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 20f;
