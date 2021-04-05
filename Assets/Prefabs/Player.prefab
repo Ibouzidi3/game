@@ -873,6 +873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4839759510560658}
   - component: {fileID: 95572759151801680}
+  - component: {fileID: 6362595507137345815}
   - component: {fileID: 7512373013211667060}
   - component: {fileID: 628183896835367732}
   - component: {fileID: 9162929353632659922}
@@ -936,6 +937,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6362595507137345815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534879604843604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4a74cd9c08f4018a93712d681ac37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &7512373013211667060
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1053,6 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981f751fbef1e4bb1a42f548270233c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterSurface: 0
 --- !u!1 &1574471777096546
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class AppearanceSelector : MonoBehaviour
 {
-    public GameObject costumeObject;
+
+    public AvatarSettings avatar;
+
     public GameObject hairObject;
     public GameObject genderGameObject;
     public GameObject costumeGameObject;
@@ -20,10 +22,7 @@ public class AppearanceSelector : MonoBehaviour
     private TextMeshProUGUI costumeVariantTmp;
     private TextMeshProUGUI skinColorTmp;
 
-    enum Gender { Female, Male }
     private Gender gender = Gender.Female;
-
-    enum SkinColor { Black, Brown, White };
     private SkinColor skinColor = SkinColor.Black;
 
     private string costume;
@@ -205,9 +204,17 @@ public class AppearanceSelector : MonoBehaviour
 
     private void UpdateSkin ()
     {
+        Gamestate.gender = gender;
+        Gamestate.skinColor = skinColor;
+        Gamestate.costume = costume;
+        Gamestate.costumeIndex = costumeIndex;
+        Gamestate.costumeVariantIndex = costumeVariantIndex;
+
         string k = gender + "-" + skinColor;
         GameObject newAsset = assetTree[k][costume][costumeVariantIndex];
-        costumeObject.GetComponent<SkinnedMeshRenderer> ().materials = newAsset.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
+        Gamestate.avatarMaterials = newAsset.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
+        avatar.UpdateSkin (Gamestate.avatarMaterials);
+
         genderTmp.text = genderToString (gender);
         skinColorTmp.text = SkinColorToString (skinColor);
 
