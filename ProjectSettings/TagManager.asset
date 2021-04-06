@@ -15,6 +15,7 @@ TagManager:
   - MovingWP
   - Waypoint
   - Pond
+  - Projectile
   layers:
   - Default
   - TransparentFX

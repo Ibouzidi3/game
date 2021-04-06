@@ -48,13 +48,21 @@ MonoBehaviour:
   boxDesctructionAudio: {fileID: 8300000, guid: 8b3d26d6dcaae4b8783ca534410e083f,
     type: 3}
   coinCollectAudio: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
-  laserHitAudio: {fileID: 0}
-  checkpointAudio: {fileID: 0}
+  laserHitAudio: {fileID: 8300000, guid: d389e4695172f48d2b04ba4852b1bfa5, type: 3}
+  checkpointAudio: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   speedUp: {fileID: 8300000, guid: e9bc800cb24ffc845bcc77c49ab64d31, type: 3}
   shieldPowerup: {fileID: 8300000, guid: 7da886a070ddeee4ba6bc0fd415e462c, type: 3}
-  rollingBallAudio: {fileID: 0}
-  swingingPendulumAudio: {fileID: 0}
-  jumpableMashroomAudio: {fileID: 0}
-  crashingStoneAudio: {fileID: 0}
-  explosionAudio: {fileID: 0}
+  rollingBallAudio: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
+  swingingPendulumAudio: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671,
+    type: 3}
+  jumpableMashroomAudio: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49,
+    type: 3}
+  crashingStoneAudio: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
+  explosionAudio: {fileID: 8300000, guid: 9073e410d62374ce7bc54c3dc8b2ecc3, type: 3}
   bgmAudio: {fileID: 0}
+  victoryAudio: {fileID: 8300000, guid: 06a0420f8524f54458b313c29fbfd2b1, type: 3}
+  losingAudio: {fileID: 8300000, guid: c6b596fd07a14a64b89285b6f079b167, type: 3}
+  footStepAudio: {fileID: 8300000, guid: 209ae35949b251d4a83610a1e5992a2f, type: 3}
+  footStepWaterAudio: {fileID: 8300000, guid: 8f43c14949b249045a202961f8d5a00b, type: 3}
+  projectileAudio: {fileID: 8300000, guid: 9c22eea25e7875348832fdeeff708cd1, type: 3}
+  projectileFireAudio: {fileID: 8300000, guid: 303b58edb84f1ad46aba990ade9c626c, type: 3}

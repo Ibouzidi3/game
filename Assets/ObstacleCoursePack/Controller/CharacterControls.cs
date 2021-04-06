@@ -14,7 +14,13 @@ public class CharacterControls : MonoBehaviour
     public float airVelocity = 8f;
     public float gravity = 10.0f;
     public float jumpHeight = 2.0f;
+    public GameObject projectile;    // projectile prefab
+    public GameObject fireProjectile;
+    public Transform spawnTransform; // transform where the prefab will spawn
+
+    private GameObject currentProjectile;
     private bool jump = false;
+    public bool attack = false;
     public float rotateSpeed = 25f; //Speed the player rotate
     public float threshold = -5f; // How low the character falls before respawning
     private Rigidbody rb;
@@ -37,6 +43,7 @@ public class CharacterControls : MonoBehaviour
         // get the distance to ground
         distToGround = GetComponent<Collider> ().bounds.extents.y;
         powerUpsCollector = GetComponent<PowerUpsCollector> ();
+        currentProjectile = projectile;
     }
 
     bool IsGrounded ()
@@ -64,6 +71,12 @@ public class CharacterControls : MonoBehaviour
         {
             jump = false;
             anim.SetTrigger ("jump");
+            //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
+        }
+        if (attack)
+        {
+            attack = false;
+            anim.SetTrigger("attack");
             //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
         }
 
@@ -123,6 +136,23 @@ public class CharacterControls : MonoBehaviour
             jump = true;
         }
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            attack= true;
+            Instantiate(currentProjectile, spawnTransform.position, spawnTransform.rotation);
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if(currentProjectile == fireProjectile)
+            {
+                currentProjectile = projectile;
+            }
+            else
+            {
+                currentProjectile = fireProjectile;
+            }
+        }
 
 
 

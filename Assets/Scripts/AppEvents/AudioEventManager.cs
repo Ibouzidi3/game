@@ -23,7 +23,8 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip losingAudio;
     public AudioClip footStepAudio;
     public AudioClip footStepWaterAudio;
-
+    public AudioClip projectileAudio;
+    public AudioClip projectileFireAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -44,6 +45,8 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> losingEventListener;
     private UnityAction<Vector3> footStepEventListener;
     private UnityAction<Vector3> footStepWaterEventListener;
+    private UnityAction<Vector3> projectileEventListener;
+    private UnityAction<Vector3> projectileFireEventListener;
 
     void Awake()
     {
@@ -67,6 +70,8 @@ public class AudioEventManager : MonoBehaviour
         losingEventListener = new UnityAction<Vector3>(losingEventHandler);
         footStepEventListener = new UnityAction<Vector3>(footStepEventHandler);
         footStepWaterEventListener = new UnityAction<Vector3>(footStepWaterEventHandler);
+        projectileEventListener = new UnityAction<Vector3>(projectileEventHandler);
+        projectileFireEventListener = new UnityAction<Vector3>(projectileFireEventHandler);
     }
 
 
@@ -89,6 +94,8 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<LosingEvent, Vector3>(losingEventListener);
         EventManager.StartListening<FootStepEvent, Vector3>(footStepEventListener);
         EventManager.StartListening<FootStepWaterEvent, Vector3>(footStepWaterEventListener);
+        EventManager.StartListening<ProjectileEvent, Vector3>(projectileEventListener);
+        EventManager.StartListening<ProjectileFireEvent, Vector3>(projectileFireEventListener);
     }
 
     void OnDisable()
@@ -110,6 +117,8 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<LosingEvent, Vector3>(losingEventListener);
         EventManager.StopListening<FootStepEvent, Vector3>(footStepEventListener);
         EventManager.StopListening<FootStepWaterEvent, Vector3>(footStepWaterEventListener);
+        EventManager.StopListening<ProjectileEvent, Vector3>(projectileEventListener);
+        EventManager.StopListening<ProjectileFireEvent, Vector3>(projectileFireEventListener);
     }
 
 
@@ -402,6 +411,40 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
+    void projectileEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = projectileAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 20f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+
+    void projectileFireEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = projectileFireAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 20f;
+
+            snd.audioSrc.Play();
+        }
+    }
 
 
 }
