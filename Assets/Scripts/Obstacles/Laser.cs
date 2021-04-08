@@ -23,11 +23,12 @@ public class Laser : MonoBehaviour
         RaycastHit hit;
          if (Physics.Raycast(transform.position, transform.forward, out hit))
          {
-             if (hit.collider)
-             {
-                 lr.SetPosition(1, hit.point);
-                 EventManager.TriggerEvent<LaserHitEvent, Vector3>(hit.point);
-             }
+            if (hit.collider  && hit.collider.gameObject.tag =="Player")
+            {
+                lr.SetPosition(1, hit.point);
+                EventManager.TriggerEvent<LaserHitEvent, Vector3>(hit.point);
+                hit.collider.gameObject.SendMessage("ShootPlayer",hit.collider);
+            }
          }
         else lr.SetPosition(1, transform.forward * 5000); 
 

@@ -882,6 +882,7 @@ GameObject:
   - component: {fileID: 2099021636}
   - component: {fileID: 2341994298470612967}
   - component: {fileID: 1848793747652001231}
+  - component: {fileID: 2358318557943857656}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -928,7 +929,7 @@ Animator:
   m_GameObject: {fileID: 1534879604843604}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 231d45dba8bff13478d80904318e7bc4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 552d8a8b2f7b94ac78a93422921acac4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4243fd67e7b3eed408e84e576cf14c77, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1027,6 +1028,10 @@ MonoBehaviour:
   airVelocity: 8
   gravity: 30
   jumpHeight: 4
+  projectile: {fileID: 0}
+  fireProjectile: {fileID: 0}
+  spawnTransform: {fileID: 0}
+  attack: 0
   rotateSpeed: 100
   threshold: -5
   checkPoint: {x: 0, y: 0, z: 0}
@@ -1067,6 +1072,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterSurface: 0
+--- !u!114 &2358318557943857656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534879604843604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ad78b8d9c51464bb9cf629c013b54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 1500219146128548, guid: ce9eabb3a091c20409d10b932697c6e0, type: 3}
+  spawnTransform: {fileID: 4543767659148280}
 --- !u!1 &1574471777096546
 GameObject:
   m_ObjectHideFlags: 0

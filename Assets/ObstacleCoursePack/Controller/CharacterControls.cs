@@ -20,7 +20,7 @@ public class CharacterControls : MonoBehaviour
 
     private GameObject currentProjectile;
     private bool jump = false;
-    public bool attack = false;
+    public bool attack = false; 
     public float rotateSpeed = 25f; //Speed the player rotate
     public float threshold = -5f; // How low the character falls before respawning
     private Rigidbody rb;
@@ -125,12 +125,12 @@ public class CharacterControls : MonoBehaviour
         anim.SetFloat ("speedY", speedY);
         anim.SetBool ("grounded", IsGrounded ());
 
-        if (transform.position.y < threshold)
+        if (transform.position.y < threshold )
         {
             ResetPosition ();
             return;
         }
-
+ 
         if (Input.GetButtonDown ("Jump"))
         {
             jump = true;
@@ -244,10 +244,34 @@ public class CharacterControls : MonoBehaviour
         if (collision.gameObject.tag == "Moving Bench")
         {
             this.transform.SetParent (collision.gameObject.transform);
-        }
+        } 
     }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+         
+        if (collider.gameObject.tag == "TNT")
+        {
+            rb.AddExplosionForce(25000.0F, collider.transform.position, 5.0F, 30);
+            ShootPlayer(collider);
+        }
 
+    }
+
+    private void ShootPlayer (Collider collider)
+    {
+        anim.SetBool("alive", false);
+        anim.SetBool("shot", true);
+        StartCoroutine(Delay(3));
+    }
+
+    IEnumerator Delay(int time)
+    {
+        anim.SetBool("alive", true);
+        yield return new WaitForSeconds(time);
+        ResetPosition(); 
+
+    }
 
     private float GetSpeed ()
     {

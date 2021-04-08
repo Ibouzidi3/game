@@ -35,11 +35,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: bf5c3e0cc8f27e44fa80b78fbca7ac1a, type: 3}
       propertyPath: m_Name
-      value: Explosive Box
+      value: Explosive Box Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bf5c3e0cc8f27e44fa80b78fbca7ac1a, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: TNT
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bf5c3e0cc8f27e44fa80b78fbca7ac1a, type: 3}
       propertyPath: m_RootOrder

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -45694,6 +45694,22 @@ PrefabInstance:
       propertyPath: m_RequiresDepthTextureOption
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4751899343392391015, guid: 0b452ed430b6d4261976570f48725f02,
+        type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 1500219146128548, guid: ce9eabb3a091c20409d10b932697c6e0,
+        type: 3}
+    - target: {fileID: 4751899343392391015, guid: 0b452ed430b6d4261976570f48725f02,
+        type: 3}
+      propertyPath: fireProjectile
+      value: 
+      objectReference: {fileID: 117122, guid: 193da46f5234f7444b929bf50dce7c3a, type: 3}
+    - target: {fileID: 4751899343392391015, guid: 0b452ed430b6d4261976570f48725f02,
+        type: 3}
+      propertyPath: spawnTransform
+      value: 
+      objectReference: {fileID: 1588740584}
     - target: {fileID: 7512373013211667060, guid: 0b452ed430b6d4261976570f48725f02,
         type: 3}
       propertyPath: m_IsKinematic
@@ -45711,6 +45727,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b452ed430b6d4261976570f48725f02, type: 3}
+--- !u!4 &1588740584 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4541049109302218, guid: 0b452ed430b6d4261976570f48725f02,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588740583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1598368240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1549194497252168451, guid: 410fe758f70474f2a935d8ec6903610f,

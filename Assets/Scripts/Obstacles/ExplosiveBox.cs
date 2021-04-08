@@ -34,8 +34,6 @@ public class ExplosiveBox : MonoBehaviour
             particle.Play(); 
             EventManager.TriggerEvent<ExplosiveBoxEvent, Vector3>(collider.transform.position);
             EventManager.TriggerEvent<BoxDestructionEvent, Vector3>(collider.transform.position);
-            //push player   
-            collider.GetComponent<Rigidbody>().AddExplosionForce(500.0F, collider.transform.position, 5.0F, 30);
 
             animator.SetBool("destroyed", true);
             transform.gameObject.SetActive(false);
