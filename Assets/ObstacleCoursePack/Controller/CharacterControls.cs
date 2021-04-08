@@ -249,8 +249,9 @@ public class CharacterControls : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-         
-        if (collider.gameObject.tag == "TNT")
+        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent>();
+
+        if (collider.gameObject.tag == "TNT" && (!powerup.shield))
         {
             rb.AddExplosionForce(25000.0F, collider.transform.position, 5.0F, 30);
             ShootPlayer(collider);
@@ -260,9 +261,14 @@ public class CharacterControls : MonoBehaviour
 
     private void ShootPlayer (Collider collider)
     {
-        anim.SetBool("alive", false);
-        anim.SetBool("shot", true);
-        StartCoroutine(Delay(3));
+        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent>();
+        if( !powerup.shield )
+        {
+            anim.SetBool("alive", false);
+            anim.SetBool("shot", true);
+            StartCoroutine(Delay(3));
+
+        }
     }
 
     IEnumerator Delay(int time)

@@ -6,7 +6,7 @@ public class PowerUpsCollectorComponent : MonoBehaviour, PowerUpsCollector
     public float defaultSpeed = 7.0f;
     public float speedIncreaseFactor = 1.5f;
     private float speed;
-    private bool shield;
+    public bool shield;
     public int shieldEffectInSec = 5;
     public GameObject shieldText;
     public GameObject shieldAura;

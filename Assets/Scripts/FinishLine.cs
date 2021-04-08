@@ -59,7 +59,7 @@ public class FinishLine : MonoBehaviour
 	{
  
 		Debug.Log("Started Coroutine at timestamp : " + Time.time); 
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(3);
 		SceneManager.LoadScene("EndOfRace"); 
 		Debug.Log("Finished Coroutine at timestamp : " + Time.time);
 	}

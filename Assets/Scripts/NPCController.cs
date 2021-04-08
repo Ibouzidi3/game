@@ -21,6 +21,16 @@ public class NPCController : MonoBehaviour
     public GameObject[] waypoints;
     public int currentWaypoint = 0;
 
+    // for shooting projectile
+    public GameObject player;
+    public GameObject fireProjectile;
+    public float projectileLifespan = 3.0f;
+    public float range = 100.0f;
+    public bool canShoot = true;
+    public float delayInSeconds = 3.0f;
+
+
+
     private Dictionary<int, float> distancesToGoal;
 
     private SortedDictionary<float, int> sortedDistancesToGoal;
@@ -30,7 +40,7 @@ public class NPCController : MonoBehaviour
     private NavMeshAgent agent;
 
     private Rigidbody rb;
-
+ 
     public NPCMoveState moveState = NPCMoveState.NavMesh;
 
     private GameObject manualOrigin;
@@ -198,6 +208,30 @@ public class NPCController : MonoBehaviour
             */
         }
     }
+
+
+    public void Update()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) < range && canShoot == true)
+        {
+            GameObject prj = Instantiate(fireProjectile, transform.position, transform.rotation);
+            Destroy(prj, projectileLifespan); 
+            Vector3 shoot = (player.transform.position - transform.position).normalized;
+            prj.GetComponent<Rigidbody>().AddForce(shoot * 500.0f); 
+
+            canShoot = false;
+            StartCoroutine(ShootDelay());
+        }
+
+    }
+
+    IEnumerator ShootDelay()
+    {
+        yield return new WaitForSeconds(delayInSeconds);
+        canShoot = true;
+    }
+
+
 
     // Update is called once per frame
     void FixedUpdate ()

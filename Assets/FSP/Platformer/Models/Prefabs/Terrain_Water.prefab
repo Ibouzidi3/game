@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7787869189646267383}
   - component: {fileID: 40074551107938667}
   - component: {fileID: 7009282252158660964}
+  - component: {fileID: 6199164670043221681}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -89,10 +90,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313564396118918025}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ff32d5693906a7a4fa9bdd4d7118fe5f, type: 2}
 --- !u!114 &7009282252158660964
@@ -109,6 +110,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splashEffect: {fileID: 8205706795460263314, guid: 326e86d5729c54e479798cacab220bb2,
     type: 3}
+--- !u!65 &6199164670043221681
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313564396118918025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.442726, y: 0, z: 4.3188934}
+  m_Center: {x: -0.030958176, y: 0, z: -0.030960083}
 --- !u!1 &4217841702315832739
 GameObject:
   m_ObjectHideFlags: 0
