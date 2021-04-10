@@ -378,6 +378,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   currentWaypoint: 0
+  player: {fileID: 0}
+  fireProjectile: {fileID: 122182, guid: 8290fe934290fc94bb71baa277523508, type: 3}
+  projectileLifespan: 3
+  range: 100
+  canShoot: 1
+  delayInSeconds: 3
   moveState: 1
   manualDestination: {fileID: 0}
   speed: 6

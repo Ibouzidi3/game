@@ -60,9 +60,10 @@ MonoBehaviour:
   crashingStoneAudio: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   explosionAudio: {fileID: 8300000, guid: 9073e410d62374ce7bc54c3dc8b2ecc3, type: 3}
   bgmAudio: {fileID: 0}
-  victoryAudio: {fileID: 8300000, guid: 06a0420f8524f54458b313c29fbfd2b1, type: 3}
+  victoryAudio: {fileID: 8300000, guid: a292faf3c248dd241b379ed08e05c512, type: 3}
   losingAudio: {fileID: 8300000, guid: c6b596fd07a14a64b89285b6f079b167, type: 3}
   footStepAudio: {fileID: 8300000, guid: 209ae35949b251d4a83610a1e5992a2f, type: 3}
   footStepWaterAudio: {fileID: 8300000, guid: 8f43c14949b249045a202961f8d5a00b, type: 3}
   projectileAudio: {fileID: 8300000, guid: 9c22eea25e7875348832fdeeff708cd1, type: 3}
   projectileFireAudio: {fileID: 8300000, guid: 303b58edb84f1ad46aba990ade9c626c, type: 3}
+  flameAudio: {fileID: 8300000, guid: ab9e41bb385f81c4585afabb2ba047da, type: 3}

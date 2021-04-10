@@ -8,7 +8,9 @@ public class Projectile : MonoBehaviour
 
     public float speed = 10f;   // this is the projectile's speed
     public float lifespan = 3f; // this is the projectile's lifespan (in seconds)
+    public GameObject poofEffect;
 
+    private ParticleSystem particle;
     private Rigidbody rb;
 
     void Awake()
@@ -42,6 +44,9 @@ public class Projectile : MonoBehaviour
         if ( collision.gameObject.tag == "NPC")
         {
             collision.gameObject.SetActive(false);
+            GameObject poof = Instantiate(poofEffect, collision.gameObject.transform.position, Quaternion.identity);
+            particle = poof.GetComponent<ParticleSystem>();
+            particle.Play();
         }
          
     }

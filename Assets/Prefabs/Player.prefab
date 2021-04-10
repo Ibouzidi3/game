@@ -1006,6 +1006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSpeed: 1
   speedIncreaseFactor: 1.5
+  shield: 0
   shieldEffectInSec: 5
   shieldText: {fileID: 0}
   shieldAura: {fileID: 0}
@@ -1028,9 +1029,17 @@ MonoBehaviour:
   airVelocity: 8
   gravity: 30
   jumpHeight: 4
-  projectile: {fileID: 0}
-  fireProjectile: {fileID: 0}
-  spawnTransform: {fileID: 0}
+  projectile: {fileID: 1500219146128548, guid: ce9eabb3a091c20409d10b932697c6e0, type: 3}
+  fireProjectile: {fileID: 117122, guid: 193da46f5234f7444b929bf50dce7c3a, type: 3}
+  spawnTransform: {fileID: 4541049109302218}
+  buttonPressStandingSpot: {fileID: 0}
+  buttonCloseEnoughForMatchDistance: 2
+  buttonCloseEnoughForPressDistance: 0.22
+  buttonCloseEnoughForPressAngleDegrees: 5
+  initalMatchTargetsAnimTime: 0.25
+  exitMatchTargetsAnimTime: 0.75
+  buttonObject: {fileID: 0}
+  fire: {fileID: 0}
   attack: 0
   rotateSpeed: 100
   threshold: -5
