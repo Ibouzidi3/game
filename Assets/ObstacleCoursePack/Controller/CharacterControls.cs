@@ -18,6 +18,17 @@ public class CharacterControls : MonoBehaviour
     public GameObject fireProjectile;
     public Transform spawnTransform; // transform where the prefab will spawn
 
+    // Button 
+    public GameObject buttonPressStandingSpot;
+    public float buttonCloseEnoughForMatchDistance = 2f;
+    public float buttonCloseEnoughForPressDistance = 0.22f;
+    public float buttonCloseEnoughForPressAngleDegrees = 5f;
+    public float initalMatchTargetsAnimTime = 0.25f;
+    public float exitMatchTargetsAnimTime = 0.75f;
+    public GameObject buttonObject;
+    public GameObject fire;
+
+
     private GameObject currentProjectile;
     private bool jump = false;
     public bool attack = false; 
@@ -117,8 +128,39 @@ public class CharacterControls : MonoBehaviour
     }
 
 
+
+    void OnAnimatorIK(int layerIndex)
+    {
+
+        if (anim)
+        {
+            AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo(0);
+            if (astate.IsName("ButtonPress"))
+            {
+
+                float buttonWeight = anim.GetFloat("buttonClose");
+                // Set the look target position, if one has been assigned
+                if (buttonObject != null)
+                {
+                    anim.SetLookAtWeight(buttonWeight);
+                    anim.SetLookAtPosition(buttonObject.transform.position);
+                    anim.SetIKPositionWeight(AvatarIKGoal.RightHand, buttonWeight);
+                    anim.SetIKPosition(AvatarIKGoal.RightHand,
+                    buttonObject.transform.position);
+                }
+            }
+            else
+            {
+                anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                anim.SetLookAtWeight(0);
+            }
+        }
+    }
+
     private void Update ()
     {
+        bool doButtonPress = false; 
+
         float h = Input.GetAxis ("Horizontal");
         speedY = Input.GetAxis ("Vertical");
 
@@ -136,12 +178,14 @@ public class CharacterControls : MonoBehaviour
             jump = true;
         }
 
+        // throw projectile
         if (Input.GetButtonDown("Fire1"))
         {
             attack= true;
             Instantiate(currentProjectile, spawnTransform.position, spawnTransform.rotation);
         }
 
+        //change projectile
         if (Input.GetButtonDown("Fire2"))
         {
             if(currentProjectile == fireProjectile)
@@ -154,6 +198,34 @@ public class CharacterControls : MonoBehaviour
             }
         }
 
+        // push button
+        float buttonDistance = float.MaxValue;
+        float buttonAngleDegrees = float.MaxValue;
+
+        if (buttonPressStandingSpot != null)
+        {
+            buttonDistance = Vector3.Distance(transform.position, buttonPressStandingSpot.transform.position); 
+        }
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Debug.Log("Action pressed");
+            if (buttonDistance <= buttonCloseEnoughForMatchDistance)
+            {
+                Debug.Log("Button press initiated");
+                anim.SetTrigger("doButtonPress");
+                doButtonPress = true;
+            }
+
+
+        }
+
+
+        var animState = anim.GetCurrentAnimatorStateInfo(0);
+        if (animState.IsName("ButtonPress"))
+        {
+            fire.SetActive(false);
+        }
 
 
         rb.MoveRotation (rb.rotation * Quaternion.AngleAxis (h * Time.deltaTime * rotateSpeed, Vector3.up));

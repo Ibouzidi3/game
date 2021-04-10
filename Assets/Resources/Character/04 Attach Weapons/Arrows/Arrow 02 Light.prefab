@@ -4731,6 +4731,7 @@ GameObject:
   - component: {fileID: 2341756}
   - component: {fileID: 8469574341713858954}
   - component: {fileID: 8444028801012766557}
+  - component: {fileID: 3534429157474520026}
   m_Layer: 0
   m_Name: Arrow 02 Light
   m_TagString: Untagged
@@ -4829,3 +4830,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3534429157474520026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7269808ce3bf2446a5819364d5e11d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

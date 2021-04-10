@@ -34,5 +34,17 @@ public class Projectile : MonoBehaviour
                
         Destroy(gameObject, lifespan);
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if ( collision.gameObject.tag == "NPC")
+        {
+            collision.gameObject.SetActive(false);
+        }
+         
+    }
+
 }
 
