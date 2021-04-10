@@ -16,6 +16,7 @@ TagManager:
   - Waypoint
   - Pond
   - Projectile
+  - Fire
   layers:
   - Default
   - TransparentFX
