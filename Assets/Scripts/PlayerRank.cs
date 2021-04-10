@@ -16,7 +16,7 @@ public class PlayerRank : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.Find("Player");
         npcs = GameObject.FindGameObjectsWithTag("NPC");
 
         playerPosition = player.transform;
