@@ -26,6 +26,8 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip projectileAudio;
     public AudioClip projectileFireAudio;
     public AudioClip flameAudio;
+    public AudioClip countDownAudio;
+    public AudioClip startCountDownAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -49,6 +51,9 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> projectileEventListener;
     private UnityAction<Vector3> projectileFireEventListener;
     private UnityAction<Vector3> flameEventListener;
+    private UnityAction<Vector3> countDownEventListener;
+    private UnityAction<Vector3> startCountDownEventListener;
+
 
     void Awake()
     {
@@ -75,6 +80,8 @@ public class AudioEventManager : MonoBehaviour
         projectileEventListener = new UnityAction<Vector3>(projectileEventHandler);
         projectileFireEventListener = new UnityAction<Vector3>(projectileFireEventHandler);
         flameEventListener = new UnityAction<Vector3>(flameEventHandler);
+        countDownEventListener = new UnityAction<Vector3>(countDownEventHandler);
+        startCountDownEventListener = new UnityAction<Vector3>(startCountDownEventHandler);
     }
 
 
@@ -100,6 +107,8 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<ProjectileEvent, Vector3>(projectileEventListener);
         EventManager.StartListening<ProjectileFireEvent, Vector3>(projectileFireEventListener);
         EventManager.StartListening<FlameEvent, Vector3>(flameEventListener);
+        EventManager.StartListening<CountDownEvent, Vector3>(countDownEventListener);
+        EventManager.StartListening<StartCountDownEvent, Vector3>(startCountDownEventListener);
     }
 
     void OnDisable()
@@ -124,6 +133,8 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<ProjectileEvent, Vector3>(projectileEventListener);
         EventManager.StopListening<ProjectileFireEvent, Vector3>(projectileFireEventListener);
         EventManager.StopListening<FlameEvent, Vector3>(flameEventListener);
+        EventManager.StartListening<CountDownEvent, Vector3>(countDownEventListener);
+        EventManager.StartListening<StartCountDownEvent, Vector3>(startCountDownEventListener);
     }
 
 
@@ -465,6 +476,40 @@ public class AudioEventManager : MonoBehaviour
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 20f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void countDownEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = countDownAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void startCountDownEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = startCountDownAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 500f;
 
             snd.audioSrc.Play();
         }
