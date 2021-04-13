@@ -7,18 +7,20 @@ public enum NPCMoveState
 {
     Idle,
     NavMesh,
-    Manual
+    Manual,
+
+    InParabola,
 
 }
 
-[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class NPCController : MonoBehaviour
 {
     public Vector3 spawnPoint;
     public bool enableSpawnPoint = true;
 
     public GameObject goal;
-    public GameObject[] waypoints;
+    private GameObject[] waypoints;
     public int currentWaypoint = 0;
 
     // for shooting projectile
@@ -50,23 +52,29 @@ public class NPCController : MonoBehaviour
 
     private float minDistance = 10;
 
-    int FindClosestToGoal ()
+    private float normalizedTime = 0.0f;
+
+    private float parabolaHeight = 1.0f;
+
+    private float parabolaTime = 0.5f;
+
+    int FindClosestToGoal()
     {
         float[] keys = new float[this.sortedDistancesToGoal.Count];
 
         var isReachable = false;
 
-        var myDistanceToGoal = Vector3.Distance (this.transform.position, this.goal.transform.position);
+        var myDistanceToGoal = Vector3.Distance(this.transform.position, this.goal.transform.position);
 
-        this.sortedDistancesToGoal.Keys.CopyTo (keys, 0);
+        this.sortedDistancesToGoal.Keys.CopyTo(keys, 0);
 
         foreach (KeyValuePair<float, int> pair in this.sortedDistancesToGoal)
         {
 
             if (myDistanceToGoal > pair.Key)
             {
-                NavMeshPath navMeshPath = new NavMeshPath ();
-                isReachable = agent.CalculatePath (this.waypoints[pair.Value].transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete;
+                NavMeshPath navMeshPath = new NavMeshPath();
+                isReachable = agent.CalculatePath(this.waypoints[pair.Value].transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete;
 
                 //Debug.Log("   Is reachable? "+ this.waypoints[pair.Value].name + " = "+isReachable);
 
@@ -83,19 +91,19 @@ public class NPCController : MonoBehaviour
     }
 
 
-    void CalculateDistancesToGoal ()
+    void CalculateDistancesToGoal()
     {
-        this.sortedDistancesToGoal = new SortedDictionary<float, int> ();
-        this.distancesToGoal = new Dictionary<int, float> ();
+        this.sortedDistancesToGoal = new SortedDictionary<float, int>();
+        this.distancesToGoal = new Dictionary<int, float>();
         for (int i = 0; i < this.waypoints.Length; i++)
         {
-            var distance = Vector3.Distance (this.waypoints[i].transform.position, this.goal.transform.position);
-            this.distancesToGoal.Add (i, distance);
-            this.sortedDistancesToGoal.Add (distance, i);
+            var distance = Vector3.Distance(this.waypoints[i].transform.position, this.goal.transform.position);
+            this.distancesToGoal.Add(i, distance);
+            this.sortedDistancesToGoal.Add(distance, i);
         }
     }
 
-    void Start ()
+    void Start()
     {
         moveState = NPCMoveState.NavMesh;
         if (enableSpawnPoint)
@@ -105,10 +113,10 @@ public class NPCController : MonoBehaviour
 
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
 
-        agent = GetComponent<NavMeshAgent> ();
-        rb = GetComponent<Rigidbody> ();
+        agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
-        CalculateDistancesToGoal ();
+        CalculateDistancesToGoal();
 
         this.currentWaypoint = FindClosestToGoal();
         if (this.currentWaypoint > 0)
@@ -117,27 +125,28 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            Debug.Log ("No accessible waypoints");
+            Debug.Log("No accessible waypoints");
         }
 
     }
 
-    void UpdateNavMeshNav ()
+    void UpdateNavMeshNav()
     {
 
         if (this.currentWaypoint >= waypoints.Length)
         {
-            Debug.Log ("Reached the goal!");
+            Debug.Log("Reached the goal!");
             return;
         }
 
         if (agent.enabled)
         {
-            var nextWaypoint = FindClosestToGoal ();
-            if(nextWaypoint != this.currentWaypoint) {
+            var nextWaypoint = FindClosestToGoal();
+            if (nextWaypoint != this.currentWaypoint)
+            {
                 if (this.currentWaypoint >= 0 && this.currentWaypoint < waypoints.Length)
                 {
-                    agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
+                    agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
                 }
             }
             transform.LookAt(waypoints[this.currentWaypoint].transform);
@@ -147,7 +156,7 @@ public class NPCController : MonoBehaviour
 
     }
 
-    void UpdateManualNav ()
+    void UpdateManualNav()
     {
         transform.LookAt(this.goal.transform);
         Vector3 manualDestPosition = this.manualDestination.transform.position;
@@ -157,13 +166,13 @@ public class NPCController : MonoBehaviour
 
         if (dirction.magnitude > minDistance)
         {
-            //Debug.Log ("WAIT! it's still " + dirction.magnitude + " and min distance is " + minDistance);
+            // Debug.Log ("WAIT! it's still " + dirction.magnitude + " and min distance is " + minDistance);
             this.transform.position = this.manualOrigin.transform.position + (Vector3.up * 1.2f);
         }
         else
         {
             //rb.isKinematic = true;
-            //Debug.Log("NOWGO!!! "+this.transform.position);
+            // Debug.Log("NOWGO!!! "+this.transform.position + " - distance: "+dirction.magnitude + " (min dis):"+minDistance);
 
             // Normalize resultant vector to unit Vector.
             dirction = -dirction.normalized;
@@ -171,8 +180,8 @@ public class NPCController : MonoBehaviour
             // Move in the direction of the direction vector every frame.
             //this.transform.position += dirction * Time.deltaTime * speed;
 
-            float step =  speed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position,manualDestPosition, step);
+            float step = speed * Time.deltaTime; // calculate distance to move
+            transform.position = Vector3.MoveTowards(transform.position, manualDestPosition, step);
 
             //transform.LookAt(this.manualDestination.transform);
 
@@ -187,9 +196,10 @@ public class NPCController : MonoBehaviour
 
         //Debug.Log("TO REACH :" + Vector3.Distance(this.transform.position, manualDestPosition));
 
-        if (Vector3.Distance (this.transform.position, manualDestPosition) < 1)
+        if (Vector3.Distance(this.transform.position, manualDestPosition) < 1)
         {
-           if (this.manualDestination.tag == "MovingWP")
+            
+            if (this.manualDestination.tag == "MovingWP")
             {
                 this.transform.position = this.manualDestination.transform.position + (Vector3.up * 1.2f);
             }
@@ -234,24 +244,25 @@ public class NPCController : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-
-        if (moveState == NPCMoveState.NavMesh)
+        switch (moveState)
         {
-            this.UpdateNavMeshNav ();
-        }
-        //if moveState = NPCMoveState.Manual
-        else if (moveState == NPCMoveState.Manual)
-        {
-            //Debug.Log("Moving manuall: "+ moveState);
-            this.UpdateManualNav ();
+            case NPCMoveState.NavMesh:
+                this.UpdateNavMeshNav();
+                break;
+            case NPCMoveState.Manual:
+                this.UpdateManualNav();
+                break;
+            case NPCMoveState.InParabola:
+                this.UpdateParabola(this.manualOrigin.transform.position, manualDestination.transform.position, parabolaHeight, parabolaTime);
+                break;
         }
     }
 
-    public void MoveManuallyTo (GameObject positionFrom, GameObject positionTo, float minDistance = 10)
+    public void MoveManuallyTo(GameObject positionFrom, GameObject positionTo, float minDistance = 10)
     {
-        Debug.Log ("Move manually from" + positionFrom.name + " to " + positionTo.name);
+        Debug.Log("Move manually from" + positionFrom.name + " to " + positionTo.name);
 
         moveState = NPCMoveState.Manual;
         this.manualDestination = positionTo;
@@ -263,19 +274,32 @@ public class NPCController : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    public void ResumeNameMesh ()
+    public void ParabolaTo(GameObject positionFrom, GameObject positionTo, float height = 1.0f, float duration = 0.5f)
+    {
+        moveState = NPCMoveState.InParabola;
+        this.manualDestination = positionTo;
+        this.manualOrigin = positionFrom;
+        this.agent.enabled = false;
+        this.normalizedTime = 0.0f;
+        this.parabolaHeight = height;
+        this.parabolaTime = duration;
+
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    public void ResumeNameMesh()
     {
         this.moveState = NPCMoveState.NavMesh;
         this.agent.enabled = true;
 
-        this.currentWaypoint = FindClosestToGoal ();
-        Debug.Log ("Move to " + waypoints[this.currentWaypoint].name);
+        this.currentWaypoint = FindClosestToGoal();
+        Debug.Log("Move to " + waypoints[this.currentWaypoint].name);
 
-        agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
-        Debug.Log ("Move to navmesh");
+        agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
+        Debug.Log("Move to navmesh");
     }
 
-    void MoveTo (Vector3 destination)
+    void MoveTo(Vector3 destination)
     {
 
         // Calculate direction vector.
@@ -287,16 +311,35 @@ public class NPCController : MonoBehaviour
         // Move in the direction of the direction vector every frame.
         this.transform.position += dirction * Time.deltaTime * speed;
 
-        if (Vector3.Distance (this.transform.position, destination) < 2)
+        if (Vector3.Distance(this.transform.position, destination) < 2)
         {
             this.moveState = NPCMoveState.NavMesh;
             this.agent.enabled = true;
 
-            this.currentWaypoint = System.Array.IndexOf (waypoints, this.manualDestination) + 1;
-            Debug.Log ("Move to " + currentWaypoint);
+            this.currentWaypoint = System.Array.IndexOf(waypoints, this.manualDestination) + 1;
+            Debug.Log("Move to " + currentWaypoint);
 
-            agent.SetDestination (waypoints[this.currentWaypoint].transform.position);
-            Debug.Log ("Move to navmesh");
+            agent.SetDestination(waypoints[this.currentWaypoint].transform.position);
+            Debug.Log("Move to navmesh");
+        }
+    }
+
+
+    void UpdateParabola(Vector3 from, Vector3 to, float height, float duration)
+    {
+        int baseOffset = 1;
+        OffMeshLinkData data = agent.currentOffMeshLinkData;
+        Vector3 startPos = from;
+        Vector3 endPos = to + Vector3.up * baseOffset;
+        if (normalizedTime < 1.0f)
+        {
+            float yOffset = height * 3.0f * (normalizedTime - normalizedTime * normalizedTime);
+            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+            normalizedTime += Time.deltaTime / duration;
+        }
+        else
+        {
+            this.moveState = NPCMoveState.Manual;
         }
     }
 

@@ -12,6 +12,12 @@ public class FreeJumpLink : MonoBehaviour
     public float minDistance = 20;
 
     public bool isEndOfChain = false;
+
+    public bool useParabola = false;
+
+    public float parabolaHeight = 1.0f;
+
+    public float parabolaTime = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +43,10 @@ public class FreeJumpLink : MonoBehaviour
 
             if(isEndOfChain) {
                 npc.ResumeNameMesh();
+            }
+            else if(useParabola) {
+                Debug.Log("parabolla Collision between " + this.name + " and " +other.name);
+                npc.ParabolaTo(gameObject, destination, parabolaHeight, parabolaTime);
             }
             else {
                 

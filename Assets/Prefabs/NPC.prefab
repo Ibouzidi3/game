@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 885059921565348344}
   - component: {fileID: 885059921565348345}
   m_Layer: 0
-  m_Name: NPC (2)
+  m_Name: NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,26 +357,6 @@ MonoBehaviour:
   spawnPoint: {x: -3.34, y: 1.26, z: -197.3}
   enableSpawnPoint: 0
   goal: {fileID: 0}
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   currentWaypoint: 0
   player: {fileID: 0}
   fireProjectile: {fileID: 122182, guid: 8290fe934290fc94bb71baa277523508, type: 3}
@@ -387,6 +367,7 @@ MonoBehaviour:
   moveState: 1
   manualDestination: {fileID: 0}
   speed: 6
+  minDistance: 10
 --- !u!136 &885059921565348344
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -398,9 +379,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.87250465
-  m_Height: 9.361225
+  m_Height: 6.0277567
   m_Direction: 1
-  m_Center: {x: 0, y: -4.0550957, z: 0}
+  m_Center: {x: 0, y: -2.3883612, z: 0}
 --- !u!54 &885059921565348345
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -410,7 +391,7 @@ Rigidbody:
   m_GameObject: {fileID: 885059921565348346}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 15
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
