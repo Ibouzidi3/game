@@ -8,6 +8,7 @@ public class AvatarSettings : MonoBehaviour
     SkinnedMeshRenderer skinnedMeshRenderer;
     public GameObject hairObject;
     public GameObject faceObject;
+    public GameObject beardObject;
     // Start is called before the first frame update
     void Start ()
     {
@@ -25,10 +26,7 @@ public class AvatarSettings : MonoBehaviour
 
     public void UpdateHair (GameObject hair)
     {
-        hair.transform.parent = hairObject.transform.parent;
-        hair.transform.position = hairObject.transform.position;
-        hair.transform.rotation = hairObject.transform.rotation;
-        hair.transform.localScale = hairObject.transform.localScale;
+        copyTransforms (hair.transform, hairObject.transform);
         Destroy (hairObject);
         hairObject = hair;
     }
@@ -40,6 +38,23 @@ public class AvatarSettings : MonoBehaviour
 
         faceObject = face;
 
+    }
+
+    public void UpdateBeard (GameObject beard)
+    {
+        if (beard == null)
+        {
+            beardObject.SetActive (false);
+        }
+        else
+        {
+            beardObject.SetActive (true);
+            copyTransforms (beard.transform, beardObject.transform);
+            Destroy (beardObject);
+
+            beardObject = beard;
+
+        }
     }
 
     private void copyTransforms (Transform to, Transform from)

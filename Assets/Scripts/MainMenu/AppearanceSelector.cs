@@ -26,17 +26,16 @@ public class AppearanceSelector : MonoBehaviour
     // Head panel
     public GameObject hairMenuGameObject;
     public GameObject hairColorMenuGameObject;
-    public GameObject earsMenuGameObject;
+    public GameObject beardMenuGameObject;
+    public GameObject beardColorMenuGameObject;
     public GameObject faceMenuGameObject;
-    public GameObject glassesMenuGameObject;
-    public GameObject hatsMenuGameObject;
 
     private TextMeshProUGUI hairTmp;
     private TextMeshProUGUI hairColorTmp;
-    private TextMeshProUGUI earsTmp;
+    private TextMeshProUGUI beardTmp;
+    private TextMeshProUGUI beardColorTmp;
+
     private TextMeshProUGUI faceTmp;
-    private TextMeshProUGUI glassesTmp;
-    private TextMeshProUGUI hatsTmp;
 
     private Gender gender = Gender.Female;
     private SkinColor skinColor = SkinColor.Black;
@@ -44,6 +43,8 @@ public class AppearanceSelector : MonoBehaviour
     private string costume;
     private int hairColorIndex = 0;
     private int hairStyleIndex = 0;
+    private int beardColorIndex = 0;
+    private int beardStyleIndex = 0;
     private int costumeIndex = 0;
     private int costumeVariantIndex = 0;
     private int faceIndex = 0;
@@ -51,15 +52,18 @@ public class AppearanceSelector : MonoBehaviour
     private GameObject[] allSkins;
     private GameObject[] allHair;
     private GameObject[] allFaces;
+    private GameObject[] allBeards;
     private Dictionary<string, Dictionary<string, List<GameObject>>> assetTree;
     private Dictionary<string, List<Dictionary<string, GameObject>>> hairTree;
     private Dictionary<string, List<GameObject>> faceTree;
+    private List<Dictionary<string, GameObject>> beardTree;
 
     void Start ()
     {
         LoadSkins ();
         LoadHair ();
         LoadFaces ();
+        LoadBeards ();
         UpdateSkin ();
     }
 
@@ -92,6 +96,16 @@ public class AppearanceSelector : MonoBehaviour
         allFaces = Resources.LoadAll<GameObject> ("Character/Face/");
         BuildFaceTree ();
         faceTmp = faceMenuGameObject.GetComponent<TextMeshProUGUI> ();
+    }
+
+    void LoadBeards ()
+    {
+        allBeards = Resources.LoadAll<GameObject> ("Character/Beard/");
+        BuildBeardTree ();
+
+        beardTmp = beardMenuGameObject.GetComponent<TextMeshProUGUI> ();
+        beardColorTmp = beardColorMenuGameObject.GetComponent<TextMeshProUGUI> ();
+
     }
 
     public void OnGenderToggle ()
@@ -206,6 +220,22 @@ public class AppearanceSelector : MonoBehaviour
         UpdateSkin ();
     }
 
+    public void OnBeardStyleChange (bool left)
+    {
+        int max = beardTree.Count;
+        beardColorIndex = 0;
+        beardStyleIndex = rotate (beardStyleIndex, max, left ? Direction.Left : Direction.Right);
+        UpdateSkin ();
+    }
+
+    public void OnBeardColorChange (bool left)
+    {
+        int max = beardTree[beardStyleIndex].Keys.Count;
+        beardColorIndex = rotate (beardColorIndex, max, left ? Direction.Left : Direction.Right);
+        UpdateSkin ();
+    }
+
+
     private void BuildSkinTree ()
     {
         foreach (GameObject skin in allSkins)
@@ -315,6 +345,28 @@ public class AppearanceSelector : MonoBehaviour
             faceTree[label].Add (face);
         }
     }
+
+    private void BuildBeardTree ()
+    {
+        beardTree = new List<Dictionary<string, GameObject>> ();
+        foreach (GameObject beard in allBeards)
+        {
+            string[] elements = beard.name.Split (' ');
+            int beardStyleIdx = int.Parse (elements[1]);
+            string color = elements[2];
+
+            if (beardTree.Count < beardStyleIdx)
+            {
+                beardTree.Add (new Dictionary<string, GameObject> ());
+            }
+            beardTree[beardStyleIdx - 1][color] = beard;
+        }
+
+        Dictionary<string, GameObject> d = new Dictionary<string, GameObject> ();
+        d["N/A"] = null;
+        beardTree.Insert (0, d);
+    }
+
     private void UpdateSkin ()
     {
         Gamestate.gender = gender;
@@ -323,6 +375,7 @@ public class AppearanceSelector : MonoBehaviour
         Gamestate.costumeIndex = costumeIndex;
         Gamestate.costumeVariantIndex = costumeVariantIndex;
 
+        // Skin
         string k = gender + "-" + skinColor;
         GameObject newAsset = assetTree[k][costume][costumeVariantIndex];
         Gamestate.avatarMaterials = newAsset.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
@@ -344,9 +397,15 @@ public class AppearanceSelector : MonoBehaviour
 
         // Face
         GameObject newFace = faceTree[gender + "_" + skinColor][faceIndex];
-        Debug.Log (faceIndex);
         avatar.UpdateFace (Instantiate (newFace));
         faceTmp.text = "Face #" + (faceIndex + 1);
+
+        // Beard
+        string beardColor = beardTree[beardStyleIndex].Keys.ElementAt (beardColorIndex);
+        GameObject newBeard = beardTree[beardStyleIndex][beardColor];
+        avatar.UpdateBeard (newBeard == null ? newBeard : Instantiate (newBeard));
+        beardColorTmp.text = beardColor;
+        beardTmp.text = newBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
     }
 
     private string genderToString (Gender gender)
