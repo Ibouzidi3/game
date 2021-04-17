@@ -69,7 +69,7 @@ public class AppearanceSelector : MonoBehaviour
 
     void LoadSkins ()
     {
-        allSkins = Resources.LoadAll<GameObject> ("Character/Costume/");
+        allSkins = ResourceManager.LoadAll (ResourceType.Costume);
         assetTree = new Dictionary<string, Dictionary<string, List<GameObject>>> ();
         BuildSkinTree ();
 
@@ -84,7 +84,7 @@ public class AppearanceSelector : MonoBehaviour
     void LoadHair ()
     {
         hairTree = new Dictionary<string, List<Dictionary<string, GameObject>>> ();
-        allHair = Resources.LoadAll<GameObject> ("Character/Hair/");
+        allHair = ResourceManager.LoadAll (ResourceType.Hair);
         BuildHairTree ();
 
         hairTmp = hairMenuGameObject.GetComponent<TextMeshProUGUI> ();
@@ -93,14 +93,14 @@ public class AppearanceSelector : MonoBehaviour
 
     void LoadFaces ()
     {
-        allFaces = Resources.LoadAll<GameObject> ("Character/Face/");
+        allFaces = ResourceManager.LoadAll (ResourceType.Face);
         BuildFaceTree ();
         faceTmp = faceMenuGameObject.GetComponent<TextMeshProUGUI> ();
     }
 
     void LoadBeards ()
     {
-        allBeards = Resources.LoadAll<GameObject> ("Character/Beard/");
+        allBeards = ResourceManager.LoadAll (ResourceType.Beard);
         BuildBeardTree ();
 
         beardTmp = beardMenuGameObject.GetComponent<TextMeshProUGUI> ();
@@ -305,6 +305,8 @@ public class AppearanceSelector : MonoBehaviour
             else
                 continue;
 
+            hair.name = assetGender + "/" + hair.name;
+
             int hairStyleIdx = int.Parse (elements[2]);
             string hairColor = elements[3];
 
@@ -330,11 +332,20 @@ public class AppearanceSelector : MonoBehaviour
 
         foreach (GameObject face in allFaces)
         {
-            string[] elements = face.name.Split (' ');
+            string[] elements = face.name.Split ('/').Last ().Split (' ');
+            Gender assetGender = Gender.Female;
+            try
+            {
+                assetGender = tryParseGender (elements[0]);
+            }
+            catch (ArgumentException e)
+            {
+                Debug.Log ("Unknown gender: " + face.name);
+            }
 
-            Gender assetGender = tryParseGender (elements[0]);
             SkinColor skinColor = tryParseSkinColor (elements[1]);
 
+            face.name = assetGender + "/" + face.name;
             string label = assetGender + "_" + skinColor;
 
             if (!faceTree.ContainsKey (label))
@@ -392,18 +403,24 @@ public class AppearanceSelector : MonoBehaviour
         string hairColorText = hairTree[gender.ToString ()][hairStyleIndex].Keys.ElementAt (hairColorIndex);
         GameObject newHair = hairTree[gender.ToString ()][hairStyleIndex][hairColorText];
         avatar.UpdateHair (Instantiate (newHair));
+        Gamestate.hair = newHair.name;
+
         hairColorTmp.text = hairColorText;
         hairTmp.text = "Hair Style #" + (hairStyleIndex + 1);
 
         // Face
         GameObject newFace = faceTree[gender + "_" + skinColor][faceIndex];
         avatar.UpdateFace (Instantiate (newFace));
+        Gamestate.face = newFace.name;
         faceTmp.text = "Face #" + (faceIndex + 1);
 
         // Beard
         string beardColor = beardTree[beardStyleIndex].Keys.ElementAt (beardColorIndex);
         GameObject newBeard = beardTree[beardStyleIndex][beardColor];
+
         avatar.UpdateBeard (newBeard == null ? newBeard : Instantiate (newBeard));
+        Gamestate.beard = newBeard == null ? null : newBeard.name;
+
         beardColorTmp.text = beardColor;
         beardTmp.text = newBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
     }

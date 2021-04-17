@@ -17,6 +17,10 @@ public class AvatarSettings : MonoBehaviour
         {
             skinnedMeshRenderer.materials = Gamestate.avatarMaterials;
         }
+
+        UpdateFace (Gamestate.face == null ? null : ResourceManager.LoadSingle (ResourceType.Face, Gamestate.face));
+        UpdateHair (Gamestate.hair == null ? null : ResourceManager.LoadSingle (ResourceType.Hair, Gamestate.hair));
+        UpdateBeard (Gamestate.beard == null ? null : ResourceManager.LoadSingle (ResourceType.Beard, Gamestate.beard));
     }
 
     public void UpdateSkin (Material[] materials)
@@ -26,18 +30,35 @@ public class AvatarSettings : MonoBehaviour
 
     public void UpdateHair (GameObject hair)
     {
-        copyTransforms (hair.transform, hairObject.transform);
-        Destroy (hairObject);
-        hairObject = hair;
+        if (hair == null)
+        {
+            hairObject.SetActive (false);
+
+        }
+        else
+        {
+            hairObject.SetActive (true);
+            copyTransforms (hair.transform, hairObject.transform);
+            Destroy (hairObject);
+            hairObject = hair;
+
+        }
     }
 
     public void UpdateFace (GameObject face)
     {
-        copyTransforms (face.transform, faceObject.transform);
-        Destroy (faceObject);
+        if (face == null)
+        {
+            faceObject.SetActive (false);
+        }
+        else
+        {
+            faceObject.SetActive (true);
+            copyTransforms (face.transform, faceObject.transform);
+            Destroy (faceObject);
 
-        faceObject = face;
-
+            faceObject = face;
+        }
     }
 
     public void UpdateBeard (GameObject beard)

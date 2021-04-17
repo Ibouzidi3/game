@@ -1,12 +1,16 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
     public GameObject customizationPanel;
     public GameObject customizationGeneralPanel;
     public GameObject customizationHeadPanel;
+    public Transform customizationPanelFocus;
+    public Button customizationGeneralButton;
+    public Button customizationHeadButton;
 
     public GameObject mainPanel;
 
@@ -30,6 +34,9 @@ public class MenuController : MonoBehaviour
     public void OnCharacterButtonPress ()
     {
         customizationPanel.SetActive (true);
+        customizationGeneralButton.Select ();
+        customizationGeneralPanel.SetActive (true);
+        customizationHeadPanel.SetActive (false);
         mainPanel.SetActive (false);
     }
 
@@ -43,13 +50,16 @@ public class MenuController : MonoBehaviour
     {
         customizationHeadPanel.SetActive (false);
         customizationGeneralPanel.SetActive (true);
+        customizationPanelFocus.parent = customizationGeneralButton.transform;
+        customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
     }
 
     public void OnCustomizationHeadButtonPress ()
     {
         customizationHeadPanel.SetActive (true);
         customizationGeneralPanel.SetActive (false);
-
+        customizationPanelFocus.parent = customizationHeadButton.transform;
+        customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
     }
 
 }

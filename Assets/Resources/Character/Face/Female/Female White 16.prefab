@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33732355549961990}
   - component: {fileID: 23424517372746476}
   m_Layer: 0
-  m_Name: Face White 16
+  m_Name: Female White 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,8 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846669577910278}
-  m_LocalRotation: {x: -0.7071064, y: -0.00000008940701, z: -0.0000001490116, w: 0.7071072}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.4999995, y: -0.50000054, z: -0.4999998, w: 0.5000003}
+  m_LocalPosition: {x: -7.3357587, y: 1.6499996, z: -188.60759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
