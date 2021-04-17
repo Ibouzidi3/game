@@ -12,4 +12,5 @@ public static class Gamestate
     public static int costumeVariantIndex = 0;
 
     public static Material[] avatarMaterials;
+    public static GameObject hair;
 }
