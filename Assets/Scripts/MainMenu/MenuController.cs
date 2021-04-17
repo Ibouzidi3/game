@@ -13,6 +13,12 @@ public class MenuController : MonoBehaviour
     public Button customizationHeadButton;
 
     public GameObject mainPanel;
+    public TextMeshProUGUI goldCount;
+
+    private void Start ()
+    {
+        goldCount.text = Gamestate.coins.ToString ();
+    }
 
     public void StartGame ()
     {

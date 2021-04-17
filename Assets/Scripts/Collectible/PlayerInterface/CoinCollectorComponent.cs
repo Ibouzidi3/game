@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class CoinCollectorComponent : MonoBehaviour
 {
-    private int numberOfCoins = 0;
     private TMP_Text textMeshPro;
-    public void Start()
+    public void Start ()
     {
-        if(GameObject.Find("coin_text") != null)
-            textMeshPro = GameObject.Find("coin_text").GetComponent<TMP_Text>();
+        Gamestate.coinsCurrentGame = 0;
+        if (GameObject.Find ("coin_text") != null)
+            textMeshPro = GameObject.Find ("coin_text").GetComponent<TMP_Text> ();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter (Collider other)
     {
-        if (other != null && other.gameObject.CompareTag("Coin"))
+        if (other != null && other.gameObject.CompareTag ("Coin"))
         {
 
-            EventManager.TriggerEvent<CoinCollectionEvent, Vector3>(other.transform.position);
-            other.gameObject.SetActive(false);
-            numberOfCoins++;
+            EventManager.TriggerEvent<CoinCollectionEvent, Vector3> (other.transform.position);
+            other.gameObject.SetActive (false);
+            Gamestate.coinsCurrentGame++;
             if (textMeshPro != null)
-                textMeshPro.text = numberOfCoins.ToString();
+                textMeshPro.text = Gamestate.coinsCurrentGame.ToString ();
 
         }
 

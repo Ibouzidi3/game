@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -416,6 +416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75dec1a6ef441e4b3109e24e794e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customizationPanel: {fileID: 0}
+  customizationGeneralPanel: {fileID: 0}
+  customizationHeadPanel: {fileID: 0}
+  customizationPanelFocus: {fileID: 0}
+  customizationGeneralButton: {fileID: 0}
+  customizationHeadButton: {fileID: 0}
+  mainPanel: {fileID: 0}
+  goldCount: {fileID: 0}
 --- !u!4 &97540241 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2314935142293537170, guid: b42aa3f5250af22429aa13485faa9977,
@@ -3538,6 +3546,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff75dec1a6ef441e4b3109e24e794e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customizationPanel: {fileID: 0}
+  customizationGeneralPanel: {fileID: 0}
+  customizationHeadPanel: {fileID: 0}
+  customizationPanelFocus: {fileID: 0}
+  customizationGeneralButton: {fileID: 0}
+  customizationHeadButton: {fileID: 0}
+  mainPanel: {fileID: 0}
+  goldCount: {fileID: 1826724810}
 --- !u!4 &1757029754
 Transform:
   m_ObjectHideFlags: 0
