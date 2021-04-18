@@ -14,6 +14,7 @@ public class CharacterControls : MonoBehaviour
     public float airVelocity = 8f;
     public float gravity = 10.0f;
     public float jumpHeight = 2.0f;
+    public float jumpHorizMultiplier = 0.05f;
     public GameObject projectile;    // projectile prefab
     public GameObject fireProjectile;
     public Transform spawnTransform; // transform where the prefab will spawn
@@ -31,7 +32,7 @@ public class CharacterControls : MonoBehaviour
 
     private GameObject currentProjectile;
     private bool jump = false;
-    public bool attack = false; 
+    public bool attack = false;
     public float rotateSpeed = 25f; //Speed the player rotate
     public float threshold = -5f; // How low the character falls before respawning
     private Rigidbody rb;
@@ -68,12 +69,18 @@ public class CharacterControls : MonoBehaviour
         rb = GetComponent<Rigidbody> ();
         rb.freezeRotation = true;
         anim.applyRootMotion = true;
-        checkPoint = transform.position; 
+        checkPoint = transform.position;
     }
 
     void ApexReached ()
     {
         jump = false;
+    }
+
+    public void LaunchProjectile ()
+    {
+        Debug.Log ("Launching projectile");
+        Instantiate (currentProjectile, spawnTransform.position, spawnTransform.rotation);
     }
 
     void FixedUpdate ()
@@ -87,7 +94,7 @@ public class CharacterControls : MonoBehaviour
         if (attack)
         {
             attack = false;
-            anim.SetTrigger("attack");
+            anim.SetTrigger ("attack");
             //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
         }
 
@@ -111,7 +118,7 @@ public class CharacterControls : MonoBehaviour
 
         if (IsInAnimationState ("Jump State") || IsInAnimationState ("Falling"))
         {
-            float multiplier = IsInAnimationState ("Jump State") ? 0.1f : 0.1f;
+            float multiplier = IsInAnimationState ("Jump State") ? jumpHorizMultiplier : 0.1f;
             newRootPosition.y = transform.position.y + anim.deltaPosition.y * jumpHeight;
             float newX = Mathf.LerpUnclamped (transform.position.x, transform.position.x + transform.forward.x * speedY, GetSpeed () * multiplier);
             float newZ = Mathf.LerpUnclamped (transform.position.z, transform.position.z + transform.forward.z * speedY, GetSpeed () * multiplier);
@@ -129,37 +136,37 @@ public class CharacterControls : MonoBehaviour
 
 
 
-    void OnAnimatorIK(int layerIndex)
+    void OnAnimatorIK (int layerIndex)
     {
 
         if (anim)
         {
-            AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo(0);
-            if (astate.IsName("ButtonPress"))
+            AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
+            if (astate.IsName ("ButtonPress"))
             {
 
-                float buttonWeight = anim.GetFloat("buttonClose");
+                float buttonWeight = anim.GetFloat ("buttonClose");
                 // Set the look target position, if one has been assigned
                 if (buttonObject != null)
                 {
-                    anim.SetLookAtWeight(buttonWeight);
-                    anim.SetLookAtPosition(buttonObject.transform.position);
-                    anim.SetIKPositionWeight(AvatarIKGoal.RightHand, buttonWeight);
-                    anim.SetIKPosition(AvatarIKGoal.RightHand,
+                    anim.SetLookAtWeight (buttonWeight);
+                    anim.SetLookAtPosition (buttonObject.transform.position);
+                    anim.SetIKPositionWeight (AvatarIKGoal.RightHand, buttonWeight);
+                    anim.SetIKPosition (AvatarIKGoal.RightHand,
                     buttonObject.transform.position);
                 }
             }
             else
             {
-                anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                anim.SetLookAtWeight(0);
+                anim.SetIKPositionWeight (AvatarIKGoal.RightHand, 0);
+                anim.SetLookAtWeight (0);
             }
         }
     }
 
     private void Update ()
     {
-        bool doButtonPress = false; 
+        bool doButtonPress = false;
 
         float h = Input.GetAxis ("Horizontal");
         speedY = Input.GetAxis ("Vertical");
@@ -167,28 +174,27 @@ public class CharacterControls : MonoBehaviour
         anim.SetFloat ("speedY", speedY);
         anim.SetBool ("grounded", IsGrounded ());
 
-        if (transform.position.y < threshold )
+        if (transform.position.y < threshold)
         {
             ResetPosition ();
             return;
         }
- 
+
         if (Input.GetButtonDown ("Jump"))
         {
             jump = true;
         }
 
         // throw projectile
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown ("Fire1"))
         {
-            attack= true;
-            Instantiate(currentProjectile, spawnTransform.position, spawnTransform.rotation);
+            attack = true;
         }
 
         //change projectile
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown ("Fire2"))
         {
-            if(currentProjectile == fireProjectile)
+            if (currentProjectile == fireProjectile)
             {
                 currentProjectile = projectile;
             }
@@ -204,16 +210,16 @@ public class CharacterControls : MonoBehaviour
 
         if (buttonPressStandingSpot != null)
         {
-            buttonDistance = Vector3.Distance(transform.position, buttonPressStandingSpot.transform.position); 
+            buttonDistance = Vector3.Distance (transform.position, buttonPressStandingSpot.transform.position);
         }
 
-        if (Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown ("Fire3"))
         {
-            Debug.Log("Action pressed");
+            Debug.Log ("Action pressed");
             if (buttonDistance <= buttonCloseEnoughForMatchDistance)
             {
-                Debug.Log("Button press initiated");
-                anim.SetTrigger("doButtonPress");
+                Debug.Log ("Button press initiated");
+                anim.SetTrigger ("doButtonPress");
                 doButtonPress = true;
             }
 
@@ -221,10 +227,10 @@ public class CharacterControls : MonoBehaviour
         }
 
 
-        var animState = anim.GetCurrentAnimatorStateInfo(0);
-        if (animState.IsName("ButtonPress"))
+        var animState = anim.GetCurrentAnimatorStateInfo (0);
+        if (animState.IsName ("ButtonPress"))
         {
-            fire.SetActive(false);
+            fire.SetActive (false);
         }
 
 
@@ -316,38 +322,39 @@ public class CharacterControls : MonoBehaviour
         if (collision.gameObject.tag == "Moving Bench")
         {
             this.transform.SetParent (collision.gameObject.transform);
-        } 
+        }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter (Collider collider)
     {
-        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent>();
+        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent> ();
 
         if (collider.gameObject.tag == "TNT" && (!powerup.shield))
         {
-            rb.AddExplosionForce(25000.0F, collider.transform.position, 5.0F, 30);
-            ShootPlayer(collider);
+            rb.AddExplosionForce (25000.0F, collider.transform.position, 5.0F, 30);
+            ShootPlayer ();
         }
 
     }
 
-    private void ShootPlayer (Collider collider)
+    private void ShootPlayer ()
     {
-        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent>();
-        if( !powerup.shield )
+        PowerUpsCollectorComponent powerup = GetComponent<PowerUpsCollectorComponent> ();
+        if (!powerup.shield)
         {
-            anim.SetBool("alive", false);
-            anim.SetBool("shot", true);
-            StartCoroutine(Delay(3));
+            anim.SetTrigger ("die");
+            anim.SetBool ("shot", true);
+            StartCoroutine (Delay (3));
 
         }
     }
 
-    IEnumerator Delay(int time)
+    IEnumerator Delay (int time)
     {
-        anim.SetBool("alive", true);
-        yield return new WaitForSeconds(time);
-        ResetPosition(); 
+        yield return new WaitForSeconds (time);
+        anim.SetTrigger ("resurrect");
+        ResetPosition ();
+
 
     }
 
