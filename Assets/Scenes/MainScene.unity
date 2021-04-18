@@ -96602,6 +96602,11 @@ PrefabInstance:
       propertyPath: fireProjectile
       value: 
       objectReference: {fileID: 122182, guid: 8290fe934290fc94bb71baa277523508, type: 3}
+    - target: {fileID: 9115129866998306574, guid: b57c46c0afdaf6b48a9928013e6178d8,
+        type: 3}
+      propertyPath: m_Name
+      value: Player NPC
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b57c46c0afdaf6b48a9928013e6178d8, type: 3}
 --- !u!1 &1777050976
