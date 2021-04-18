@@ -111,7 +111,7 @@ public class NPCController : MonoBehaviour
 
     private void Awake ()
     {
-        anim = transform.Find ("Player").GetComponent<Animator> ();
+        anim = transform.Find ("Player NPC").GetComponent<Animator> ();
         anim.applyRootMotion = false;
     }
 
