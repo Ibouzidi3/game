@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     public Transform customizationPanelFocus;
     public Button customizationGeneralButton;
     public Button customizationHeadButton;
+    public MenuCameraController menuCameraController;
 
     public GameObject mainPanel;
     public TextMeshProUGUI goldCount;
@@ -44,12 +45,14 @@ public class MenuController : MonoBehaviour
         customizationGeneralPanel.SetActive (true);
         customizationHeadPanel.SetActive (false);
         mainPanel.SetActive (false);
+        menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTOMISATION_GENERAL;
     }
 
     public void OnCharacterBackButtonPress ()
     {
         customizationPanel.SetActive (false);
         mainPanel.SetActive (true);
+        menuCameraController.currentState = MenuCameraController.CameraState.MAIN_MENU;
     }
 
     public void OnCustomizationGeneralButtonPress ()
@@ -58,6 +61,7 @@ public class MenuController : MonoBehaviour
         customizationGeneralPanel.SetActive (true);
         customizationPanelFocus.parent = customizationGeneralButton.transform;
         customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
+        menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTOMISATION_GENERAL;
     }
 
     public void OnCustomizationHeadButtonPress ()
@@ -66,6 +70,7 @@ public class MenuController : MonoBehaviour
         customizationGeneralPanel.SetActive (false);
         customizationPanelFocus.parent = customizationHeadButton.transform;
         customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
+        menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTIOMZIATION_HEAD;
     }
 
 }
