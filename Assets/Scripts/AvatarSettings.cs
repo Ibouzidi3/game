@@ -9,7 +9,10 @@ public class AvatarSettings : MonoBehaviour
     public GameObject hairObject;
     public GameObject faceObject;
     public GameObject beardObject;
-    // Start is called before the first frame update
+    public GameObject headgearObject;
+    public GameObject faceAccessoryObject;
+    public GameObject backAccessoryObject;
+
     void Start ()
     {
         skinnedMeshRenderer = this.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ();
@@ -18,9 +21,12 @@ public class AvatarSettings : MonoBehaviour
             skinnedMeshRenderer.materials = Gamestate.avatarMaterials;
         }
 
-        UpdateFace (Gamestate.face == null ? null : ResourceManager.LoadSingle (ResourceType.Face, Gamestate.face));
-        UpdateHair (Gamestate.hair == null ? null : ResourceManager.LoadSingle (ResourceType.Hair, Gamestate.hair));
-        UpdateBeard (Gamestate.beard == null ? null : ResourceManager.LoadSingle (ResourceType.Beard, Gamestate.beard));
+        UpdateFace(Gamestate.face == null ? null : ResourceManager.LoadSingle(ResourceType.Face, Gamestate.face));
+        UpdateHair(Gamestate.hair == null ? null : ResourceManager.LoadSingle(ResourceType.Hair, Gamestate.hair));
+        UpdateBeard(Gamestate.beard == null ? null : ResourceManager.LoadSingle(ResourceType.Beard, Gamestate.beard));
+        UpdateFace(Gamestate.headgear == null ? null : ResourceManager.LoadSingle(ResourceType.Headgear, Gamestate.headgear));
+        UpdateHair(Gamestate.faceAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.FaceAccessory, Gamestate.faceAccessory));
+        UpdateBeard(Gamestate.backAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.BackAccessory, Gamestate.backAccessory));
     }
 
     public void UpdateSkin (Material[] materials)
@@ -74,6 +80,39 @@ public class AvatarSettings : MonoBehaviour
             Destroy (beardObject);
 
             beardObject = beard;
+
+        }
+    }
+
+    public void UpdateHeadgear (GameObject headgear)
+    {
+        headgearObject = ReplaceOrDisable(headgear, headgearObject);
+    }
+
+    public void UpdateFaceAccessory (GameObject faceAccessory)
+    {
+        faceAccessoryObject = ReplaceOrDisable(faceAccessory, faceAccessoryObject);
+    }
+
+    public void UpdateBackAccessory(GameObject backAccessory)
+    {
+        backAccessoryObject = ReplaceOrDisable(backAccessory, backAccessoryObject);
+    }
+
+    private GameObject ReplaceOrDisable(GameObject newObject, GameObject oldObject)
+    {
+        if (newObject == null)
+        {
+            oldObject.SetActive(false);
+            return oldObject;
+        }
+        else
+        {
+            oldObject.SetActive(true);
+            copyTransforms(newObject.transform, oldObject.transform);
+            Destroy(oldObject);
+
+            return newObject;
 
         }
     }

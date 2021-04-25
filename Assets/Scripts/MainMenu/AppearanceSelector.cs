@@ -17,6 +17,7 @@ public class AppearanceSelector : MonoBehaviour
     public GameObject costumeVariantGameObject;
     public GameObject skinColorGameObject;
 
+    // General panel
     private TextMeshProUGUI genderTmp;
     private TextMeshProUGUI costumeTmp;
     private TextMeshProUGUI costumeVariantTmp;
@@ -34,28 +35,62 @@ public class AppearanceSelector : MonoBehaviour
     private TextMeshProUGUI beardTmp;
     private TextMeshProUGUI beardColorTmp;
 
+    // Accessories panel
+    public TextMeshProUGUI headgearTmp;
+    public TextMeshProUGUI headgearTypeTmp;
+    public TextMeshProUGUI faceAccessoryTmp;
+    public TextMeshProUGUI faceAccessoryTypeTmp;
+    public TextMeshProUGUI backAccessoryTmp;
+    public TextMeshProUGUI backAccessoryTypeTmp;
+
+
     private TextMeshProUGUI faceTmp;
 
     private Gender gender = Gender.Female;
     private SkinColor skinColor = SkinColor.Black;
 
-    private string costume;
+    // Hair
     private int hairColorIndex = 0;
     private int hairStyleIndex = 0;
+    private GameObject[] allHair;
+    private Dictionary<string, List<Dictionary<string, GameObject>>> hairTree;
+
+    // Beard
     private int beardColorIndex = 0;
     private int beardStyleIndex = 0;
+    private GameObject[] allBeards;
+    private List<Dictionary<string, GameObject>> beardTree;
+
+
+    // Skins
+    private string costume;
     private int costumeIndex = 0;
     private int costumeVariantIndex = 0;
-    private int faceIndex = 0;
-
     private GameObject[] allSkins;
-    private GameObject[] allHair;
-    private GameObject[] allFaces;
-    private GameObject[] allBeards;
     private Dictionary<string, Dictionary<string, List<GameObject>>> assetTree;
-    private Dictionary<string, List<Dictionary<string, GameObject>>> hairTree;
+
+    // Faces
+    private int faceIndex = 0;
+    private GameObject[] allFaces;
     private Dictionary<string, List<GameObject>> faceTree;
-    private List<Dictionary<string, GameObject>> beardTree;
+
+    // Headgears
+    private int headgearIndex = 0;
+    private int headgearTypeIndex = 0;
+    private GameObject[] allHeadgears;
+    private Dictionary<string, Dictionary<string, GameObject>> headgearTree;
+
+    // Face accessories
+    private int faceAccessoryIndex = 0;
+    private int faceAccessoryTypeIndex = 0;
+    private GameObject[] allFaceAccessories;
+    private Dictionary<string, Dictionary<string, GameObject>> faceAccessoryTree;
+
+    // Back accessories
+    private int backAccessoryIndex = 0;
+    private int backAccessoryTypeIndex = 0;
+    private GameObject[] allBackAccessories;
+    private Dictionary<string, Dictionary<string, GameObject>> backAccessoryTree;
 
     void Start ()
     {
@@ -63,6 +98,7 @@ public class AppearanceSelector : MonoBehaviour
         LoadHair ();
         LoadFaces ();
         LoadBeards ();
+        LoadAccessories();
         UpdateSkin ();
     }
 
@@ -104,7 +140,17 @@ public class AppearanceSelector : MonoBehaviour
 
         beardTmp = beardMenuGameObject.GetComponent<TextMeshProUGUI> ();
         beardColorTmp = beardColorMenuGameObject.GetComponent<TextMeshProUGUI> ();
+    }
 
+    void LoadAccessories()
+    {
+        allHeadgears = ResourceManager.LoadAll(ResourceType.Headgear);
+        allFaceAccessories = ResourceManager.LoadAll(ResourceType.FaceAccessory);
+        allBackAccessories = ResourceManager.LoadAll(ResourceType.BackAccessory);
+
+        headgearTree = BuildAccessoryTree(allHeadgears);
+        faceAccessoryTree = BuildAccessoryTree(allFaceAccessories);
+        backAccessoryTree = BuildAccessoryTree(allBackAccessories);
     }
 
     public void OnGenderToggle ()
@@ -234,6 +280,48 @@ public class AppearanceSelector : MonoBehaviour
         UpdateSkin ();
     }
 
+    public void OnHeadgearChange(bool left)
+    {
+        headgearTypeIndex = 0;
+        headgearIndex = rotate(headgearIndex, headgearTree.Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
+
+    public void OnHeadgearTypeChange(bool left)
+    {
+        string type = headgearTree.Keys.ElementAt(headgearIndex);
+        headgearTypeIndex = rotate(headgearTypeIndex, headgearTree[type].Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
+
+
+    public void OnFaceAccessoryChange(bool left)
+    {
+        faceAccessoryTypeIndex = 0;
+        faceAccessoryIndex = rotate(faceAccessoryIndex, faceAccessoryTree.Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
+
+    public void OnFaceAccessoryTypeChange(bool left)
+    {
+        string type = faceAccessoryTree.Keys.ElementAt(faceAccessoryIndex);
+
+        faceAccessoryTypeIndex = rotate(faceAccessoryTypeIndex, faceAccessoryTree[type].Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
+
+    public void OnBackAccessoryChange(bool left)
+    {
+        backAccessoryTypeIndex = 0;
+        backAccessoryIndex = rotate(backAccessoryIndex, backAccessoryTree.Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
+    public void OnBackAccessoryTypeChange(bool left)
+    {
+        string type = backAccessoryTree.Keys.ElementAt(backAccessoryIndex);
+        backAccessoryTypeIndex = rotate(backAccessoryTypeIndex, backAccessoryTree[type].Keys.Count, left ? Direction.Left : Direction.Right);
+        UpdateSkin();
+    }
 
     private void BuildSkinTree ()
     {
@@ -377,6 +465,28 @@ public class AppearanceSelector : MonoBehaviour
         beardTree.Insert (0, d);
     }
 
+    // Type > Flavour > Object
+    private Dictionary<string, Dictionary<string, GameObject>> BuildAccessoryTree(GameObject[] accessories)
+    {
+        Dictionary<string, Dictionary<string, GameObject>> accessoryTree = new Dictionary<string, Dictionary<string, GameObject>>();
+
+        foreach (GameObject accessory in accessories)
+        {
+            string[] elements = accessory.name.Split(' ');
+            string accessoryType = elements[0];
+            string flavour = String.Join(" ",elements.Skip(1));
+
+
+            if (!accessoryTree.ContainsKey(accessoryType))
+                accessoryTree[accessoryType] = new Dictionary<string, GameObject>();
+
+            accessoryTree[accessoryType][flavour] = accessory;
+        }
+
+        return accessoryTree;
+    }
+
+
     private void UpdateSkin ()
     {
         Gamestate.gender = gender;
@@ -417,11 +527,45 @@ public class AppearanceSelector : MonoBehaviour
         string beardColor = beardTree[beardStyleIndex].Keys.ElementAt (beardColorIndex);
         GameObject newBeard = beardTree[beardStyleIndex][beardColor];
 
-        avatar.UpdateBeard (newBeard == null ? newBeard : Instantiate (newBeard));
+        avatar.UpdateBeard(newBeard == null ? newBeard : Instantiate(newBeard));
         Gamestate.beard = newBeard == null ? null : newBeard.name;
 
         beardColorTmp.text = beardColor;
         beardTmp.text = newBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
+
+
+        // Headgear
+        string headgear = headgearTree.Keys.ElementAt(headgearIndex);
+        string headgearType = headgearTree[headgear].Keys.ElementAt(headgearTypeIndex);
+        GameObject newHeadgear = headgearTree[headgear][headgearType];
+
+        avatar.UpdateHeadgear(newHeadgear == null ? newHeadgear : Instantiate(newHeadgear));
+        Gamestate.headgear = newHeadgear == null ? null : newHeadgear.name;
+
+        headgearTmp.text = headgear;
+        headgearTypeTmp.text = headgearType;
+
+        // Face accessory
+        string faceAccessory = faceAccessoryTree.Keys.ElementAt(faceAccessoryIndex);
+        string faceAccessoryType = faceAccessoryTree[faceAccessory].Keys.ElementAt(faceAccessoryTypeIndex);
+        GameObject newFaceAccessory = faceAccessoryTree[faceAccessory][faceAccessoryType];
+
+        avatar.UpdateFaceAccessory(newFaceAccessory == null ? newFaceAccessory : Instantiate(newFaceAccessory));
+        Gamestate.faceAccessory = newFaceAccessory == null ? null : newFaceAccessory.name;
+
+        faceAccessoryTmp.text = faceAccessory;
+        faceAccessoryTypeTmp.text = faceAccessoryType;
+
+        // Back accessory
+        string backAccessory = backAccessoryTree.Keys.ElementAt(backAccessoryIndex);
+        string backAccessoryType = backAccessoryTree[backAccessory].Keys.ElementAt(backAccessoryTypeIndex);
+        GameObject newBackAccessory = backAccessoryTree[backAccessory][backAccessoryType];
+
+        avatar.UpdateBackAccessory(newBackAccessory == null ? newBackAccessory : Instantiate(newBackAccessory));
+        Gamestate.backAccessory = newBackAccessory == null ? null : newBackAccessory.name;
+
+        backAccessoryTmp.text = backAccessory;
+        backAccessoryTypeTmp.text = backAccessoryType;
     }
 
     private string genderToString (Gender gender)

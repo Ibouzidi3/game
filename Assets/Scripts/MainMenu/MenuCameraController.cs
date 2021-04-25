@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MenuCameraController : MonoBehaviour
 {
+    public bool disabled = false;
     public GameObject titleCard;
     public GameObject mainMenu;
     public GameObject goldCount;
@@ -26,6 +27,10 @@ public class MenuCameraController : MonoBehaviour
 
     void Start()
     {
+        if(disabled && Application.isEditor)
+        {
+            return;
+        }
         // Pos 1 13.5 -7.68
         this.transform.rotation = Quaternion.Euler(-45f, 0, 0);
         this.transform.position = mainMenuPosition;

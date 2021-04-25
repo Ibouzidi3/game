@@ -7,33 +7,79 @@ public static class ResourceManager
 {
     public static GameObject[] LoadAll (ResourceType type)
     {
-        return Resources.LoadAll<GameObject> (ResourceTypeToPath (type));
+        List<GameObject> toReturn = new List<GameObject>();
+
+        foreach (string path in ResourceTypeToPath(type))
+        {
+            toReturn.AddRange(Resources.LoadAll<GameObject>(path));
+        }
+
+        return toReturn.ToArray();
+
     }
 
     public static GameObject LoadSingle (ResourceType type, string name)
     {
-        string path = ResourceTypeToPath (type) + "/" + name;
-        Debug.Log ("Loading " + path);
+        foreach (string pathDir in ResourceTypeToPath(type))
+        {
+            string path = pathDir + "/" + name;
+            Debug.Log("Loading " + path);
+            GameObject loaded = Resources.Load<GameObject>(path);
 
-        return UnityEngine.Object.Instantiate (Resources.Load<GameObject> (path));
+            if(loaded != null)
+                return UnityEngine.Object.Instantiate(loaded);
+        }
+
+        return null;
     }
 
-    private static string ResourceTypeToPath (ResourceType type)
+    private static string[] ResourceTypeToPath (ResourceType type)
     {
+;
         switch (type)
         {
             case ResourceType.Costume:
-                return "Character/Costume";
+                return new string[] { "Character/Costume"};
             case ResourceType.Hair:
-                return "Character/Hair";
+                return new string[] { "Character/Hair"};
             case ResourceType.Face:
-                return "Character/Face";
+                return new string[] { "Character/Face"};
             case ResourceType.Beard:
-                return "Character/Beard";
+                return new string[] { "Character/Beard" };
+            case ResourceType.Headgear:
+                return new string[] { 
+                    "Character/Accessories/Hats (Head)",
+                    "Character/Accessories/Headbands (Head)",
+                    "Character/Accessories/Ears (Head)",
+                    "Character/Accessories/Helmets (Head)",
+                    "Character/Accessories/Horns (Head)",
+                    "Character/Accessories/Misc (Head)"
+                };
+            case ResourceType.FaceAccessory:
+                return new string[] {
+                    "Character/Accessories/Glasses (Head)",
+                    "Character/Accessories/Masks (Head)",
+                };
+            case ResourceType.BackAccessory:
+                return new string[] {
+                    "Character/Accessories/Back Props (Back)",
+                    "Character/Accessories/Bags and Sacks (Back)",
+                    "Character/Accessories/Baskets (Back)",
+                    "Character/Accessories/Wings (Back)",
+                };
+
             default:
                 throw new ArgumentException ("undefined resource path");
         }
     }
 }
 
-public enum ResourceType { Costume, Hair, Face, Beard }
+public enum ResourceType { 
+    Costume,
+    Hair,
+    Face,
+    Beard,
+    Headgear,
+    FaceAccessory,
+    BackAccessory
+}

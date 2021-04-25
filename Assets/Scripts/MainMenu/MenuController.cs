@@ -9,9 +9,12 @@ public class MenuController : MonoBehaviour
     public GameObject customizationPanel;
     public GameObject customizationGeneralPanel;
     public GameObject customizationHeadPanel;
+    public GameObject customizationAccessoriesPanel;
+
     public Transform customizationPanelFocus;
     public Button customizationGeneralButton;
     public Button customizationHeadButton;
+    public Button customizationAccessoriesButton;
     public MenuCameraController menuCameraController;
 
     public GameObject mainPanel;
@@ -58,6 +61,7 @@ public class MenuController : MonoBehaviour
         customizationGeneralButton.Select ();
         customizationGeneralPanel.SetActive (true);
         customizationHeadPanel.SetActive (false);
+        customizationAccessoriesPanel.SetActive(false);
         mainPanel.SetActive (false);
         menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTOMISATION_GENERAL;
     }
@@ -73,7 +77,8 @@ public class MenuController : MonoBehaviour
     {
         customizationHeadPanel.SetActive (false);
         customizationGeneralPanel.SetActive (true);
-        customizationPanelFocus.parent = customizationGeneralButton.transform;
+        customizationAccessoriesPanel.SetActive(false);
+        customizationPanelFocus.SetParent(customizationGeneralButton.transform, false);
         customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
         menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTOMISATION_GENERAL;
     }
@@ -82,9 +87,21 @@ public class MenuController : MonoBehaviour
     {
         customizationHeadPanel.SetActive (true);
         customizationGeneralPanel.SetActive (false);
-        customizationPanelFocus.parent = customizationHeadButton.transform;
+        customizationAccessoriesPanel.SetActive(false);
+        customizationPanelFocus.SetParent(customizationHeadButton.transform, false);
         customizationPanelFocus.localPosition = new Vector3 (0, customizationPanelFocus.localPosition.y, 0);
         menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTIOMZIATION_HEAD;
+    }
+
+    public void OnCustomizationAccessoriesButtonPress ()
+    {
+        customizationHeadPanel.SetActive(false);
+        customizationGeneralPanel.SetActive(false);
+        customizationAccessoriesPanel.SetActive(true);
+        customizationPanelFocus.SetParent(customizationAccessoriesButton.transform, false);
+        customizationPanelFocus.localPosition = new Vector3(0, customizationPanelFocus.localPosition.y, 0);
+        menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTIOMZIATION_HEAD;
+
     }
 
 }
