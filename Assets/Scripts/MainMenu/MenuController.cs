@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
+    public GameObject instructionsPanel;
     public GameObject customizationPanel;
     public GameObject customizationGeneralPanel;
     public GameObject customizationHeadPanel;
@@ -37,6 +38,19 @@ public class MenuController : MonoBehaviour
     {
         SceneManager.LoadScene ("Menu");
     }
+
+    public void OnInstructionsButtonPress()
+    {
+        instructionsPanel.SetActive(true);  
+        mainPanel.SetActive(false); 
+    }
+
+    public void OnInstructionsBackButtonPress()
+    {
+        instructionsPanel.SetActive(false);
+        mainPanel.SetActive(true); 
+    }
+
 
     public void OnCharacterButtonPress ()
     {
