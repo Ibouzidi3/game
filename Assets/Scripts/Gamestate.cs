@@ -16,6 +16,9 @@ public static class Gamestate
     public static string hair;
     public static string face;
     public static string beard;
+    public static string headgear;
+    public static string faceAccessory;
+    public static string backAccessory;
 
     // Misc
     public static int coins = 0;
