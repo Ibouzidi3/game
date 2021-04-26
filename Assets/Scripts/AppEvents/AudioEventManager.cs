@@ -28,6 +28,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip flameAudio;
     public AudioClip countDownAudio;
     public AudioClip startCountDownAudio;
+    public AudioClip fountainSplashAudio;
 
     private UnityAction<Vector3> boxDestructionEventListener;
 
@@ -53,6 +54,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> flameEventListener;
     private UnityAction<Vector3> countDownEventListener;
     private UnityAction<Vector3> startCountDownEventListener;
+    private UnityAction<Vector3> fountainSplashEventListener;
 
 
     void Awake()
@@ -82,6 +84,7 @@ public class AudioEventManager : MonoBehaviour
         flameEventListener = new UnityAction<Vector3>(flameEventHandler);
         countDownEventListener = new UnityAction<Vector3>(countDownEventHandler);
         startCountDownEventListener = new UnityAction<Vector3>(startCountDownEventHandler);
+        fountainSplashEventListener = new UnityAction<Vector3>(fountainSplashEventHandler);
     }
 
 
@@ -109,6 +112,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<FlameEvent, Vector3>(flameEventListener);
         EventManager.StartListening<CountDownEvent, Vector3>(countDownEventListener);
         EventManager.StartListening<StartCountDownEvent, Vector3>(startCountDownEventListener);
+        EventManager.StartListening<FountainSplashEvent, Vector3>(fountainSplashEventListener);
     }
 
     void OnDisable()
@@ -135,6 +139,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<FlameEvent, Vector3>(flameEventListener);
         EventManager.StartListening<CountDownEvent, Vector3>(countDownEventListener);
         EventManager.StartListening<StartCountDownEvent, Vector3>(startCountDownEventListener);
+        EventManager.StopListening<FountainSplashEvent, Vector3>(fountainSplashEventListener);
     }
 
 
@@ -454,6 +459,23 @@ public class AudioEventManager : MonoBehaviour
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = projectileFireAudio;
+
+            snd.audioSrc.minDistance = 10f;
+            snd.audioSrc.maxDistance = 20f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
+    void fountainSplashEventHandler(Vector3 worldPos)
+    {
+
+        if (eventSound3DPrefab)
+        {
+
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = fountainSplashAudio;
 
             snd.audioSrc.minDistance = 10f;
             snd.audioSrc.maxDistance = 20f;

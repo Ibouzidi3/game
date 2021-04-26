@@ -17,6 +17,7 @@ public class Fountain : MonoBehaviour
             if (rb != null)
             {
                 transform.GetChild(0).gameObject.SetActive(true);
+                EventManager.TriggerEvent<FountainSplashEvent, Vector3>(transform.position);
                 Vector3 velocity = rb.velocity;
                 velocity += transform.up * force * Time.deltaTime;
                 velocity -= velocity * damping * Time.deltaTime;

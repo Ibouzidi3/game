@@ -10,6 +10,7 @@ public class FountainPoison : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             transform.GetChild(0).gameObject.SetActive(true);
+            EventManager.TriggerEvent<FountainSplashEvent, Vector3>(transform.position);
             other.SendMessage("ShootPlayer", other);
 
         }
