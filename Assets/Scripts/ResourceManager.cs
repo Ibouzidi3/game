@@ -1,17 +1,41 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public static class ResourceManager
 {
-    public static GameObject[] LoadAll (ResourceType type)
+    private static Dictionary<string, Dictionary<string, int>> priceList = null;
+    public static CharacterAsset[] LoadAll (ResourceType type)
     {
-        List<GameObject> toReturn = new List<GameObject>();
+        if (priceList == null)
+        {
+            string json = Resources.Load("Character/manifest").ToString();
+            priceList = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>>(json);
+            List<string> klist = new List<string>(priceList["Beard"].Keys);
+        }
+
+
+        List<CharacterAsset> toReturn = new List<CharacterAsset>();
 
         foreach (string path in ResourceTypeToPath(type))
         {
-            toReturn.AddRange(Resources.LoadAll<GameObject>(path));
+            foreach (GameObject gameObject in Resources.LoadAll<GameObject>(path))
+            {
+                Dictionary<string, int> ppr = priceList[type.ToString()];
+                List<string> k = new List<string>(ppr.Keys);
+
+                if (!ppr.ContainsKey(path + "/" + gameObject.name))
+                {
+                    Debug.Log("Expected " + k.ToArray()[0] + "---" + "Requested " + path + "/" + gameObject.name);
+                    continue;
+
+                }
+
+                int price = ppr[path + "/" + gameObject.name];
+                CharacterAsset characterAsset = new CharacterAsset(gameObject, price);
+                toReturn.Add(characterAsset);
+            }
         }
 
         return toReturn.ToArray();
@@ -47,7 +71,8 @@ public static class ResourceManager
             case ResourceType.Beard:
                 return new string[] { "Character/Beard" };
             case ResourceType.Headgear:
-                return new string[] { 
+                return new string[] {
+                    "Character/Accessories/Crowns (Head)",
                     "Character/Accessories/Hats (Head)",
                     "Character/Accessories/Headbands (Head)",
                     "Character/Accessories/Ears (Head)",
@@ -82,4 +107,16 @@ public enum ResourceType {
     Headgear,
     FaceAccessory,
     BackAccessory
+}
+
+public class CharacterAsset
+{
+    public readonly GameObject gameObject;
+    public readonly int price;
+
+    public CharacterAsset(GameObject gameObject, int price)
+    {
+        this.gameObject = gameObject;
+        this.price = price;
+    }
 }
