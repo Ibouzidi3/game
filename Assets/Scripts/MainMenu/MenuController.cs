@@ -117,12 +117,4 @@ public class MenuController : MonoBehaviour
         customizationPanelFocus.localPosition = new Vector3(0, customizationPanelFocus.localPosition.y, 0);
         menuCameraController.currentState = MenuCameraController.CameraState.CHARACTER_CUSTIOMZIATION_HEAD;
     }
-
-    public int costumePrice { set { costumeBuy.SetAmount(value); } }
-    public int hairPrice { set { hairBuy.SetAmount(value); } }
-    public int beardPrice { set { beardBuy.SetAmount(value); } }
-    public int facePrice { set { faceBuy.SetAmount(value); } }
-    public int headgearPrice { set { headgearBuy.SetAmount(value); } }
-    public int faceAccessoryPrice { set { faceAccessoryBuy.SetAmount(value); } }
-    public int backAccessoryPrice { set { backAccessoryBuy.SetAmount(value); } }
 }

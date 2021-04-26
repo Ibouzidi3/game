@@ -21,6 +21,6 @@ public static class Gamestate
     public static string backAccessory;
 
     // Misc
-    public static int coins = 0;
+    public static int coins = 20;
     public static int coinsCurrentGame = 0;
 }

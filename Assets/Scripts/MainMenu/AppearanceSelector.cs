@@ -559,7 +559,8 @@ public class AppearanceSelector : MonoBehaviour
         string variantName = selectedCostume.gameObject.name.Substring (selectedCostume.gameObject.name.IndexOf ('0'));
         costumeTmp.text = costume;
         costumeVariantTmp.text = variantName;
-        menuController.costumePrice = selectedCostume.owned ? 0 : selectedCostume.price;
+        menuController.costumeBuy.SetAmount(selectedCostume.owned ? 0 : selectedCostume.price);
+        menuController.costumeBuy.enabled = Gamestate.coins >= selectedCostume.price;
 
         // Hair
         string hairColorText = hairTree[gender.ToString ()][hairStyleIndex].Keys.ElementAt (hairColorIndex);
@@ -569,14 +570,16 @@ public class AppearanceSelector : MonoBehaviour
 
         hairColorTmp.text = hairColorText;
         hairTmp.text = "Hair Style #" + (hairStyleIndex + 1);
-        menuController.hairPrice = selectedHair.owned ? 0 : selectedHair.price;
+        menuController.hairBuy.SetAmount(selectedHair.owned ? 0 : selectedHair.price);
+        menuController.hairBuy.enabled = Gamestate.coins >= selectedHair.price;
 
         // Face
         selectedFace = faceTree[gender + "_" + skinColor][faceIndex];
         avatar.UpdateFace (Instantiate (selectedFace.gameObject));
         Gamestate.face = selectedFace.gameObject.name;
         faceTmp.text = "Face #" + (faceIndex + 1);
-        menuController.facePrice = selectedFace.owned ? 0 : selectedFace.price;
+        menuController.faceBuy.SetAmount(selectedFace.owned ? 0 : selectedFace.price);
+        menuController.faceBuy.enabled = Gamestate.coins >= selectedFace.price;
 
         // Beard
         string beardColor = beardTree[beardStyleIndex].Keys.ElementAt (beardColorIndex);
@@ -587,7 +590,8 @@ public class AppearanceSelector : MonoBehaviour
 
         beardColorTmp.text = beardColor;
         beardTmp.text = selectedBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
-        menuController.beardPrice = selectedBeard.owned ? 0 : selectedBeard.price;
+        menuController.beardBuy.SetAmount(selectedBeard.owned ? 0 : selectedBeard.price);
+        menuController.beardBuy.enabled = Gamestate.coins >= selectedBeard.price;
 
 
         // Headgear
@@ -600,7 +604,8 @@ public class AppearanceSelector : MonoBehaviour
 
         headgearTmp.text = headgear;
         headgearTypeTmp.text = headgearType;
-        menuController.headgearPrice = selectedHeadgear.owned ? 0 : selectedHeadgear.price;
+        menuController.headgearBuy.SetAmount(selectedHeadgear.owned ? 0 : selectedHeadgear.price);
+        menuController.headgearBuy.enabled = Gamestate.coins >= selectedHeadgear.price;
 
         // Face accessory
         string faceAccessory = faceAccessoryTree.Keys.ElementAt(faceAccessoryIndex);
@@ -612,7 +617,8 @@ public class AppearanceSelector : MonoBehaviour
 
         faceAccessoryTmp.text = faceAccessory;
         faceAccessoryTypeTmp.text = faceAccessoryType;
-        menuController.faceAccessoryPrice =  selectedFaceAccessory.owned ? 0 : selectedFaceAccessory.price;
+        menuController.faceAccessoryBuy.SetAmount(selectedFaceAccessory.owned ? 0 : selectedFaceAccessory.price);
+        menuController.faceAccessoryBuy.enabled = Gamestate.coins >= selectedFaceAccessory.price;
 
         // Back accessory
         string backAccessory = backAccessoryTree.Keys.ElementAt(backAccessoryIndex);
@@ -624,7 +630,9 @@ public class AppearanceSelector : MonoBehaviour
 
         backAccessoryTmp.text = backAccessory;
         backAccessoryTypeTmp.text = backAccessoryType;
-        menuController.backAccessoryPrice =  selectedBackAccessory.owned ? 0 : selectedBackAccessory.price;
+        menuController.backAccessoryBuy.SetAmount(selectedBackAccessory.owned ? 0 : selectedBackAccessory.price);
+        menuController.backAccessoryBuy.enabled = Gamestate.coins >= selectedBackAccessory.price;
+
     }
 
     private string genderToString (Gender gender)
