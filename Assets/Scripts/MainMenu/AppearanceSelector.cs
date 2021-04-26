@@ -156,6 +156,11 @@ public class AppearanceSelector : MonoBehaviour
         backAccessoryTree = BuildAccessoryTree(allBackAccessories);
     }
 
+    public void OnBuyButton(ResourceType resourceType)
+    {
+
+    }
+
     public void OnGenderToggle ()
     {
         gender = gender == Gender.Female ? Gender.Male : Gender.Female;
