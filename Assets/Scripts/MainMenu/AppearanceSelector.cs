@@ -57,13 +57,14 @@ public class AppearanceSelector : MonoBehaviour
     private int hairStyleIndex = 0;
     private CharacterAsset[] allHair;
     private Dictionary<string, List<Dictionary<string, CharacterAsset>>> hairTree;
+    private CharacterAsset selectedHair;
 
     // Beard
     private int beardColorIndex = 0;
     private int beardStyleIndex = 0;
     private CharacterAsset[] allBeards;
     private List<Dictionary<string, CharacterAsset>> beardTree;
-
+    private CharacterAsset selectedBeard;
 
     // Skins
     private string costume;
@@ -71,29 +72,34 @@ public class AppearanceSelector : MonoBehaviour
     private int costumeVariantIndex = 0;
     private CharacterAsset[] allSkins;
     private Dictionary<string, Dictionary<string, List<CharacterAsset>>> assetTree;
+    private CharacterAsset selectedCostume;
 
     // Faces
     private CharacterAsset[] allFaces;
     private int faceIndex = 0;
     private Dictionary<string, List<CharacterAsset>> faceTree;
+    private CharacterAsset selectedFace;
 
     // Headgears
     private int headgearIndex = 0;
     private int headgearTypeIndex = 0;
     private CharacterAsset[] allHeadgears;
     private Dictionary<string, Dictionary<string, CharacterAsset>> headgearTree;
+    private CharacterAsset selectedHeadgear;
 
     // Face accessories
     private int faceAccessoryIndex = 0;
     private int faceAccessoryTypeIndex = 0;
     private CharacterAsset[] allFaceAccessories;
     private Dictionary<string, Dictionary<string, CharacterAsset>> faceAccessoryTree;
+    private CharacterAsset selectedFaceAccessory;
 
     // Back accessories
     private int backAccessoryIndex = 0;
     private int backAccessoryTypeIndex = 0;
     private CharacterAsset[] allBackAccessories;
     private Dictionary<string, Dictionary<string, CharacterAsset>> backAccessoryTree;
+    private CharacterAsset selectedBackAccessory;
 
     void Start ()
     {
@@ -158,7 +164,45 @@ public class AppearanceSelector : MonoBehaviour
 
     public void OnBuyButton(ResourceType resourceType)
     {
+        int price = 0;
 
+        switch(resourceType)
+        {
+            case ResourceType.Costume:
+                price = selectedCostume.price;
+                selectedCostume.owned = true;
+                break;
+            case ResourceType.BackAccessory:
+                price = selectedBackAccessory.price;
+                selectedBackAccessory.owned = true;
+                break;
+            case ResourceType.Beard:
+                price = selectedBeard.price;
+                selectedBeard.owned = true;
+                break;
+            case ResourceType.Face:
+                price = selectedFace.price;
+                selectedFace.owned = true;
+                break;
+            case ResourceType.FaceAccessory:
+                price = selectedFaceAccessory.price;
+                selectedFaceAccessory.owned = true;
+                break;
+            case ResourceType.Hair:
+                price = selectedHair.price;
+                selectedHair.owned = true;
+                break;
+            case ResourceType.Headgear:
+                price = selectedHeadgear.price;
+                selectedHeadgear.owned = true;
+                break;
+            default:
+                break;
+        }
+
+        Gamestate.coins -= price;
+        menuController.UpdateCoins();
+        UpdateSkin();
     }
 
     public void OnGenderToggle ()
@@ -505,82 +549,82 @@ public class AppearanceSelector : MonoBehaviour
 
         // Skin
         string k = gender + "-" + skinColor;
-        CharacterAsset newAsset = assetTree[k][costume][costumeVariantIndex];
-        Gamestate.avatarMaterials = newAsset.gameObject.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
+        selectedCostume = assetTree[k][costume][costumeVariantIndex];
+        Gamestate.avatarMaterials = selectedCostume.gameObject.transform.Find ("Base").GetComponent<SkinnedMeshRenderer> ().sharedMaterials;
         avatar.UpdateSkin (Gamestate.avatarMaterials);
 
         genderTmp.text = genderToString (gender);
         skinColorTmp.text = SkinColorToString (skinColor);
 
-        string variantName = newAsset.gameObject.name.Substring (newAsset.gameObject.name.IndexOf ('0'));
+        string variantName = selectedCostume.gameObject.name.Substring (selectedCostume.gameObject.name.IndexOf ('0'));
         costumeTmp.text = costume;
         costumeVariantTmp.text = variantName;
-        menuController.costumePrice = newAsset.price;
+        menuController.costumePrice = selectedCostume.owned ? 0 : selectedCostume.price;
 
         // Hair
         string hairColorText = hairTree[gender.ToString ()][hairStyleIndex].Keys.ElementAt (hairColorIndex);
-        CharacterAsset newHair = hairTree[gender.ToString ()][hairStyleIndex][hairColorText];
-        avatar.UpdateHair (Instantiate (newHair.gameObject));
-        Gamestate.hair = newHair.gameObject.name;
+        selectedHair = hairTree[gender.ToString ()][hairStyleIndex][hairColorText];
+        avatar.UpdateHair (Instantiate (selectedHair.gameObject));
+        Gamestate.hair = selectedHair.gameObject.name;
 
         hairColorTmp.text = hairColorText;
         hairTmp.text = "Hair Style #" + (hairStyleIndex + 1);
-        menuController.hairPrice = newHair.price;
+        menuController.hairPrice = selectedHair.owned ? 0 : selectedHair.price;
 
         // Face
-        CharacterAsset newFace = faceTree[gender + "_" + skinColor][faceIndex];
-        avatar.UpdateFace (Instantiate (newFace.gameObject));
-        Gamestate.face = newFace.gameObject.name;
+        selectedFace = faceTree[gender + "_" + skinColor][faceIndex];
+        avatar.UpdateFace (Instantiate (selectedFace.gameObject));
+        Gamestate.face = selectedFace.gameObject.name;
         faceTmp.text = "Face #" + (faceIndex + 1);
-        menuController.facePrice = newFace.price;
+        menuController.facePrice = selectedFace.owned ? 0 : selectedFace.price;
 
         // Beard
         string beardColor = beardTree[beardStyleIndex].Keys.ElementAt (beardColorIndex);
-        CharacterAsset newBeard = beardTree[beardStyleIndex][beardColor];
+        selectedBeard = beardTree[beardStyleIndex][beardColor];
 
-        avatar.UpdateBeard(newBeard.gameObject == null ? newBeard.gameObject : Instantiate(newBeard.gameObject));
-        Gamestate.beard = newBeard.gameObject == null ? null : newBeard.gameObject.name;
+        avatar.UpdateBeard(selectedBeard.gameObject == null ? selectedBeard.gameObject : Instantiate(selectedBeard.gameObject));
+        Gamestate.beard = selectedBeard.gameObject == null ? null : selectedBeard.gameObject.name;
 
         beardColorTmp.text = beardColor;
-        beardTmp.text = newBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
-        menuController.beardPrice = newBeard.price;
+        beardTmp.text = selectedBeard == null ? "No beard" : "Beard Style #" + beardStyleIndex;
+        menuController.beardPrice = selectedBeard.owned ? 0 : selectedBeard.price;
 
 
         // Headgear
         string headgear = headgearTree.Keys.ElementAt(headgearIndex);
         string headgearType = headgearTree[headgear].Keys.ElementAt(headgearTypeIndex);
-        CharacterAsset newHeadgear = headgearTree[headgear][headgearType];
+        selectedHeadgear = headgearTree[headgear][headgearType];
 
-        avatar.UpdateHeadgear(newHeadgear.gameObject == null ? newHeadgear.gameObject : Instantiate(newHeadgear.gameObject));
-        Gamestate.headgear = newHeadgear.gameObject == null ? null : newHeadgear.gameObject.name;
+        avatar.UpdateHeadgear(selectedHeadgear.gameObject == null ? selectedHeadgear.gameObject : Instantiate(selectedHeadgear.gameObject));
+        Gamestate.headgear = selectedHeadgear.gameObject == null ? null : selectedHeadgear.gameObject.name;
 
         headgearTmp.text = headgear;
         headgearTypeTmp.text = headgearType;
-        menuController.headgearPrice = newHeadgear.price;
+        menuController.headgearPrice = selectedHeadgear.owned ? 0 : selectedHeadgear.price;
 
         // Face accessory
         string faceAccessory = faceAccessoryTree.Keys.ElementAt(faceAccessoryIndex);
         string faceAccessoryType = faceAccessoryTree[faceAccessory].Keys.ElementAt(faceAccessoryTypeIndex);
-        CharacterAsset newFaceAccessory = faceAccessoryTree[faceAccessory][faceAccessoryType];
+        selectedFaceAccessory = faceAccessoryTree[faceAccessory][faceAccessoryType];
 
-        avatar.UpdateFaceAccessory(newFaceAccessory.gameObject == null ? newFaceAccessory.gameObject : Instantiate(newFaceAccessory.gameObject));
-        Gamestate.faceAccessory = newFaceAccessory.gameObject == null ? null : newFaceAccessory.gameObject.name;
+        avatar.UpdateFaceAccessory(selectedFaceAccessory.gameObject == null ? selectedFaceAccessory.gameObject : Instantiate(selectedFaceAccessory.gameObject));
+        Gamestate.faceAccessory = selectedFaceAccessory.gameObject == null ? null : selectedFaceAccessory.gameObject.name;
 
         faceAccessoryTmp.text = faceAccessory;
         faceAccessoryTypeTmp.text = faceAccessoryType;
-        menuController.faceAccessoryPrice = newFaceAccessory.price;
+        menuController.faceAccessoryPrice =  selectedFaceAccessory.owned ? 0 : selectedFaceAccessory.price;
 
         // Back accessory
         string backAccessory = backAccessoryTree.Keys.ElementAt(backAccessoryIndex);
         string backAccessoryType = backAccessoryTree[backAccessory].Keys.ElementAt(backAccessoryTypeIndex);
-        CharacterAsset newBackAccessory = backAccessoryTree[backAccessory][backAccessoryType];
+        selectedBackAccessory = backAccessoryTree[backAccessory][backAccessoryType];
 
-        avatar.UpdateBackAccessory(newBackAccessory.gameObject == null ? newBackAccessory.gameObject : Instantiate(newBackAccessory.gameObject));
-        Gamestate.backAccessory = newBackAccessory == null ? null : newBackAccessory.gameObject.name;
+        avatar.UpdateBackAccessory(selectedBackAccessory.gameObject == null ? selectedBackAccessory.gameObject : Instantiate(selectedBackAccessory.gameObject));
+        Gamestate.backAccessory = selectedBackAccessory == null ? null : selectedBackAccessory.gameObject.name;
 
         backAccessoryTmp.text = backAccessory;
         backAccessoryTypeTmp.text = backAccessoryType;
-        menuController.backAccessoryPrice = newBackAccessory.price;
+        menuController.backAccessoryPrice =  selectedBackAccessory.owned ? 0 : selectedBackAccessory.price;
     }
 
     private string genderToString (Gender gender)

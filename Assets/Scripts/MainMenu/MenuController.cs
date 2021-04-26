@@ -32,6 +32,11 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        UpdateCoins();
+    }
+
+    public void UpdateCoins()
+    {
         goldCount.text = Gamestate.coins.ToString();
     }
 

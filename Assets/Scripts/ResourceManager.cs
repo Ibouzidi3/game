@@ -113,10 +113,12 @@ public class CharacterAsset
 {
     public readonly GameObject gameObject;
     public readonly int price;
+    public bool owned;
 
     public CharacterAsset(GameObject gameObject, int price)
     {
         this.gameObject = gameObject;
         this.price = price;
+        this.owned = price == 0;
     }
 }
