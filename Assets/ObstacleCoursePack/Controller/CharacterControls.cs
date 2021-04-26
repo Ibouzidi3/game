@@ -85,11 +85,11 @@ public class CharacterControls : MonoBehaviour
 
     void FixedUpdate ()
     {
-        if (IsGrounded () && jump)
+        if (jump)
         {
             jump = false;
-            anim.SetTrigger ("jump");
-            //rb.AddForce (new Vector3 (anim.velocity.x, anim.velocity.y * jumpHeight, anim.velocity.z) * GetSpeed (), ForceMode.VelocityChange);
+            if(IsGrounded())
+                anim.SetTrigger ("jump");
         }
         if (attack)
         {
@@ -118,7 +118,7 @@ public class CharacterControls : MonoBehaviour
 
         if (IsInAnimationState ("Jump State") || IsInAnimationState ("Falling"))
         {
-            float multiplier = IsInAnimationState ("Jump State") ? jumpHorizMultiplier : 0.1f;
+            float multiplier = jumpHorizMultiplier;
             newRootPosition.y = transform.position.y + anim.deltaPosition.y * jumpHeight;
             float newX = Mathf.LerpUnclamped (transform.position.x, transform.position.x + transform.forward.x * speedY, GetSpeed () * multiplier);
             float newZ = Mathf.LerpUnclamped (transform.position.z, transform.position.z + transform.forward.z * speedY, GetSpeed () * multiplier);
@@ -312,7 +312,7 @@ public class CharacterControls : MonoBehaviour
     {
         if (collision.gameObject.tag == "Moving Bench" && transform.parent != null && this.transform.parent.Equals (collision.gameObject.transform))
         {
-            this.transform.SetParent (null);
+            this.transform.SetParent (null, true);
         }
     }
 
@@ -321,7 +321,7 @@ public class CharacterControls : MonoBehaviour
 
         if (collision.gameObject.tag == "Moving Bench")
         {
-            this.transform.SetParent (collision.gameObject.transform);
+            this.transform.SetParent (collision.gameObject.transform, true);
         }
     }
 
