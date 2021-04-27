@@ -25,16 +25,21 @@ public class LoadingManager : MonoBehaviour
         else
         {
             canvasGroup = menuCanvas.GetComponent<CanvasGroup>();
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-            canvasGroup.alpha = 1f;
+            if (scene == "LoadingScene")
+            {
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha = 1f;
+
+            }
+
         }
         
     }
 
     public void LoadScene(string sceneName)
     { 
-        if (scene == "EndOfRace")
+        if (scene != "Menu")
         { 
             loadingPanel.SetActive(true); 
             canvasGroup.interactable = false;
