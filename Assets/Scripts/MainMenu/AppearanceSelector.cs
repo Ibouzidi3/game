@@ -522,6 +522,9 @@ public class AppearanceSelector : MonoBehaviour
     {
         Dictionary<string, Dictionary<string, CharacterAsset>> accessoryTree = new Dictionary<string, Dictionary<string, CharacterAsset>>();
 
+        accessoryTree["None"] = new Dictionary<string, CharacterAsset>();
+        accessoryTree["None"]["N/A"] = new CharacterAsset(null, 0);
+
         foreach (CharacterAsset accessory in accessories)
         {
             string[] elements = accessory.gameObject.name.Split(' ');
@@ -626,7 +629,7 @@ public class AppearanceSelector : MonoBehaviour
         selectedBackAccessory = backAccessoryTree[backAccessory][backAccessoryType];
 
         avatar.UpdateBackAccessory(selectedBackAccessory.gameObject == null ? selectedBackAccessory.gameObject : Instantiate(selectedBackAccessory.gameObject));
-        Gamestate.backAccessory = selectedBackAccessory == null ? null : selectedBackAccessory.gameObject.name;
+        Gamestate.backAccessory = selectedBackAccessory.gameObject == null ? null : selectedBackAccessory.gameObject.name;
 
         backAccessoryTmp.text = backAccessory;
         backAccessoryTypeTmp.text = backAccessoryType;
