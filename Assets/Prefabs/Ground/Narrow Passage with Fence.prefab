@@ -112,6 +112,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prop_Fence_Straight (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.1605221
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.5237753
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 748a61d3e8d0f0e4980cdbcbe707d76a, type: 3}
 --- !u!4 &4626624490412240099 stripped
@@ -197,7 +207,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass Block (8)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7144560009451096996, guid: fc3606814b105d944aebbeed94d35dc4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fc3606814b105d944aebbeed94d35dc4, type: 3}
 --- !u!4 &3190920968613013361 stripped
 Transform:
@@ -281,6 +292,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Prop_Fence_Straight (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.19131434
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.5391714
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 748a61d3e8d0f0e4980cdbcbe707d76a, type: 3}
@@ -367,6 +388,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prop_Fence_Straight
       objectReference: {fileID: 0}
+    - target: {fileID: 4743833039231089767, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.14827538
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.47783947
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 748a61d3e8d0f0e4980cdbcbe707d76a, type: 3}
 --- !u!4 &4626624491999726971 stripped
@@ -451,6 +487,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Prop_Fence_Straight (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.15370715
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360869638187073048, guid: 748a61d3e8d0f0e4980cdbcbe707d76a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.48932534
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 748a61d3e8d0f0e4980cdbcbe707d76a, type: 3}
