@@ -10932,6 +10932,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingBar: {fileID: 1018521407}
   loadingText: {fileID: 109450036}
+  loadingPanel: {fileID: 0}
+  menuCanvas: {fileID: 0}
 --- !u!1001 &2077459519
 PrefabInstance:
   m_ObjectHideFlags: 0

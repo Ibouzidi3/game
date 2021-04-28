@@ -39,7 +39,7 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     { 
-        if (scene != "Menu")
+        if (scene != "LoadingScene")
         { 
             loadingPanel.SetActive(true); 
             canvasGroup.interactable = false;
