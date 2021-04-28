@@ -18,6 +18,7 @@ public enum NPCMoveState
 [RequireComponent (typeof (NavMeshAgent))]
 public class NPCController : MonoBehaviour
 {
+    private (float, float) VelocityRanges = (7, 12);
     public Vector3 spawnPoint;
     public bool enableSpawnPoint = true;
 
@@ -115,6 +116,18 @@ public class NPCController : MonoBehaviour
         anim.applyRootMotion = false;
     }
 
+    IEnumerator UpdateSpeed()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(2);
+
+        System.Random random = new System.Random();
+        var (minimum, maximum) = this.VelocityRanges;
+        agent.speed = (float) random.NextDouble() * (maximum - minimum) + minimum;
+
+        yield return UpdateSpeed();
+    }
+
     void Start ()
     {
         distToGround = GetComponent<Collider> ().bounds.extents.y;
@@ -140,7 +153,7 @@ public class NPCController : MonoBehaviour
         {
             Debug.Log ("No accessible waypoints");
         }
-
+        StartCoroutine(UpdateSpeed());
     }
 
     void UpdateNavMeshNav ()
