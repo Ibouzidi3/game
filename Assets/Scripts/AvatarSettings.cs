@@ -25,8 +25,8 @@ public class AvatarSettings : MonoBehaviour
         UpdateHair(Gamestate.hair == null ? null : ResourceManager.LoadSingle(ResourceType.Hair, Gamestate.hair));
         UpdateBeard(Gamestate.beard == null ? null : ResourceManager.LoadSingle(ResourceType.Beard, Gamestate.beard));
         UpdateFace(Gamestate.headgear == null ? null : ResourceManager.LoadSingle(ResourceType.Headgear, Gamestate.headgear));
-        UpdateHair(Gamestate.faceAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.FaceAccessory, Gamestate.faceAccessory));
-        UpdateBeard(Gamestate.backAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.BackAccessory, Gamestate.backAccessory));
+        UpdateFaceAccessory(Gamestate.faceAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.FaceAccessory, Gamestate.faceAccessory));
+        UpdateBackAccessory(Gamestate.backAccessory == null ? null : ResourceManager.LoadSingle(ResourceType.BackAccessory, Gamestate.backAccessory));
     }
 
     public void UpdateSkin (Material[] materials)
@@ -36,19 +36,8 @@ public class AvatarSettings : MonoBehaviour
 
     public void UpdateHair (GameObject hair)
     {
-        if (hair == null)
-        {
-            hairObject.SetActive (false);
-
-        }
-        else
-        {
-            hairObject.SetActive (true);
-            copyTransforms (hair.transform, hairObject.transform);
-            Destroy (hairObject);
-            hairObject = hair;
-
-        }
+        Debug.Log("THe hair object is " + hair);
+        hairObject = ReplaceOrDisable(hair, hairObject);
     }
 
     public void UpdateFace (GameObject face)
