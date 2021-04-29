@@ -30,7 +30,7 @@ public class NPCController : MonoBehaviour
     public GameObject player;
     public GameObject fireProjectile;
     public float projectileLifespan = 3.0f;
-    public float range = 100.0f;
+    public float range = 10.0f;
     public bool canShoot = true;
     public float delayInSeconds = 3.0f;
 
